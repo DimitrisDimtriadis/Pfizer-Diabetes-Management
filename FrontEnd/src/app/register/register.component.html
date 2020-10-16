@@ -1,0 +1,34 @@
+
+
+<div class="sidenav">
+    <div class="login-main-text">
+     <img src="https://thetotalbusiness.com/wp-content/uploads/2020/06/Pfizer-the-total-business.jpg" class="rounded" alt="Cinque Terre" width="300" height="150"> 
+       <h2>Welcome to Pfizer <br> Diabetes Management App</h2>
+       <p>Login or Register from here to access.</p>
+       
+    </div>
+  </div>
+  <div class="main">
+    <div class="col-md-6 col-sm-12">
+       <div class="login-form">
+          <form>
+             <div class="form-group">
+                <label>User Name</label>
+                <input type="text" class="form-control" placeholder="User Name">
+             </div>
+             <div class="form-group">
+                <label>Password</label>
+                <input type="password" class="form-control" placeholder="Password">
+             </div>
+             <div class="form-group">
+                <label>Confirm Password</label>
+                <input type="password" class="form-control" placeholder="Confirm Password">
+             </div>
+             <button type="submit" class="btn btn-black" (click)="RegisterClick();">Register</button>
+             <button type="submit" class="btn btn-dark" (click)="LoginNavClick();" style="display:block" style="width:auto;">Back</button>
+          </form>
+          <p *ngIf="showMyMessage">Registered!</p>
+       </div>
+    </div>
+  </div>
+  
