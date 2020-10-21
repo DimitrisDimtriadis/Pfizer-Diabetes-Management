@@ -1,0 +1,70 @@
+
+
+<nav class="navbar navbar-expand-sm navbar-dark bg-dark">
+    <li class="nav-item">
+        <a class="navbar-brand" href="/patient"  >Patient</a>
+      </li>
+      <li class="nav-item">
+        <a class="navbar-brand" href="/admin">Admin</a>
+      </li>
+      <li class="nav-item">
+        <a class="navbar-brand" href="/home">Logout</a>
+      </li>
+  </nav>
+<div class="container">
+  <div class="jumbotron">
+    <h2 style="text-align: center; color: blue">Angular CRUD Application</h2>
+  </div>
+  <div class="row">
+    <div class="col-md-6">
+        <div class="doc-form">
+            <div class="row">
+              <div class="col-md-6 form-group">
+                <input placeholder="Name" class="form-control" [(ngModel)]="dservice.currentDoctor.name">
+              </div>
+              <div class="col-md-6 form-group">
+                <input placeholder="Email" class="form-control" [(ngModel)]="dservice.currentDoctor.email">
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-12 form-group">
+                <input placeholder="Body" class="form-control" [(ngModel)]="dservice.currentDoctor.body">
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-8">
+                <button class="btn btn-success btn-lg btn-block" (click)="createOrUpdateDoctor(dservice.currentDoctor)">
+                  <i class="fa fa-save"></i>
+                  SAVE
+                </button>
+              </div>
+              <div class="col-md-4">
+                <button class="btn btn-primary btn-lg btn-block" (click)="clearDoctor()">
+                  <i class="fa fa-retweet"></i>
+                  CLEAR
+                </button>
+              </div>
+            </div>
+          </div>
+    </div>
+    <div class="col-md-6">
+        <table class="table table-hover">
+            <tr *ngFor="let doc1 of dservice.allDoctors">
+              <td>{{doc1.id}}</td>
+              <td>{{doc1.email}}</td>
+              <td>
+                <a class="btn" (click)="editDoctor(doc1)">
+                    <i class="fa fa-edit"></i>
+                  </a>
+                </td>
+                <td>
+                  <a class="btn" (click)="deleteDoctor(doc1.id)">
+                    <i class="fa fa-trash"></i>
+                  </a>
+                </td>
+              </tr>
+            </table>
+    </div>
+  </div>
+</div>
+
