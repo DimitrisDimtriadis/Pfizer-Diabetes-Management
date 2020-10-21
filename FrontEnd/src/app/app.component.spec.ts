@@ -16,16 +16,16 @@ describe('AppComponent', () => {
     expect(app).toBeTruthy();
   });
 
-  it(`should have as title 'management'`, () => {
+  it(`should have as title 'Pfizer-Diabetes-Management'`, () => {
     const fixture = TestBed.createComponent(AppComponent);
     const app = fixture.componentInstance;
-    expect(app.title).toEqual('management');
+    expect(app.title).toEqual('Pfizer-Diabetes-Management');
   });
 
   it('should render title', () => {
     const fixture = TestBed.createComponent(AppComponent);
     fixture.detectChanges();
     const compiled = fixture.nativeElement;
-    expect(compiled.querySelector('.content span').textContent).toContain('management app is running!');
+    expect(compiled.querySelector('.content span').textContent).toContain('Pfizer-Diabetes-Management app is running!');
   });
 });

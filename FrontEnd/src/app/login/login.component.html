@@ -1,32 +1,28 @@
-<!-- main app container -->
-<div class="jumbotron">
-    <div class="container">
-        <div class="row">
-            <div class="col-md-6 offset-md-3">
-                <h3 style="text-align: center;">Login</h3>
-                <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
-                    <div class="form-group">
-                        <label>Username</label>
-                        <input type="text" formControlName="userName" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.userName.errors }" />
-                        <div *ngIf="submitted && f.userName.errors" class="invalid-feedback">
-                            <div *ngIf="f.userName.errors.required">userName is required</div>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label>Password</label>
-                        <input type="password" formControlName="password" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.password.errors }" />
-                        <div *ngIf="submitted && f.password.errors" class="invalid-feedback">
-                            <div *ngIf="f.password.errors.required">Password is required</div>
-                            <div *ngIf="f.password.errors.minlength">Password must be at least 6 characters</div>
-                        </div>
-                    </div>
-                    
-                    <div class="form-group">
-                        <button class="btn btn-primary"style="margin: 2%;margin-right:5%;" >Login</button>
-                        <button  class="btn btn-dark" (click)="BackClick();"   style="width:auto;">Back</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
+
+
+<div class="sidenav">
+  <div class="login-main-text">
+   <img src="https://thetotalbusiness.com/wp-content/uploads/2020/06/Pfizer-the-total-business.jpg" class="rounded" alt="Cinque Terre" width="300" height="150"> 
+     <h2>Welcome to Pfizer <br> Diabetes Management App</h2>
+     <p>Login or Register from here to access.</p>
+     
+  </div>
+</div>
+<div class="main">
+  <div class="col-md-6 col-sm-12">
+     <div class="login-form">
+        <form>
+           <div class="form-group">
+              <label>User Name</label>
+              <input type="text" class="form-control" placeholder="User Name">
+           </div>
+           <div class="form-group">
+              <label>Password</label>
+              <input type="password" class="form-control" placeholder="Password">
+           </div>
+           <button type="submit" class="btn btn-black"(click)="PatientNavClick();">Login</button>
+           <button type="submit" class="btn btn-secondary" (click)="RegisterNavClick();" style="display:block" style="width:auto;">Register</button>
+        </form>
+     </div>
+  </div>
 </div>
