@@ -1,10 +1,11 @@
 package gr.codehub.teamOne.repository;
 
+import gr.codehub.teamOne.model.Product;
 import gr.codehub.teamOne.repository.lib.Repository;
 
 import javax.persistence.EntityManager;
 
-public class ProductRepository extends Repository {
+public class ProductRepository extends Repository<Product, Long> {
 
     public ProductRepository(EntityManager entityManager) {
         super(entityManager);
@@ -12,11 +13,11 @@ public class ProductRepository extends Repository {
 
     @Override
     public Class getEntityClass() {
-        return this.getClass();
+        return Product.class;
     }
 
     @Override
     public String getEntityClassName() {
-        return this.getClass().getName();
+        return Product.class.getName();
     }
 }

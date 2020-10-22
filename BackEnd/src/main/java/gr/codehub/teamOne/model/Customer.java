@@ -24,5 +24,5 @@ public class Customer {
     private CustomerCategory category;
 
     @OneToMany(mappedBy = "customer")
-    private List<Basket> basketspl = new ArrayList<>();
+    private List<Basket> baskets = new ArrayList<>();
 }

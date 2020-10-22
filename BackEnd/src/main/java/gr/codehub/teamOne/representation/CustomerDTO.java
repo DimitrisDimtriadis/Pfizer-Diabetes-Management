@@ -23,14 +23,13 @@ public class CustomerDTO {
         return customer;
     }
 
-    public static CustomerDTO getCustomer(Customer customer) {
+    static public CustomerDTO getCustomerDTO(Customer customer) {
         CustomerDTO customerDTO = new CustomerDTO();
         customerDTO.setAddress(customer.getAddress());
         customerDTO.setName(customer.getName());
         customerDTO.setDob(customer.getDob());
         customerDTO.setCategory(customer.getCategory());
-        customerDTO.setUri("http://localhost:9000/v1/customer/"+customer.getId());
+        customerDTO.setUri("http://localhost:9000/sacchon/customer/"+customer.getId());
         return customerDTO;
     }
-
 }

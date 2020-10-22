@@ -20,7 +20,7 @@ public class CustomerResourceImpl extends ServerResource implements CustomerReso
     private long id;
 
     @Override
-    protected void doInit() throws ResourceException {
+    protected void doInit() {
 
         try {
             em = JpaUtil.getEntityManager();
@@ -32,7 +32,7 @@ public class CustomerResourceImpl extends ServerResource implements CustomerReso
     }
 
     @Override
-    protected void doRelease() throws ResourceException {
+    protected void doRelease() {
         em.close();
     }
 
@@ -41,17 +41,28 @@ public class CustomerResourceImpl extends ServerResource implements CustomerReso
         Optional<Customer> customer = customerRepository.findById(id);
         setExisting(customer.isPresent());
         if (!customer.isPresent()) throw new NotFoundException("Customer not found !");
-        CustomerDTO customerDTO = CustomerDTO.getCustomer(customer.get());
-        return customerDTO;
+        return CustomerDTO.getCustomerDTO(customer.get());
     }
 
     @Override
     public void remove() throws NotFoundException {
+        customerRepository.deletedById(id);
 
     }
 
     @Override
-    public CustomerDTO store(CustomerDTO customerDTO) throws NotFoundException, BadEntityException {
-        return null;
+    public CustomerDTO update(CustomerDTO customerDTO) throws NotFoundException, BadEntityException {
+
+        Optional<Customer> customerOpt = customerRepository.findById(id);
+        if (!customerOpt.isPresent()) throw new NotFoundException("The given customer id is not existing");
+        Customer customer = customerOpt.get();
+
+        customer.setName(customerDTO.getName());
+        customer.setDob(customerDTO.getDob());
+        customer.setAddress(customerDTO.getAddress());
+        customer.setCategory(customerDTO.getCategory());
+
+        customerRepository.save(customer);
+        return CustomerDTO.getCustomerDTO(customer);
     }
 }

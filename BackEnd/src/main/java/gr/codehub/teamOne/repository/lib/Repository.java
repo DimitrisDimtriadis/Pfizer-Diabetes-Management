@@ -1,7 +1,5 @@
 package gr.codehub.teamOne.repository.lib;
 
-import org.hibernate.engine.spi.EntityUniqueKey;
-
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
 import java.util.List;
@@ -10,14 +8,22 @@ import java.util.Optional;
 public abstract class Repository<T, K> implements IRepository<T, K> {
 
     private EntityManager entityManager;
+
     public Repository(EntityManager entityManager){
         this.entityManager = entityManager;
     }
 
     @Override
     public Optional<T> findById(K id) {
-        T t = entityManager.find(getEntityClass(), id);
-        return t != null ? Optional.of(t) : Optional.empty();
+        try {
+            entityManager.getTransaction().begin();
+            T t = entityManager.find(getEntityClass(), id);
+            entityManager.getTransaction().commit();
+            return Optional.of(t);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return Optional.empty();
     }
 
     @Override

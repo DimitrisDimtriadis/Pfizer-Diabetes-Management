@@ -5,14 +5,14 @@ import gr.codehub.teamOne.repository.lib.Repository;
 
 import javax.persistence.EntityManager;
 
-public class CustomerRepository extends Repository {
+public class CustomerRepository extends Repository<Customer, Long> {
 
     public CustomerRepository(EntityManager entityManager) {
         super(entityManager);
     }
 
     @Override
-    public Class getEntityClass() {
+    public Class<Customer> getEntityClass() {
         return Customer.class;
     }
 
