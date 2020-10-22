@@ -1,26 +1,51 @@
+
 import { Component, OnInit } from '@angular/core';
+import { MustMatch } from 'src/app/_helpers/must-match.validator';
+import { FormBuilder, FormControl, FormGroup ,Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 
 @Component({
-  selector: 'app-register',
+  selector: 'codehub-register',
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.scss']
 })
 export class RegisterComponent implements OnInit {
+  userForm:FormGroup;
+  submitted = false;
+
+  constructor(private formBuilder: FormBuilder,private _router: Router) { }
   
-public showMyMessage=false;
-  constructor(
-    private _router: Router
-    ) { }
-
   ngOnInit(): void {
+    this.userForm= this.formBuilder.group({
+      firstName:['', Validators.required],
+      lastName: ['', Validators.required],
+      userName: ['', Validators.required],
+      email:['', [Validators.required, Validators.email]],
+      gender:['', Validators.required],
+      password: ['', [Validators.required, Validators.minLength(6)]],
+      confirmPassword:['', Validators.required],
+      dob :['', Validators.required]
+    }, {
+      validator: MustMatch('password', 'confirmPassword')
+    });
   }
-  LoginNavClick() {
-    this._router.navigate(['/'])
+  // convenience getter for easy access to form fields
+  get f() { return this.userForm.controls; }
+
+  onSubmit() {
+      this.submitted = true;
+
+      // stop here if form is invalid
+      if (this.userForm.invalid) {
+        this.submitted = false;
+          return;
+      }
+
+      alert('SUCCESS!! :-)\n\n' + JSON.stringify(this.userForm.value))
+      this._router.navigate(['/login'])
+  }
+  BackClick() {
+    this._router.navigate(['/home'])
   }
 
-  RegisterClick() {
-    this.showMyMessage=true;
-    
-  }
 }
