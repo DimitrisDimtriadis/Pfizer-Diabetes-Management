@@ -1,11 +1,11 @@
 package gr.codehub.teamOne.repository;
 
-import gr.codehub.teamOne.model.Basket;
+import gr.codehub.teamOne.model.Measurements;
 import gr.codehub.teamOne.repository.lib.Repository;
 
 import javax.persistence.EntityManager;
 
-public class BasketRepository extends Repository<Basket, Long> {
+public class BasketRepository extends Repository<Measurements, Long> {
 
     public BasketRepository(EntityManager entityManager) {
         super(entityManager);
@@ -13,11 +13,11 @@ public class BasketRepository extends Repository<Basket, Long> {
 
     @Override
     public Class getEntityClass() {
-        return Basket.class;
+        return Measurements.class;
     }
 
     @Override
     public String getEntityClassName() {
-        return Basket.class.getName();
+        return Measurements.class.getName();
     }
 }

@@ -9,17 +9,18 @@ import java.util.List;
 @Getter
 @Setter
 @NoArgsConstructor
-@AllArgsConstructor
 @Entity
-public class Product {
+public class Doctors {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
     private String name;
-    private double price;
-    private int inventoryQuantity;
 
-    @OneToMany(mappedBy = "product")
-    private List<BasketProduct> basketProductList = new ArrayList<>();
+    private String address;
+
+    @OneToMany(mappedBy = "doctors")
+    private List<Patients> patients=new ArrayList<>();
+
+
 }

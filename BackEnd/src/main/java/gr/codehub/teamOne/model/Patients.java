@@ -11,17 +11,32 @@ import java.util.List;
 
 @Getter
 @Setter
-@NoArgsConstructor
 @Entity
-public class Basket {
+@NoArgsConstructor
+public class Patients {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private long amka;
 
-    private Date creationDate;
+    private String name;
+    private String address;
+    private Date dob;
+    private Gender gender;
+
+    @OneToMany
+    private PatientMeasuraments patientMeasuraments;
 
     @ManyToOne
-    private Customer customer;
-    @OneToMany(mappedBy = "basket")
-    private List<BasketProduct> cartProductList = new ArrayList<>();
+    private Doctors doctors;
+
+
+
+
+
+
+
+
+
+
 }

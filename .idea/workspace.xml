@@ -4,7 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f81aea1a-71ed-4117-83f9-523c4c0ecbf4" name="Default Changelist" comment="" />
+    <list default="true" id="f81aea1a-71ed-4117-83f9-523c4c0ecbf4" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/BackEnd/.idea/.name" beforeDir="false" afterPath="$PROJECT_DIR$/BackEnd/.idea/.name" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BackEnd/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/BackEnd/.idea/compiler.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BackEnd/src/main/java/gr/codehub/teamOne/RestApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/BackEnd/src/main/java/gr/codehub/teamOne/RestApplication.java" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />

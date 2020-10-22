@@ -10,15 +10,20 @@ import javax.persistence.*;
 @Setter
 @NoArgsConstructor
 @Entity
-public class BasketProduct {
+public class PatientMeasuraments {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    private int quantity;
+    private int numberOfMeasuraments;
 
     @ManyToOne
-    private Basket basket;
+    private Patients patient;
+
     @ManyToOne
-    private Product product;
+    private Measurements measurements;
+
+
+
+
 }

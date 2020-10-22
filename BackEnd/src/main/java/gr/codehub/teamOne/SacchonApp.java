@@ -17,9 +17,9 @@ import org.restlet.security.Role;
 import javax.persistence.EntityManager;
 import java.util.logging.Logger;
 
-public class RestApplication extends Application {
+public class SacchonApp extends Application {
 
-    public static final Logger LOGGER = Engine.getLogger(RestApplication.class);
+    public static final Logger LOGGER = Engine.getLogger(SacchonApp.class);
 
     public static void main(String[] args) throws Exception {
         startHibernate();
@@ -52,7 +52,7 @@ public class RestApplication extends Application {
         em.close();
     }
 
-    public RestApplication(){
+    public SacchonApp(){
         setName("WebApiTutorial");
         setDescription("Full web API Tutorial");
 
@@ -68,7 +68,7 @@ public class RestApplication extends Application {
         // Attach application to http://localhost:9000/sacchon
         Component c = new Component();
         c.getServers().add(Protocol.HTTP, 9000);
-        c.getDefaultHost().attach("/sacchon", new RestApplication());
+        c.getDefaultHost().attach("/sacchon", new SacchonApp());
 
         try {
             c.start();
@@ -78,5 +78,5 @@ public class RestApplication extends Application {
         LOGGER.info("Sample Web API started");
         LOGGER.info("URL: http://localhost:9000/sacchon/customer/1");
     }
-    // next 
+    // next
 }

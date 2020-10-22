@@ -9,6 +9,7 @@
         <outputRelativeToContentRoot value="true" />
         <module name="Sacchon" />
         <module name="BackEnd" />
+        <module name="RestApiProject" />
       </profile>
     </annotationProcessing>
   </component>

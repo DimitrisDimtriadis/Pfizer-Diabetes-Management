@@ -1,7 +1,7 @@
 package gr.codehub.teamOne.representation;
 
 import gr.codehub.teamOne.model.Customer;
-import gr.codehub.teamOne.model.CustomerCategory;
+import gr.codehub.teamOne.model.Gender;
 import lombok.*;
 
 import java.util.Date;
@@ -11,7 +11,7 @@ public class CustomerDTO {
     private String name;
     private String address;
     private Date dob;
-    private CustomerCategory category;
+    private Gender category;
     private String uri;
 
     public static Customer getCustomer(CustomerDTO customerDTO) {
