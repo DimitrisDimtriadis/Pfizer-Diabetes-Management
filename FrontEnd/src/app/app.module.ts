@@ -15,6 +15,7 @@ import { DoctorComponent } from './doctor/doctor.component';
 import { DoctorService } from './services/doctor.service';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AdminComponent } from './admin/admin.component';
+import { NavComponent } from './nav/nav.component';
 
 
 
@@ -29,7 +30,8 @@ import { AdminComponent } from './admin/admin.component';
     RegisterComponent,
     PatientComponent,
     DoctorComponent,
-    AdminComponent
+    AdminComponent,
+	  NavComponent
  
   
   

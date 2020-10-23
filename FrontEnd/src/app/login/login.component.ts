@@ -3,7 +3,6 @@ import { MustMatch } from 'src/app/_helpers/must-match.validator';
 import { FormBuilder, FormControl, FormGroup ,Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 
-
 @Component({
   selector: 'codehub-login',
   templateUrl: './login.component.html',
@@ -36,9 +35,4 @@ export class LoginComponent implements OnInit {
       alert('SUCCESS!! :-)\n\n' + JSON.stringify(this.loginForm.value))
       this._router.navigate(['/patient'])
   }
-
-  BackClick() {
-    this._router.navigate(['/home'])
-  }
-  
 }

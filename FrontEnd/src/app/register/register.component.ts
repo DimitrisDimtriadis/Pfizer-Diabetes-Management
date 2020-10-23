@@ -22,9 +22,13 @@ export class RegisterComponent implements OnInit {
       userName: ['', Validators.required],
       email:['', [Validators.required, Validators.email]],
       gender:['', Validators.required],
+      typeAccount:['', Validators.required],
       password: ['', [Validators.required, Validators.minLength(6)]],
       confirmPassword:['', Validators.required],
-      dob :['', Validators.required]
+      dob :['', Validators.required],
+      mobile:['', [Validators.required, Validators.minLength(10), Validators.maxLength(10)]],
+      phone:['', [Validators.required, Validators.minLength(10)]],
+      amka:['', [Validators.required, Validators.minLength(9),Validators.maxLength(9)]]
     }, {
       validator: MustMatch('password', 'confirmPassword')
     });
@@ -37,15 +41,19 @@ export class RegisterComponent implements OnInit {
 
       // stop here if form is invalid
       if (this.userForm.invalid) {
-        this.submitted = false;
           return;
       }
 
       alert('SUCCESS!! :-)\n\n' + JSON.stringify(this.userForm.value))
       this._router.navigate(['/login'])
   }
-  BackClick() {
-    this._router.navigate(['/home'])
-  }
 
+  numberOnly(event): boolean {
+    const charCode = (event.which) ? event.which : event.keyCode;
+    if (charCode > 31 && (charCode < 48 || charCode > 57)) {
+      return false;
+    }
+    return true;
+
+  }
 }

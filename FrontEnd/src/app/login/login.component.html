@@ -1,15 +1,15 @@
-<!-- main app container -->
-<div class="jumbotron">
-    <div class="container">
+<div id="bg" style="width:100%;" >
+<div  class="container">
         <div class="row">
-            <div class="col-md-6 offset-md-3">
+            <div id="c" class="col-md-6 offset-md-3">
                 <h3 style="text-align: center;">Login</h3>
                 <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
                     <div class="form-group">
                         <label>Username</label>
-                        <input type="text" formControlName="userName" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.userName.errors }" />
+                        <input type="text" formControlName="userName" class="form-control" 
+                        [ngClass]="{ 'is-invalid': submitted && f.userName.errors }" />
                         <div *ngIf="submitted && f.userName.errors" class="invalid-feedback">
-                            <div *ngIf="f.userName.errors.required">userName is required</div>
+                            <div *ngIf="f.userName.errors.required">Username is required</div>
                         </div>
                     </div>
                     <div class="form-group">
@@ -22,8 +22,8 @@
                     </div>
                     
                     <div class="form-group">
-                        <button class="btn btn-primary"style="margin: 2%;margin-right:5%;" >Login</button>
-                        <button  class="btn btn-dark" (click)="BackClick();"   style="width:auto;">Back</button>
+                        <button class="btn btn-primary">Login</button>
+                        <a href="/register" type="button" >Not a member? Singup now</a> 
                     </div>
                 </form>
             </div>

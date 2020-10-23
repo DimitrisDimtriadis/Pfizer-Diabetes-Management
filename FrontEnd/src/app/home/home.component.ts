@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+
 
 
 @Component({
@@ -9,15 +9,9 @@ import { Router } from '@angular/router';
 })
 export class HomeComponent implements OnInit {
 
-  constructor(private _router: Router) { }
+  constructor() { }
 
-  RegisterNavClick() {
-    this._router.navigate(['/register'])
-  }
-
-  LoginNavClick() {
-    this._router.navigate(['/login'])
-  }
+ 
   
 
   ngOnInit(): void {
