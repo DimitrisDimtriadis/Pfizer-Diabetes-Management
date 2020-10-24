@@ -17,7 +17,11 @@ public class Doctors {
 
     private String name;
 
+    private String email;
+
     private String address;
+
+
 
     @OneToMany(mappedBy = "doctors")
     private List<Patients> patients=new ArrayList<>();

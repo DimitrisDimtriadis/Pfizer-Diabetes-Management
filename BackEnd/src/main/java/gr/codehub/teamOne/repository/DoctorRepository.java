@@ -1,5 +1,6 @@
 package gr.codehub.teamOne.repository;
 
+import gr.codehub.teamOne.model.Doctors;
 import gr.codehub.teamOne.repository.lib.IRepository;
 import gr.codehub.teamOne.repository.lib.Repository;
 
@@ -12,11 +13,11 @@ public class DoctorRepository extends Repository implements IRepository {
 
     @Override
     public Class getEntityClass() {
-        return null;
+       return Doctors.class;
     }
 
     @Override
     public String getEntityClassName() {
-        return null;
+        return Doctors.class.getName();
     }
 }

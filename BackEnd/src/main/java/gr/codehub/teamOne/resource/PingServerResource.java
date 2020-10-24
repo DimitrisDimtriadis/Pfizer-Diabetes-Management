@@ -8,5 +8,7 @@ public class PingServerResource extends ServerResource {
     public static final String PING = "Version 1.0.0 running";
 
     @Get("txt")
-    public String ping() { return PING; }
+    public String ping() {
+        return PING;
+    }
 }

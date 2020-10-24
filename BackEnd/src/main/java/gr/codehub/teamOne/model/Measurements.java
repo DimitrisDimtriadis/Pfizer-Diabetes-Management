@@ -27,7 +27,7 @@ public class Measurements {
     private Date measurmentDate;
 
     @ManyToOne
-    private Doctors doctors;
+    private Patients patients;
 
 
     @OneToMany(mappedBy = "measuraments")

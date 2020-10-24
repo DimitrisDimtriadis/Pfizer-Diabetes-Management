@@ -3,10 +3,16 @@ package gr.codehub.teamOne.representation;
 import lombok.Data;
 
 @Data
-public class ProductDTO {
-    private String name;
-    private double price;
-    private int inventory;
+public class DoctorRepresentation {
 
+
+    private String name;
+
+    private String email;
+
+    private String address;
     private String uri;
+
+
+
 }

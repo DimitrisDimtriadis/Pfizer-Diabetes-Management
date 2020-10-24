@@ -1,5 +1,6 @@
 package gr.codehub.teamOne.router;
 
+import gr.codehub.teamOne.model.Measurements;
 import gr.codehub.teamOne.resource.PingServerResource;
 import gr.codehub.teamOne.resource.impl.*;
 import org.restlet.Application;
@@ -16,9 +17,13 @@ public class CustomRouter {
     public Router createApiRouter(){
 
         Router router = new Router(application.getContext());
-        router.attach("/customer/{id}", CustomerResourceImpl.class);
-        router.attach("/customer", CustomerListResourceImpl.class);
-        router.attach("/customer/", CustomerListResourceImpl.class);
+        router.attach("/patient/{id}", PatientResourceImpl.class);
+        router.attach("/patient", PatientListResourceImpl.class);
+        router.attach("/patient/", PatientListResourceImpl.class);
+
+        router.attach("/measuraments", MeasurementsResourceImpl.class);
+
+
         return router;
     }
 

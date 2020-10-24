@@ -2,16 +2,16 @@ package gr.codehub.teamOne.resource;
 
 import gr.codehub.teamOne.exceptions.BadEntityException;
 import gr.codehub.teamOne.exceptions.NotFoundException;
-import gr.codehub.teamOne.representation.CustomerDTO;
+import gr.codehub.teamOne.model.Patients;
 import org.restlet.resource.Get;
 import org.restlet.resource.Post;
 
 import java.util.List;
 
-public interface CustomerListResource {
+public interface PatientListResource {
     @Post("json")
-    public CustomerDTO add(CustomerDTO customerIn) throws BadEntityException;
+    public Patients add(Patients patientIn) throws BadEntityException;
 
     @Get("json")
-    public List<CustomerDTO> getCustomers() throws NotFoundException;
+    public List<Patients> getPatients() throws NotFoundException;
 }

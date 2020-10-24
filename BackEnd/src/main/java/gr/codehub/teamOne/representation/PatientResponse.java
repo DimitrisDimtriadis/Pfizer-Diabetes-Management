@@ -1,6 +1,6 @@
 package gr.codehub.teamOne.representation;
 
-public class CustomResponse<T> {
+public class PatientResponse<T> {
     private String message;
     private int statuscode;
     private T Result;

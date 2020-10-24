@@ -20,8 +20,13 @@ public class Patients {
     private long amka;
 
     private String name;
+
+    private String email;
+
     private String address;
+
     private Date dob;
+
     private Gender gender;
 
     @OneToMany
