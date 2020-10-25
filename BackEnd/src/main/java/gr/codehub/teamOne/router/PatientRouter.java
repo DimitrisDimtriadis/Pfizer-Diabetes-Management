@@ -6,11 +6,11 @@ import gr.codehub.teamOne.resource.impl.*;
 import org.restlet.Application;
 import org.restlet.routing.Router;
 
-public class CustomRouter {
+public class PatientRouter {
 
     private Application application;
 
-    public CustomRouter(Application application) {
+    public PatientRouter(Application application) {
         this.application = application;
     }
 

@@ -1,7 +1,7 @@
 package gr.codehub.teamOne;
 
 import gr.codehub.teamOne.repository.util.JpaUtil;
-import gr.codehub.teamOne.router.CustomRouter;
+import gr.codehub.teamOne.router.PatientRouter;
 import gr.codehub.teamOne.security.Shield;
 import gr.codehub.teamOne.security.cors.CustomCorsFilter;
 import gr.codehub.teamOne.security.dao.AccessRole;
@@ -30,13 +30,13 @@ public class SacchonApp extends Application {
     public Restlet createInboundRoot() {
 
         // Create the api router, protected by a guard
-        CustomRouter customRouter = new CustomRouter(this);
+        PatientRouter patientRouter = new PatientRouter(this);
         Shield shield = new Shield(this);
 
         ChallengeAuthenticator apiGuard = shield.createApiGuard();
 
-        Router publicRouter = customRouter.createApiRouter();
-        Router apiRouter = customRouter.createApiRouter();
+        Router publicRouter = patientRouter.createApiRouter();
+        Router apiRouter = patientRouter.createApiRouter();
 
         apiGuard.setNext(apiRouter);
         publicRouter.attachDefault(apiGuard);
@@ -57,8 +57,8 @@ public class SacchonApp extends Application {
         setDescription("Full web API Tutorial");
 
         getRoles().add(new Role(this, AccessRole.ROLE_ADMIN.getRoleName()));
-        getRoles().add(new Role(this, AccessRole.ROLE_OWNER.getRoleName()));
-        getRoles().add(new Role(this, AccessRole.ROLE_USER.getRoleName()));
+        getRoles().add(new Role(this, AccessRole.ROLE_DOCTOR.getRoleName()));
+        getRoles().add(new Role(this, AccessRole.ROLE_PATIENT.getRoleName()));
     }
 
     //All about Rest Service
