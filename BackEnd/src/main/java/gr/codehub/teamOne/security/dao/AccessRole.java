@@ -3,8 +3,8 @@ package gr.codehub.teamOne.security.dao;
 public enum AccessRole {
     ROLE_NA("n/a"),
     ROLE_ADMIN("Admin"),
-    ROLE_DOCTOR("owner"),
-    ROLE_PATIENT("user");
+    ROLE_DOCTOR("Doctor"),
+    ROLE_PATIENT("Patient");
 
     private final String roleName;
 
