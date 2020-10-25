@@ -7,6 +7,8 @@ import gr.codehub.teamOne.repository.CustomerRepository;
 import gr.codehub.teamOne.repository.util.JpaUtil;
 import gr.codehub.teamOne.representation.CustomerDTO;
 import gr.codehub.teamOne.resource.CustomerResource;
+import gr.codehub.teamOne.resource.util.ResourceUtils;
+import gr.codehub.teamOne.security.AccessRole;
 import org.restlet.resource.ResourceException;
 import org.restlet.resource.ServerResource;
 
@@ -37,7 +39,10 @@ public class CustomerResourceImpl extends ServerResource implements CustomerReso
     }
 
     @Override
-    public CustomerDTO getCustomer() throws NotFoundException {
+    public CustomerDTO getCustomer() throws NotFoundException, ResourceException {
+
+        ResourceUtils.checkRole(this, AccessRole.ROLE_USER.getRoleName());
+
         Optional<Customer> customer = customerRepository.findById(id);
         setExisting(customer.isPresent());
         if (!customer.isPresent()) throw new NotFoundException("Customer not found !");
@@ -46,8 +51,8 @@ public class CustomerResourceImpl extends ServerResource implements CustomerReso
 
     @Override
     public void remove() throws NotFoundException {
+        ResourceUtils.checkRole(this, AccessRole.ROLE_ADMIN.getRoleName());
         customerRepository.deletedById(id);
-
     }
 
     @Override

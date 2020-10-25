@@ -1,4 +1,4 @@
-package gr.codehub.teamOne.security.dao;
+package gr.codehub.teamOne.security;
 
 public enum AccessRole {
     ROLE_NA("n/a"),
@@ -18,7 +18,7 @@ public enum AccessRole {
 
     public static AccessRole getRoleValue(String roleParameter){
         for(AccessRole accessRole : AccessRole.values()){
-            if(roleParameter.equalsIgnoreCase(accessRole.getRoleName())){
+            if(roleParameter.equals(accessRole.getRoleName())){
                 return accessRole;
             }
         }

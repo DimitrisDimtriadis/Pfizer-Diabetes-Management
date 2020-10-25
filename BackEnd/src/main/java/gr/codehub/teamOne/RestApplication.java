@@ -4,7 +4,7 @@ import gr.codehub.teamOne.repository.util.JpaUtil;
 import gr.codehub.teamOne.router.CustomRouter;
 import gr.codehub.teamOne.security.Shield;
 import gr.codehub.teamOne.security.cors.CustomCorsFilter;
-import gr.codehub.teamOne.security.dao.AccessRole;
+import gr.codehub.teamOne.security.AccessRole;
 import org.restlet.Application;
 import org.restlet.Component;
 import org.restlet.Restlet;
@@ -29,17 +29,19 @@ public class RestApplication extends Application {
     @Override
     public Restlet createInboundRoot() {
 
-        // Create the api router, protected by a guard
         CustomRouter customRouter = new CustomRouter(this);
         Shield shield = new Shield(this);
 
+        Router publicRouter = customRouter.publicResources();
         ChallengeAuthenticator apiGuard = shield.createApiGuard();
+        // Create the api router, protected by a guard
 
-        Router publicRouter = customRouter.createApiRouter();
         Router apiRouter = customRouter.createApiRouter();
-
         apiGuard.setNext(apiRouter);
+
         publicRouter.attachDefault(apiGuard);
+
+        // return publicRouter;
 
         CustomCorsFilter corsFilter = new CustomCorsFilter(this);
         return corsFilter.createCorsFilter(publicRouter);
@@ -72,10 +74,11 @@ public class RestApplication extends Application {
 
         try {
             c.start();
+            LOGGER.info("Sample Web API started");
+            LOGGER.info("URL: http://localhost:9000/sacchon/customer/1");
+
         } catch (Exception e){
             LOGGER.info("Something went wrong with starting of Rest Service. Error: " + e.getMessage());
         }
-        LOGGER.info("Sample Web API started");
-        LOGGER.info("URL: http://localhost:9000/sacchon/customer/1");
     }
 }

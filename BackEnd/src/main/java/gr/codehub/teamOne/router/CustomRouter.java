@@ -18,7 +18,11 @@ public class CustomRouter {
         Router router = new Router(application.getContext());
         router.attach("/customer/{id}", CustomerResourceImpl.class);
         router.attach("/customer", CustomerListResourceImpl.class);
-        router.attach("/customer/", CustomerListResourceImpl.class);
+
+        router.attach("/product/{id}", ProductResourceImpl.class);
+        router.attach("/product", ProductListResourceImpl.class);
+
+        router.attach("/basket", BasketResourceImpl.class);
         return router;
     }
 

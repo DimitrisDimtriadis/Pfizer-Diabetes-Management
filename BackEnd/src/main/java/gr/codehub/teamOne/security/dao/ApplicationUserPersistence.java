@@ -1,7 +1,7 @@
 package gr.codehub.teamOne.security.dao;
 
+import gr.codehub.teamOne.security.AccessRole;
 import lombok.NoArgsConstructor;
-import org.restlet.Application;
 import org.restlet.Context;
 
 import java.sql.*;
@@ -23,14 +23,14 @@ public class ApplicationUserPersistence {
 
         try{
             connection = getConnection();
-            PreparedStatement preparedStatement = connection.prepareStatement("select * from UserTable where username=?");
+            PreparedStatement preparedStatement = connection.prepareStatement("select * from userTable where userName=?");
             preparedStatement.setString(1, username);
             ResultSet rs = preparedStatement.executeQuery();
 
             if(rs.next()){
                 ApplicationUser user = new ApplicationUser();
                 user.setUsername(rs.getString("username"));
-                user.setUsername(rs.getString("password"));
+                user.setPassword(rs.getString("password"));
                 user.setAccessRole(AccessRole.getRoleValue(rs.getString("role")));
                 return user;
             }

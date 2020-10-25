@@ -7,6 +7,8 @@ import gr.codehub.teamOne.repository.CustomerRepository;
 import gr.codehub.teamOne.repository.util.JpaUtil;
 import gr.codehub.teamOne.representation.CustomerDTO;
 import gr.codehub.teamOne.resource.CustomerListResource;
+import gr.codehub.teamOne.resource.util.ResourceUtils;
+import gr.codehub.teamOne.security.AccessRole;
 import org.restlet.resource.ResourceException;
 import org.restlet.resource.ServerResource;
 
@@ -35,8 +37,9 @@ public class CustomerListResourceImpl extends ServerResource implements Customer
     }
 
     @Override
-    public CustomerDTO add(CustomerDTO customerIn) throws BadEntityException {
+    public CustomerDTO add(CustomerDTO customerIn) throws BadEntityException, ResourceException {
 
+        ResourceUtils.checkRole(this, AccessRole.ROLE_USER.getRoleName());
         if(customerIn == null) throw new BadEntityException("Null customer representation error");
         if(customerIn.getName().equals("admin")) throw new BadEntityException("Invalid customer name error");
 
@@ -47,11 +50,12 @@ public class CustomerListResourceImpl extends ServerResource implements Customer
 
     @Override
     public List<CustomerDTO> getCustomers() throws NotFoundException {
+        ResourceUtils.checkRole(this, AccessRole.ROLE_USER.getRoleName());
         List<Customer> customers= customerRepository.findAll();
 
         List<CustomerDTO> customerRepresentationList = new ArrayList<>();
 
-        customers.forEach(customer -> customerRepresentationList.add(CustomerDTO.getCustomerDTO(customer)));
+        customers.forEach( customer -> customerRepresentationList.add(CustomerDTO.getCustomerDTO(customer)));
 
         return customerRepresentationList;
     }
