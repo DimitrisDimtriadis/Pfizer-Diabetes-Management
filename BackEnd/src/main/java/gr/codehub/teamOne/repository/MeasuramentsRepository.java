@@ -20,4 +20,9 @@ public class MeasuramentsRepository extends Repository implements IRepository {
     public String getEntityClassName() {
         return Measurements.class.getName();
     }
+
+    @Override
+    public boolean deleteById(long id) {
+        return false;
+    }
 }

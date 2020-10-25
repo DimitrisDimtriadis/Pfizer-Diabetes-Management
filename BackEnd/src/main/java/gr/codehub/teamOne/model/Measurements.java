@@ -30,7 +30,7 @@ public class Measurements {
     private Patients patients;
 
 
-    @OneToMany(mappedBy = "measuraments")
+    @OneToMany
     private List<PatientMeasuraments> patientMeasuraments=new ArrayList<>();
 
 

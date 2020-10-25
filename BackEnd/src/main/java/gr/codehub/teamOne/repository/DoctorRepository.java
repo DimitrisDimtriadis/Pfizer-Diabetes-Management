@@ -20,4 +20,9 @@ public class DoctorRepository extends Repository implements IRepository {
     public String getEntityClassName() {
         return Doctors.class.getName();
     }
+
+    @Override
+    public boolean deleteById(long id) {
+        return false;
+    }
 }

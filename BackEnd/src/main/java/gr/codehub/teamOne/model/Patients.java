@@ -29,8 +29,9 @@ public class Patients {
 
     private Gender gender;
 
+
     @OneToMany
-    private PatientMeasuraments patientMeasuraments;
+    private List<Measurements> measurements = new ArrayList<>();
 
     @ManyToOne
     private Doctors doctors;

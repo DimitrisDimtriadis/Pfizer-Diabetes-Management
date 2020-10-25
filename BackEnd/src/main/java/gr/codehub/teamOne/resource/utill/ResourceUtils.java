@@ -7,7 +7,7 @@ import org.restlet.resource.ServerResource;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
 
-public class ResourceUtill {
+public class ResourceUtils {
     public static void checkRole(ServerResource serverResource, List<String> roles)
             throws ResourceException {
         AtomicBoolean hasAuthentication = new AtomicBoolean(false);

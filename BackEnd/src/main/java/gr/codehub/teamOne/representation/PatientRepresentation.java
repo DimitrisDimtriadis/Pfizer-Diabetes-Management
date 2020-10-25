@@ -9,7 +9,7 @@ import javax.persistence.OneToMany;
 import java.util.Date;
 
 @Data
-public class PatientRepresentation {
+public class PatientRepresentation  {
     private String name;
     private String email;
     private String address;
