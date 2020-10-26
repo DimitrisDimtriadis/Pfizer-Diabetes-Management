@@ -6,6 +6,10 @@ import { RegisterComponent } from './register/register.component';
 import {PatientComponent} from './patient/patient.component';
 import {DoctorComponent} from './doctor/doctor.component';
 import{AdminComponent} from './admin/admin.component';
+import { DoctorAccComponent } from './doctor/doctor-acc/doctor-acc.component';
+import { DoctorAddPComponent } from './doctor/doctor-add-p/doctor-add-p.component';
+import { DoctorViewPComponent } from './doctor/doctor-view-p/doctor-view-p.component';
+import { DoctorConsultPComponent } from './doctor/doctor-consult-p/doctor-consult-p.component';
 
 
 
@@ -18,6 +22,10 @@ const routes: Routes =
 {path:'patient',component: PatientComponent},
 {path: 'doctor', component: DoctorComponent},
 {path: 'admin', component: AdminComponent},
+{path: 'doctorAcc', component: DoctorAccComponent},
+{path: 'doctorAddP', component: DoctorAddPComponent},
+{path: 'doctorViewP', component: DoctorViewPComponent},
+{path: 'doctorConsultP', component: DoctorConsultPComponent},
 ];
 
 @NgModule({

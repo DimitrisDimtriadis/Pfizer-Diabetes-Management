@@ -16,6 +16,13 @@ import { DoctorService } from './services/doctor.service';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AdminComponent } from './admin/admin.component';
 import { NavComponent } from './nav/nav.component';
+import { DoctorAccComponent } from './doctor/doctor-acc/doctor-acc.component';
+import { DoctorAddPComponent } from './doctor/doctor-add-p/doctor-add-p.component';
+import { DoctorViewPComponent } from './doctor/doctor-view-p/doctor-view-p.component';
+import { DoctorConsultPComponent } from './doctor/doctor-consult-p/doctor-consult-p.component';
+
+
+
 
 
 
@@ -31,7 +38,12 @@ import { NavComponent } from './nav/nav.component';
     PatientComponent,
     DoctorComponent,
     AdminComponent,
-	  NavComponent
+	  NavComponent,
+	  DoctorAccComponent,
+	  DoctorAddPComponent,
+	  DoctorViewPComponent,
+	  DoctorConsultPComponent,
+	  
  
   
   
@@ -42,7 +54,8 @@ import { NavComponent } from './nav/nav.component';
     AppRoutingModule,
     ReactiveFormsModule,
     HttpClientModule,
-    FormsModule
+    FormsModule,
+   
     
     ],
 
