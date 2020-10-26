@@ -47,14 +47,14 @@ public class RestApplication extends Application {
         return corsFilter.createCorsFilter(publicRouter);
     }
 
-    private static void startHibernate(){
+    private static void startHibernate() {
         LOGGER.info("Starting with hibernate");
 
         EntityManager em = JpaUtil.getEntityManager();
         em.close();
     }
 
-    public RestApplication(){
+    public RestApplication() {
         setName("WebApiTutorial");
         setDescription("Full web API Tutorial");
 
@@ -64,7 +64,7 @@ public class RestApplication extends Application {
     }
 
     //All about Rest Service
-    private static void startRestService(){
+    private static void startRestService() {
         LOGGER.info("Contacts application starting...");
 
         // Attach application to http://localhost:9000/sacchon
@@ -77,7 +77,7 @@ public class RestApplication extends Application {
             LOGGER.info("Sacchon Web API started !");
             LOGGER.info("URL: http://localhost:9000/sacchon/customer/1");
 
-        } catch (Exception e){
+        } catch (Exception e) {
             LOGGER.info("Something went wrong with starting of Rest Service. Error: " + e.getMessage());
         }
     }

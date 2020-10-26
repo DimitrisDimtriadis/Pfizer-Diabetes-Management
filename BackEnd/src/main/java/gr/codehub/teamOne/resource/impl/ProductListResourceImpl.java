@@ -19,4 +19,5 @@ public class ProductListResourceImpl extends ServerResource implements ProductLi
     public List<ProductDTO> getProducts() throws NotFoundException {
         return null;
     }
+
 }

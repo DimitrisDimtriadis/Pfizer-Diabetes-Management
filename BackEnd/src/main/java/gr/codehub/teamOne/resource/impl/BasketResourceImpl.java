@@ -29,7 +29,7 @@ public class BasketResourceImpl extends ServerResource implements BasketResource
             em = JpaUtil.getEntityManager();
             customerRepository = new CustomerRepository(em);
             basketRepository = new BasketRepository(em);
-        }catch(Exception e){
+        } catch (Exception e) {
             throw new ResourceException(e);
         }
     }
@@ -68,7 +68,7 @@ public class BasketResourceImpl extends ServerResource implements BasketResource
     @Override
     public BasketDTO assignCustomer(BasketDTO basketDTO) throws NotFoundException, BadEntityException {
 
-        if(basketDTO == null) throw new NotFoundException("Not found DTO");
+        if (basketDTO == null) throw new NotFoundException("Not found DTO");
         Customer customerFromDB = customerRepository.findById(basketDTO.getCustomerID()).get();
         Basket basketFromDB = basketRepository.findById(basketDTO.getBasketID()).get();
 

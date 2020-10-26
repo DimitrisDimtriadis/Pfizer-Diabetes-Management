@@ -14,7 +14,6 @@ public class ProductResourceImpl extends ServerResource implements ProductResour
 
     @Override
     public void removeProduct() throws NotFoundException {
-
     }
 
     @Override

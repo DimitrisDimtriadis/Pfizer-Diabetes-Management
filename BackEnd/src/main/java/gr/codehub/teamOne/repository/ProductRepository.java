@@ -20,4 +20,5 @@ public class ProductRepository extends Repository<Product, Long> {
     public String getEntityClassName() {
         return Product.class.getName();
     }
+
 }

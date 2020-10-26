@@ -15,5 +15,6 @@ public interface ProductListResource {
 
     @Get("json")
     public List<ProductDTO> getProducts() throws NotFoundException;
+
 }
 

@@ -8,6 +8,7 @@ import java.util.Date;
 
 @Data
 public class CustomerDTO {
+
     private String name;
     private String address;
     private Date dob;
@@ -29,7 +30,7 @@ public class CustomerDTO {
         customerDTO.setName(customer.getName());
         customerDTO.setDob(customer.getDob());
         customerDTO.setCategory(customer.getCategory());
-        customerDTO.setUri("http://localhost:9000/sacchon/customer/"+customer.getId());
+        customerDTO.setUri("http://localhost:9000/sacchon/customer/" + customer.getId());
         return customerDTO;
     }
 }

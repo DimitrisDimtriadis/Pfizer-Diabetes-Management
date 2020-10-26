@@ -13,7 +13,7 @@ public class BasketDTO {
     private Long basketID;
     private String uri;
 
-    static public Basket getBasket(BasketDTO basketDTO){
+    static public Basket getBasket(BasketDTO basketDTO) {
 
         Basket basket = new Basket();
 
@@ -21,13 +21,13 @@ public class BasketDTO {
         return basket;
     }
 
-    static public BasketDTO getBasketDTO(Basket basket){
+    static public BasketDTO getBasketDTO(Basket basket) {
 
         BasketDTO basketDTO = new BasketDTO();
         basketDTO.setCreationDate(basket.getCreationDate());
         basketDTO.setBasketID(basket.getId());
 
-        if(basket.getCustomer() != null){
+        if (basket.getCustomer() != null) {
             basketDTO.setCustomerID(basket.getCustomer().getId());
         }
 

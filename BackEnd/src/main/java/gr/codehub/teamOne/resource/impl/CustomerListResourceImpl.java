@@ -23,10 +23,10 @@ public class CustomerListResourceImpl extends ServerResource implements Customer
 
     @Override
     protected void doInit() {
-        try{
+        try {
             em = JpaUtil.getEntityManager();
             customerRepository = new CustomerRepository(em);
-        }catch(Exception ex){
+        } catch (Exception ex) {
             throw new ResourceException(ex);
         }
     }
@@ -40,12 +40,12 @@ public class CustomerListResourceImpl extends ServerResource implements Customer
     public CustomerDTO add(CustomerDTO customerIn) throws BadEntityException, ResourceException {
 
         ResourceUtils.checkRole(this, GeneralFunctions.rolesWithAccess(true, false, true));
-        if(customerIn == null) throw new BadEntityException("Null customer representation error");
-        if(customerIn.getName().equals("admin")) throw new BadEntityException("Invalid customer name error");
+        if (customerIn == null) throw new BadEntityException("Null customer representation error");
+        if (customerIn.getName().equals("admin")) throw new BadEntityException("Invalid customer name error");
 
         Customer customer = CustomerDTO.getCustomer(customerIn);
         customerRepository.save(customer);
-        return  CustomerDTO.getCustomerDTO(customer);
+        return CustomerDTO.getCustomerDTO(customer);
     }
 
     @Override
@@ -57,16 +57,16 @@ public class CustomerListResourceImpl extends ServerResource implements Customer
         try {
             String address = getQueryValue("address");
 
-            if(address == null || address.equals("")) throw new Exception();
+            if (address == null || address.equals("")) throw new Exception();
 
             customers = customerRepository.findByAddress(address);
 
-        }catch(Exception e){
-            customers= customerRepository.findAll();
+        } catch (Exception e) {
+            customers = customerRepository.findAll();
         }
 
         List<CustomerDTO> customerDTOList = new ArrayList<>();
-        customers.forEach( customer -> customerDTOList.add(CustomerDTO.getCustomerDTO(customer)));
+        customers.forEach(customer -> customerDTOList.add(CustomerDTO.getCustomerDTO(customer)));
 
         return customerDTOList;
     }

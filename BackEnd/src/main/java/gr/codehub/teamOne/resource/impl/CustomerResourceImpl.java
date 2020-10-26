@@ -29,7 +29,7 @@ public class CustomerResourceImpl extends ServerResource implements CustomerReso
             em = JpaUtil.getEntityManager();
             customerRepository = new CustomerRepository(em);
             id = Long.parseLong(getAttribute("id"));
-        } catch(Exception e){
+        } catch (Exception e) {
             throw new ResourceException(e);
         }
     }

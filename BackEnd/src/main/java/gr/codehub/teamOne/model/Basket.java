@@ -14,6 +14,7 @@ import java.util.List;
 @NoArgsConstructor
 @Entity
 public class Basket {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;

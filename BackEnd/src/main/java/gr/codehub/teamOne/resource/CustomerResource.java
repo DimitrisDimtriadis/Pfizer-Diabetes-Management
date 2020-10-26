@@ -17,4 +17,5 @@ public interface CustomerResource {
 
     @Put("json")
     public CustomerDTO update(CustomerDTO customerDTO) throws NotFoundException, BadEntityException;
+
 }

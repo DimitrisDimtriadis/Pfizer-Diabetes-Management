@@ -21,4 +21,5 @@ public interface BasketResource {
 
     @Patch("json")
     public BasketDTO assignCustomer(BasketDTO basketDTO) throws NotFoundException, BadEntityException;
+
 }

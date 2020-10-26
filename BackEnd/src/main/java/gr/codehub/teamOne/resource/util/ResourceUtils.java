@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 public class ResourceUtils {
+
     public static void checkRole(ServerResource serverResource, List<String> roles) throws ResourceException {
 
         AtomicBoolean hasAuthentication = new AtomicBoolean(false);

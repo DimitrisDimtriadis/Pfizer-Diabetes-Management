@@ -20,4 +20,5 @@ public class BasketRepository extends Repository<Basket, Long> {
     public String getEntityClassName() {
         return Basket.class.getName();
     }
+
 }

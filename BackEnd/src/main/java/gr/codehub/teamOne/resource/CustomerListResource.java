@@ -15,4 +15,5 @@ public interface CustomerListResource {
 
     @Get("json")
     public List<CustomerDTO> getCustomers() throws NotFoundException;
+
 }

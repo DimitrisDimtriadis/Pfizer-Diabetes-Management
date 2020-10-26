@@ -27,7 +27,7 @@ public class CustomerRepository extends Repository<Customer, Long> {
     }
 
     //JBQL
-    public List<Customer> findByAddress(String address){
+    public List<Customer> findByAddress(String address) {
         List<Customer> cs = entityManager.createQuery("from Customer c WHERE c.address = :address ")
                 .setParameter("address", address)
                 .getResultList();

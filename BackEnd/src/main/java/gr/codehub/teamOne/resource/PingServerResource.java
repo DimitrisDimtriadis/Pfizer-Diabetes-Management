@@ -11,5 +11,7 @@ public class PingServerResource extends ServerResource {
      * @return Default text to show that server works
      */
     @Get("txt")
-    public String ping() { return PING; }
+    public String ping() {
+        return PING;
+    }
 }
