@@ -5,8 +5,10 @@ import gr.codehub.teamOne.exceptions.NotFoundException;
 import gr.codehub.teamOne.model.Users;
 import gr.codehub.teamOne.repository.UserRepository;
 import gr.codehub.teamOne.repository.util.JpaUtil;
+import gr.codehub.teamOne.representation.LoginCredentialDTO;
 import gr.codehub.teamOne.representation.UsersDTO;
-import gr.codehub.teamOne.resource.UsersResource;
+import gr.codehub.teamOne.resource.LoginRegisterResource;
+import gr.codehub.teamOne.security.AccessRole;
 import org.restlet.resource.ResourceException;
 import org.restlet.resource.ServerResource;
 
@@ -14,7 +16,7 @@ import javax.persistence.EntityManager;
 import java.util.ArrayList;
 import java.util.List;
 
-public class UsersResourceImpl extends ServerResource implements UsersResource {
+public class LoginRegisterResourceImpl extends ServerResource implements LoginRegisterResource {
 
     private UserRepository userRepository;
     private EntityManager em;
@@ -47,11 +49,24 @@ public class UsersResourceImpl extends ServerResource implements UsersResource {
     }
 
     @Override
+    public AccessRole verifyUser(LoginCredentialDTO loginCredentialDTO) throws NotFoundException, BadEntityException {
+
+//        if(loginCredentialDTO == null) throw new BadEntityException("Null userException error");
+//        if(userRepository.checkIfAccountExist(loginCredentialDTO)) throw new BadEntityException("Found entry with the same AMKA or email");
+//
+//        Users users = UsersDTO.getUsers(usersDTO);
+//        userRepository.save(users);
+//        return UsersDTO.getUsersDTO(users);
+        return null;
+    }
+
+    @Override
     public UsersDTO addUser(UsersDTO usersDTO) throws NotFoundException, BadEntityException {
 
         //ResourceUtils.checkRole(this, GeneralFunctions.rolesWithAccess(false, true, true));
-        //TODO: Add check for user existance
         if(usersDTO == null) throw new BadEntityException("Null userException error");
+        if(userRepository.checkIfAccountExist(usersDTO)) throw new BadEntityException("Found entry with the same AMKA or email");
+
         Users users = UsersDTO.getUsers(usersDTO);
         userRepository.save(users);
         return UsersDTO.getUsersDTO(users);
