@@ -11,7 +11,7 @@ public class UsersDTO {
     private String last_name;
     private String password;
     private AccessRole accountType;
-    private long AMKA;
+    private Integer amka;
     private String uri;
 
 
@@ -20,6 +20,7 @@ public class UsersDTO {
         users.setAccountType(usersDTO.getAccountType());
         users.setFirst_name(usersDTO.getFirst_name());
         users.setLast_name(usersDTO.getLast_name());
+        users.setAmka(usersDTO.getAmka());
         users.setPassword(usersDTO.getPassword());
         return users;
     }
@@ -29,6 +30,7 @@ public class UsersDTO {
         usersDTO.setAccountType(users.getAccountType());
         usersDTO.setFirst_name(users.getFirst_name());
         usersDTO.setLast_name(users.getLast_name());
+        usersDTO.setAmka(users.getAmka());
         usersDTO.setPassword(users.getPassword());
         usersDTO.setUri("Id of object " + users.getId());
 

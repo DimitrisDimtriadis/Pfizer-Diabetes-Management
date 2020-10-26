@@ -29,7 +29,7 @@ public class Users {
     private String phone_number;
     private AccessRole accountType;
 
-    private long AMKA;
+    private Integer amka;
 
     private Gender gender;
     private Date registration_date;
