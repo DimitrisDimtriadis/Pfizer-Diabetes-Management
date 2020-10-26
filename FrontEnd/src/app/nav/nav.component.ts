@@ -17,6 +17,9 @@ export class NavComponent implements OnInit {
   LoginNavClick() {
     this._router.navigate(['/login'])
   }
+  PatientLogin() {
+    this._router.navigate(['/patient'])
+  }
 
   ngOnInit(): void {
   }

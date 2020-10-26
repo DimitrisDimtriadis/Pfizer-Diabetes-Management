@@ -1,0 +1,44 @@
+<div id="bg" style="width:100%;">
+<div class="container py-5 mt-5">
+    <div id="bg" style="width:100%;" class="card medi-card">
+      <div class="card-body">
+      <form [formGroup]="insertform">
+          <div class="form-group">
+            <h2 class="title">Add your medical data.</h2>
+          </div>
+    
+
+          <div class="form-group">
+            <label>Carbs (grams)</label>
+            <input type="number" class="form-control" formControlName="carb"
+            [ngClass]="{ 'is-invalid': submitted && f.carb.errors }" >
+            <div *ngIf="submitted && f.carb.errors" class="invalid-feedback">
+              <div *ngIf="f.carb.errors.required">Carb is required</div>
+          </div>
+          </div>
+          
+          <div class="form-group">
+              <label>Glucose ( mg/dL) </label>
+              <input type="number"class="form-control" formControlName="glucose"
+              [ngClass]="{ 'is-invalid': submitted && f.glucose.errors }" >
+              <div *ngIf="submitted && f.glucose.errors" class="invalid-feedback">
+                <div *ngIf="f.glucose.errors.required">Carb is required</div>
+            </div>
+          </div>
+          
+          <div class="form-group">
+              <label>Measured Date </label>
+              <input  type="date" class="form-control"  formControlName="measuredDate"
+              [ngClass]="{ 'is-invalid': submitted && f.measuredDate.errors }"/>
+              <div *ngIf="submitted && f.measuredDate.errors" class="invalid-feedback">
+              </div>
+          </div>
+          <div class="form-group">
+            <button type="submit" class="btn btn-primary" (click)="InsertDataSumbit()">Submit</button>
+            <a href="/patient" type="button" >Back</a>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div> 
+</div>

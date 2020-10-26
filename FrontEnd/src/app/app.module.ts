@@ -22,6 +22,9 @@ import { DoctorViewPComponent } from './doctor/doctor-view-p/doctor-view-p.compo
 import { DoctorConsultPComponent } from './doctor/doctor-consult-p/doctor-consult-p.component';
 import { AdminConsultWaitComponent } from './admin/admin-consult-wait/admin-consult-wait.component';
 import { AdminNoActivityComponent } from './admin/admin-no-activity/admin-no-activity.component';
+import { LogoutComponent } from './logout/logout.component';
+import { FooterComponent } from './footer/footer.component';
+import { PatientModule } from './patient/patient.module';
 
 
 
@@ -37,7 +40,6 @@ import { AdminNoActivityComponent } from './admin/admin-no-activity/admin-no-act
     HomeComponent,
     LoginComponent,
     RegisterComponent,
-    PatientComponent,
     DoctorComponent,
     AdminComponent,
 	  NavComponent,
@@ -46,7 +48,9 @@ import { AdminNoActivityComponent } from './admin/admin-no-activity/admin-no-act
 	  DoctorViewPComponent,
 	  DoctorConsultPComponent,
 	  AdminConsultWaitComponent,
-	  AdminNoActivityComponent,
+    AdminNoActivityComponent,
+    LogoutComponent,
+    FooterComponent,
 	  
  
   
@@ -59,6 +63,7 @@ import { AdminNoActivityComponent } from './admin/admin-no-activity/admin-no-act
     ReactiveFormsModule,
     HttpClientModule,
     FormsModule,
+    PatientModule
    
     
     ],

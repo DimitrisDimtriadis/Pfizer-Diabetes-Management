@@ -12,6 +12,7 @@ import { DoctorViewPComponent } from './doctor/doctor-view-p/doctor-view-p.compo
 import { DoctorConsultPComponent } from './doctor/doctor-consult-p/doctor-consult-p.component';
 import { AdminConsultWaitComponent } from './admin/admin-consult-wait/admin-consult-wait.component';
 import { AdminNoActivityComponent } from './admin/admin-no-activity/admin-no-activity.component';
+import { LogoutComponent } from './logout/logout.component';
 
 
 
@@ -30,6 +31,7 @@ const routes: Routes =
 {path: 'doctorConsultP', component: DoctorConsultPComponent},
 {path: 'adminConW', component: AdminConsultWaitComponent},
 {path: 'adminNoA', component: AdminNoActivityComponent},
+{ path: 'logout', component: LogoutComponent},
 ];
 
 @NgModule({
