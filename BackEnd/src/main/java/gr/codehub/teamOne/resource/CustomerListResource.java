@@ -9,6 +9,7 @@ import org.restlet.resource.Post;
 import java.util.List;
 
 public interface CustomerListResource {
+
     @Post("json")
     public CustomerDTO add(CustomerDTO customerIn) throws BadEntityException;
 

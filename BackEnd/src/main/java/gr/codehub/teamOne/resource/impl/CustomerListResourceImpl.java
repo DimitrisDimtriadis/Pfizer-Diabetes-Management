@@ -1,5 +1,6 @@
 package gr.codehub.teamOne.resource.impl;
 
+import gr.codehub.teamOne.Utilities.GeneralFunctions;
 import gr.codehub.teamOne.exceptions.BadEntityException;
 import gr.codehub.teamOne.exceptions.NotFoundException;
 import gr.codehub.teamOne.model.Customer;
@@ -8,7 +9,6 @@ import gr.codehub.teamOne.repository.util.JpaUtil;
 import gr.codehub.teamOne.representation.CustomerDTO;
 import gr.codehub.teamOne.resource.CustomerListResource;
 import gr.codehub.teamOne.resource.util.ResourceUtils;
-import gr.codehub.teamOne.security.AccessRole;
 import org.restlet.resource.ResourceException;
 import org.restlet.resource.ServerResource;
 
@@ -39,7 +39,7 @@ public class CustomerListResourceImpl extends ServerResource implements Customer
     @Override
     public CustomerDTO add(CustomerDTO customerIn) throws BadEntityException, ResourceException {
 
-        ResourceUtils.checkRole(this, AccessRole.ROLE_USER.getRoleName());
+        ResourceUtils.checkRole(this, GeneralFunctions.rolesWithAccess(true, false, true));
         if(customerIn == null) throw new BadEntityException("Null customer representation error");
         if(customerIn.getName().equals("admin")) throw new BadEntityException("Invalid customer name error");
 
@@ -50,13 +50,24 @@ public class CustomerListResourceImpl extends ServerResource implements Customer
 
     @Override
     public List<CustomerDTO> getCustomers() throws NotFoundException {
-        ResourceUtils.checkRole(this, AccessRole.ROLE_USER.getRoleName());
-        List<Customer> customers= customerRepository.findAll();
 
-        List<CustomerDTO> customerRepresentationList = new ArrayList<>();
+        List<Customer> customers;
+        ResourceUtils.checkRole(this, GeneralFunctions.rolesWithAccess(false, false, true));
 
-        customers.forEach( customer -> customerRepresentationList.add(CustomerDTO.getCustomerDTO(customer)));
+        try {
+            String address = getQueryValue("address");
 
-        return customerRepresentationList;
+            if(address == null || address.equals("")) throw new Exception();
+
+            customers = customerRepository.findByAddress(address);
+
+        }catch(Exception e){
+            customers= customerRepository.findAll();
+        }
+
+        List<CustomerDTO> customerDTOList = new ArrayList<>();
+        customers.forEach( customer -> customerDTOList.add(CustomerDTO.getCustomerDTO(customer)));
+
+        return customerDTOList;
     }
 }

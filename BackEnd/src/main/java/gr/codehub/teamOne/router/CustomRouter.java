@@ -23,6 +23,7 @@ public class CustomRouter {
         router.attach("/product", ProductListResourceImpl.class);
 
         router.attach("/basket", BasketResourceImpl.class);
+        router.attach("/basket/{id}", BasketResourceImpl.class);
         return router;
     }
 

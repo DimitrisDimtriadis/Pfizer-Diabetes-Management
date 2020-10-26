@@ -28,7 +28,7 @@ public abstract class Repository<T, K> implements IRepository<T, K> {
 
     @Override
     public List<T> findAll() {
-        TypedQuery<T> query = entityManager.createQuery("from" + getEntityClassName(), getEntityClass());
+        TypedQuery<T> query = entityManager.createQuery("from " + getEntityClassName(), getEntityClass());
         return query.getResultList();
     }
 

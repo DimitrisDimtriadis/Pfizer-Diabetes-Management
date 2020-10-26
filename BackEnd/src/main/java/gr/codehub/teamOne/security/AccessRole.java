@@ -2,7 +2,7 @@ package gr.codehub.teamOne.security;
 
 public enum AccessRole {
     ROLE_NA("n/a"),
-    ROLE_ADMIN("Admin"),
+    ROLE_ADMIN("admin"),
     ROLE_OWNER("owner"),
     ROLE_USER("user");
 

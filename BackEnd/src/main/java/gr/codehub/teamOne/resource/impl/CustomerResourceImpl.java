@@ -1,5 +1,6 @@
 package gr.codehub.teamOne.resource.impl;
 
+import gr.codehub.teamOne.Utilities.GeneralFunctions;
 import gr.codehub.teamOne.exceptions.BadEntityException;
 import gr.codehub.teamOne.exceptions.NotFoundException;
 import gr.codehub.teamOne.model.Customer;
@@ -41,7 +42,7 @@ public class CustomerResourceImpl extends ServerResource implements CustomerReso
     @Override
     public CustomerDTO getCustomer() throws NotFoundException, ResourceException {
 
-        ResourceUtils.checkRole(this, AccessRole.ROLE_USER.getRoleName());
+        ResourceUtils.checkRole(this, GeneralFunctions.rolesWithAccess(true, false, true));
 
         Optional<Customer> customer = customerRepository.findById(id);
         setExisting(customer.isPresent());
@@ -51,7 +52,8 @@ public class CustomerResourceImpl extends ServerResource implements CustomerReso
 
     @Override
     public void remove() throws NotFoundException {
-        ResourceUtils.checkRole(this, AccessRole.ROLE_ADMIN.getRoleName());
+
+        ResourceUtils.checkRole(this, GeneralFunctions.rolesWithAccess(false, false, true));
         customerRepository.deletedById(id);
     }
 

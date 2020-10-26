@@ -74,7 +74,7 @@ public class RestApplication extends Application {
 
         try {
             c.start();
-            LOGGER.info("Sample Web API started");
+            LOGGER.info("Sacchon Web API started !");
             LOGGER.info("URL: http://localhost:9000/sacchon/customer/1");
 
         } catch (Exception e){
