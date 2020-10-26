@@ -20,6 +20,8 @@ import { DoctorAccComponent } from './doctor/doctor-acc/doctor-acc.component';
 import { DoctorAddPComponent } from './doctor/doctor-add-p/doctor-add-p.component';
 import { DoctorViewPComponent } from './doctor/doctor-view-p/doctor-view-p.component';
 import { DoctorConsultPComponent } from './doctor/doctor-consult-p/doctor-consult-p.component';
+import { AdminConsultWaitComponent } from './admin/admin-consult-wait/admin-consult-wait.component';
+import { AdminNoActivityComponent } from './admin/admin-no-activity/admin-no-activity.component';
 
 
 
@@ -43,6 +45,8 @@ import { DoctorConsultPComponent } from './doctor/doctor-consult-p/doctor-consul
 	  DoctorAddPComponent,
 	  DoctorViewPComponent,
 	  DoctorConsultPComponent,
+	  AdminConsultWaitComponent,
+	  AdminNoActivityComponent,
 	  
  
   

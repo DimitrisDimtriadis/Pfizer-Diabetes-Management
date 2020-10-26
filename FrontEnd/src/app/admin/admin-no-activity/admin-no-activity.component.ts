@@ -1,18 +1,17 @@
 import { Component, OnInit } from '@angular/core';
-
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MustMatch } from 'src/app/_helpers/must-match.validator';
 import { FormBuilder, FormControl, FormGroup ,Validators } from '@angular/forms';
 
 @Component({
-  selector: 'app-admin',
-  templateUrl: './admin.component.html',
-  styleUrls: ['./admin.component.scss']
+  selector: 'app-admin-no-activity',
+  templateUrl: './admin-no-activity.component.html',
+  styleUrls: ['./admin-no-activity.component.scss']
 })
-export class AdminComponent implements OnInit {
+export class AdminNoActivityComponent implements OnInit {
 
-    userForm:FormGroup;
+  userForm:FormGroup;
     submitted = false;
   
     constructor(private formBuilder: FormBuilder) { }

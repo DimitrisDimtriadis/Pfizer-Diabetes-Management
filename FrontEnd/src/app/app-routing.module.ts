@@ -10,6 +10,8 @@ import { DoctorAccComponent } from './doctor/doctor-acc/doctor-acc.component';
 import { DoctorAddPComponent } from './doctor/doctor-add-p/doctor-add-p.component';
 import { DoctorViewPComponent } from './doctor/doctor-view-p/doctor-view-p.component';
 import { DoctorConsultPComponent } from './doctor/doctor-consult-p/doctor-consult-p.component';
+import { AdminConsultWaitComponent } from './admin/admin-consult-wait/admin-consult-wait.component';
+import { AdminNoActivityComponent } from './admin/admin-no-activity/admin-no-activity.component';
 
 
 
@@ -26,6 +28,8 @@ const routes: Routes =
 {path: 'doctorAddP', component: DoctorAddPComponent},
 {path: 'doctorViewP', component: DoctorViewPComponent},
 {path: 'doctorConsultP', component: DoctorConsultPComponent},
+{path: 'adminConW', component: AdminConsultWaitComponent},
+{path: 'adminNoA', component: AdminNoActivityComponent},
 ];
 
 @NgModule({
