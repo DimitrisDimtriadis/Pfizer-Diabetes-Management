@@ -3,7 +3,7 @@ package gr.codehub.teamOne.representation;
 import lombok.Data;
 
 @Data
-public class DoctorRepresentation {
+public class DoctorDTO {
 
     private String name;
     private String email;

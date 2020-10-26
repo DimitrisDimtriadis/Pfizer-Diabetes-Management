@@ -25,11 +25,11 @@ public class Measurements {
     private long carbIntake;
     private Date measurementDate;
 
-    @ManyToOne
-    private Patients patients;
+//    @ManyToOne
+//    private Patients patients;
 
-    @OneToMany
-    private List<PatientMeasuraments> patientMeasurements = new ArrayList<>();
+//    @OneToMany
+//    private List<PatientMeasurements> patientMeasurements = new ArrayList<>();
 
 
 }
