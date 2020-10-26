@@ -1,0 +1,28 @@
+package gr.codehub.teamOne.security;
+
+public enum AccessRole {
+
+    ROLE_NA("n/a"),
+    ROLE_ADMIN("admin"),
+    ROLE_DOCTOR("doctor"),
+    ROLE_PATIENT("patient");
+
+    private final String roleName;
+
+    AccessRole(String roleName) {
+        this.roleName = roleName;
+    }
+
+    public String getRoleName() {
+        return roleName;
+    }
+
+    public static AccessRole getRoleValue(String roleParameter) {
+        for (AccessRole accessRole : AccessRole.values()) {
+            if (roleParameter.equals(accessRole.getRoleName())) {
+                return accessRole;
+            }
+        }
+        return ROLE_NA;
+    }
+}
