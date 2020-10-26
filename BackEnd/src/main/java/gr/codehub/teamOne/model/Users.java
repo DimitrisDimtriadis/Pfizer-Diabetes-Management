@@ -17,6 +17,7 @@ import java.util.Date;
 @NoArgsConstructor
 @Entity
 public class Users {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
@@ -27,7 +28,9 @@ public class Users {
     private String password;
     private String phone_number;
     private AccessRole accountType;
+
     private long AMKA;
+
     private Gender gender;
     private Date registration_date;
 }

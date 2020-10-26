@@ -1,17 +1,10 @@
 package gr.codehub.teamOne.resource;
 
+import gr.codehub.teamOne.exceptions.NotFoundException;
 import org.restlet.resource.Get;
-import org.restlet.resource.ServerResource;
 
-public class PingServerResource extends ServerResource {
+public interface PingServerResource {
 
-    public static final String PING = "Sacchon Web API v1.0 running";
-
-    /**
-     * @return Default text to show that server works
-     */
     @Get("txt")
-    public String ping() {
-        return PING;
-    }
+    public String ping() throws NotFoundException;
 }

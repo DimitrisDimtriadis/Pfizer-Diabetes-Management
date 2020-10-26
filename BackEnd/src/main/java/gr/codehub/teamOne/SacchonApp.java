@@ -33,14 +33,11 @@ public class SacchonApp extends Application {
         PatientRouter patientRouter = new PatientRouter(this);
         Shield shield = new Shield(this);
 
-        Router publicRouter = patientRouter.publicResources();
         ChallengeAuthenticator apiGuard = shield.createApiGuard();
 
         // Create the api router, protected by a guard
         Router apiRouter = patientRouter.createApiRouter();
         apiGuard.setNext(apiRouter);
-
-        publicRouter.attachDefault(apiGuard);
 
         CustomCorsFilter corsFilter = new CustomCorsFilter(this);
         return corsFilter.createCorsFilter(apiRouter);
@@ -64,6 +61,7 @@ public class SacchonApp extends Application {
 
     //All about Rest Service
     private static void startRestService() {
+
         LOGGER.info("Contacts application starting...");
 
         // Attach application to http://localhost:9000/sacchon

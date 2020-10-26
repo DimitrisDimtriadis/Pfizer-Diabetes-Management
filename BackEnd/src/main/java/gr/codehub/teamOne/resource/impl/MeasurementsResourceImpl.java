@@ -8,6 +8,7 @@ import gr.codehub.teamOne.resource.MeasurementsResource;
 import org.restlet.resource.ServerResource;
 
 public class MeasurementsResourceImpl extends ServerResource implements MeasurementsResource {
+
     @Override
     public MeasurementDTO getBasket() throws NotFoundException {
         return null;
