@@ -4,7 +4,7 @@
             <div id="c" class="col-md-6 offset-md-3"> 
                 <h3 style="text-align: center;">Register</h3>
                 
-                <form [formGroup]="userForm" (ngSubmit)="onSubmit()">
+                <form [formGroup]="userForm" >
                     <div class="row">
                     <div class="form-group col-md-6">
                         <label>First Name*</label>
@@ -25,11 +25,11 @@
                     </div>
 
                     <div class="form-group col-md-6">
-                        <label>Username*</label>
-                        <input type="text" formControlName="userName" class="form-control" 
-                        [ngClass]="{ 'is-invalid': submitted && f.userName.errors }" />
-                        <div *ngIf="submitted && f.userName.errors" class="invalid-feedback">
-                            <div *ngIf="f.userName.errors.required">Username is required</div>
+                        <label>Andress*</label>
+                        <input type="text" formControlName="address" class="form-control" 
+                        [ngClass]="{ 'is-invalid': submitted && f.address.errors }" />
+                        <div *ngIf="submitted && f.address.errors" class="invalid-feedback">
+                            <div *ngIf="f.address.errors.required">Address is required</div>
                         </div>
                     </div>
 
@@ -38,6 +38,7 @@
                         <input type="text" formControlName="email" class="form-control" 
                         [ngClass]="{ 'is-invalid': submitted && f.email.errors }" />
                         <div *ngIf="submitted && f.email.errors" class="invalid-feedback">
+                            <div *ngIf="f.email.errors.pattern">Email pattern is required</div>
                             <div *ngIf="f.email.errors.required">Email is required</div>
                             <div *ngIf="f.email.errors.email">Email must be a valid email address</div>
                         </div>
@@ -80,9 +81,8 @@
                         [ngClass]="{ 'is-invalid': submitted && f.gender.errors }">
                         <div *ngIf="submitted && f.gender.errors" class="invalid-feedback">
                         </div>    
-                           <option>Male</option>    
-                           <option>Female</option>    
-                           <option>-</option> 
+                        <option [value]="gender" *ngFor="let gender of genders">
+                            {{gender}}</option>  
                         </select>    
                     </div> 
 
@@ -92,8 +92,8 @@
                         [ngClass]="{ 'is-invalid': submitted && f.typeAccount.errors }">
                         <div *ngIf="submitted && f.typeAccount.errors" class="invalid-feedback">
                         </div>    
-                           <option>Doctor</option>    
-                           <option>Patient</option>    
+                           <option [value]="role" *ngFor="let role of roles">
+                               {{role}}</option>    
                         </select>    
                     </div>  
                     
@@ -130,7 +130,7 @@
                 
                     <div class="col-md-6 offset-md-4">
                     <div class="form-group">
-                        <button type="submit" class="btn btn-primary">Register</button>
+                        <button type="submit" (click)="RegisterSumbit()" class="btn btn-primary">Register</button>
                         <a href="/" type="button" >Back</a> 
                     </div>
                 </div>

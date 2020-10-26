@@ -9,13 +9,14 @@ import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NavComponent } from './nav/nav.component';
-import { PatientComponent } from './patient/patient.component';
-import { AdminComponent } from './admin/admin.component';
-import { DoctorComponent } from './doctor/doctor.component';
-import { PatientService } from './services/patient.service';
-import { DoctorService } from './services/doctor.service';
 import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { LogoutComponent } from './logout/logout.component';
+import { FooterComponent } from './footer/footer.component';
+import { PatientModule } from './patient/patient.module';
+
+
+
 
 
 @NgModule({
@@ -25,9 +26,9 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     LoginComponent,
     RegisterComponent,
     NavComponent,
-    PatientComponent,
-    DoctorComponent,
-    AdminComponent
+    LogoutComponent,
+    FooterComponent,
+  
  
   ],
 
@@ -37,11 +38,12 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     AppRoutingModule,
     ReactiveFormsModule,
     HttpClientModule,
-    FormsModule
+    FormsModule,
+    PatientModule
     
     ],
 
-  providers: [PatientService,DoctorService],
+  providers: [],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
