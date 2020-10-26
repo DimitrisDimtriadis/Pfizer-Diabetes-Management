@@ -17,32 +17,16 @@ public class Patients {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long amka;
+    private long AMKA;
 
     private String name;
-
     private String email;
-
     private String address;
-
     private Date dob;
-
     private Gender gender;
-
 
     @OneToMany
     private List<Measurements> measurements = new ArrayList<>();
-
     @ManyToOne
     private Doctors doctors;
-
-
-
-
-
-
-
-
-
-
 }

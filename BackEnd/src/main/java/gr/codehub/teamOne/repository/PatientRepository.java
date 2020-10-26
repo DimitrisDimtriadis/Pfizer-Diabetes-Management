@@ -6,7 +6,7 @@ import gr.codehub.teamOne.repository.lib.Repository;
 
 import javax.persistence.EntityManager;
 
-public class PatientRepository extends Repository implements IRepository {
+public class PatientRepository extends Repository<Patients, Long> {
     public PatientRepository(EntityManager entityManager) {
         super(entityManager);
     }
@@ -22,7 +22,7 @@ public class PatientRepository extends Repository implements IRepository {
     }
 
     @Override
-    public boolean deleteById(long id) {
+    public boolean deleteById(Long id) {
         return false;
     }
 }

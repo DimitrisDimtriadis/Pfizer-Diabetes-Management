@@ -13,16 +13,16 @@ import org.restlet.util.Series;
 import java.util.Collections;
 import java.util.HashSet;
 
-public class  CustomCorsFilter {
+public class CustomCorsFilter {
 
     private Application application;
 
-    public CustomCorsFilter(Application application){
+    public CustomCorsFilter(Application application) {
         this.application = application;
     }
 
-    public Filter createCorsFilter(Restlet next){
-        Filter filter = new Filter(application.getContext(), next){
+    public Filter createCorsFilter(Restlet next) {
+        Filter filter = new Filter(application.getContext(), next) {
 
             @Override
             protected int beforeHandle(Request request, Response response) {
@@ -35,7 +35,7 @@ public class  CustomCorsFilter {
 
                 Series<Header> requestHeaders = (Series<Header>) request.getAttributes().get(HeaderConstants.ATTRIBUTE_HEADERS);
                 String requestOrigin = requestHeaders.getFirstValue("Origin", false, "*");
-                String rh = requestHeaders.getFirstValue( "Access-Control-Request-Headers", false, "*");
+                String rh = requestHeaders.getFirstValue("Access-Control-Request-Headers", false, "*");
 
                 response.setAccessControlAllowCredentials(true);
                 response.setAccessControlAllowOrigin(requestOrigin);
@@ -48,10 +48,9 @@ public class  CustomCorsFilter {
                 methodHashSet.add(Method.DELETE);
 
                 response.setAccessControlAllowMethods(methodHashSet);
-                response.getAttributes().put(HeaderConstants.ATTRIBUTE_HEADERS,  responseHeaders);
+                response.getAttributes().put(HeaderConstants.ATTRIBUTE_HEADERS, responseHeaders);
 
                 // Handle HTTP methods
-
                 if (Method.OPTIONS.equals(request.getMethod())) {
                     return Filter.STOP;
                 }

@@ -14,27 +14,22 @@ import java.util.List;
 @NoArgsConstructor
 @Entity
 public class Measurements {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
     //blood glucose level (date, time, measured in mg/dL)
-    private long bloodGlycoseLevel;
-
+    private long bloodGlucoseLevel;
     //carb intake (measured in grams)
     private long carbIntake;
-
-    private Date measurmentDate;
+    private Date measurementDate;
 
     @ManyToOne
     private Patients patients;
 
-
     @OneToMany
-    private List<PatientMeasuraments> patientMeasuraments=new ArrayList<>();
-
-
-
+    private List<PatientMeasuraments> patientMeasurements = new ArrayList<>();
 
 
 }

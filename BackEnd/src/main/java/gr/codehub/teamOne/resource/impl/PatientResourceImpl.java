@@ -8,6 +8,7 @@ import gr.codehub.teamOne.resource.PatientResource;
 import org.restlet.resource.ServerResource;
 
 public class PatientResourceImpl extends ServerResource implements PatientResource {
+
     @Override
     public PatientRepresentation getPatients() throws NotFoundException {
         return null;
@@ -15,7 +16,6 @@ public class PatientResourceImpl extends ServerResource implements PatientResour
 
     @Override
     public void remove() throws NotFoundException {
-
     }
 
     @Override

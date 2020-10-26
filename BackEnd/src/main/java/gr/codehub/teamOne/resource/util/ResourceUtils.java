@@ -1,4 +1,4 @@
-package gr.codehub.teamOne.resource.utill;
+package gr.codehub.teamOne.resource.util;
 
 import org.restlet.data.Status;
 import org.restlet.resource.ResourceException;
@@ -9,10 +9,10 @@ import java.util.concurrent.atomic.AtomicBoolean;
 
 public class ResourceUtils {
 
-    public static void checkRole(ServerResource serverResource, List<String> roles)
-            throws ResourceException {
+    public static void checkRole(ServerResource serverResource, List<String> roles) throws ResourceException {
 
         AtomicBoolean hasAuthentication = new AtomicBoolean(false);
+
         roles.forEach(role -> {
             if (serverResource.isInRole(role)) {
                 hasAuthentication.set(true);
@@ -20,9 +20,7 @@ public class ResourceUtils {
         });
 
         if (!hasAuthentication.get()) {
-            throw new ResourceException(
-                    Status.CLIENT_ERROR_FORBIDDEN.getCode(),
-                    "You're not authorized to send this call.");
+            throw new ResourceException(Status.CLIENT_ERROR_FORBIDDEN.getCode(), "You 're not authorize to send this call.");
         }
     }
 }

@@ -9,8 +9,7 @@ public interface IRepository<T, K> {
 
     Optional<T> save(T t);
 
+    List<T> findAll();
 
-
-    boolean deleteById(long id);
-
+    boolean deleteById(K id);
 }

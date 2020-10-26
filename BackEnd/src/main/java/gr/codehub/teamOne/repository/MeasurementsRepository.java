@@ -6,8 +6,8 @@ import gr.codehub.teamOne.repository.lib.Repository;
 
 import javax.persistence.EntityManager;
 
-public class MeasuramentsRepository extends Repository implements IRepository {
-    public MeasuramentsRepository(EntityManager entityManager) {
+public class MeasurementsRepository extends Repository<Measurements, Long> {
+    public MeasurementsRepository(EntityManager entityManager) {
         super(entityManager);
     }
 
@@ -22,7 +22,7 @@ public class MeasuramentsRepository extends Repository implements IRepository {
     }
 
     @Override
-    public boolean deleteById(long id) {
+    public boolean deleteById(Long id) {
         return false;
     }
 }

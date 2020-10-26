@@ -11,15 +11,15 @@ import javax.persistence.*;
 @NoArgsConstructor
 @Entity
 public class PatientMeasuraments {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    private int numberOfMeasuraments;
+    private int numberOfMeasurements;
 
     @ManyToOne
     private Patients patient;
-
     @ManyToOne
     private Measurements measurements;
 
