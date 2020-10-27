@@ -72,7 +72,7 @@ public class SacchonApp extends Application {
         try {
             c.start();
             LOGGER.info("Sacchon Web API started !");
-            LOGGER.info("URL: http://localhost:9000/sacchon/customer/1");
+            LOGGER.info("URL: http://localhost:9000/sacchon/ping");
 
         } catch (Exception e) {
             LOGGER.info("Something went wrong with starting of Rest Service. Error: " + e.getMessage());
