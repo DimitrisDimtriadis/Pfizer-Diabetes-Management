@@ -24,10 +24,10 @@ public class LoginRegisterResourceImpl extends ServerResource implements LoginRe
     @Override
     protected void doInit() throws ResourceException {
 
-        try{
+        try {
             em = JpaUtil.getEntityManager();
             userRepository = new UserRepository(em);
-        }catch(Exception e){
+        } catch (Exception e) {
             throw new ResourceException(e);
         }
     }
@@ -43,29 +43,37 @@ public class LoginRegisterResourceImpl extends ServerResource implements LoginRe
         List<Users> usersList = userRepository.findAll();
 
         List<UsersDTO> usersDTOList = new ArrayList<>();
-        usersList.forEach( users -> usersDTOList.add(UsersDTO.getUsersDTO(users)));
+        usersList.forEach(users -> usersDTOList.add(UsersDTO.getUsersDTO(users)));
 
         return usersDTOList;
     }
 
+    /**
+     * Method to validate user existence in base
+     *
+     * @param loginCredentialDTO Object with login credentials for login
+     * @return AccessRole to notify frontEnd about type of account
+     * @throws NotFoundException When there is no user with this credentials
+     * @throws BadEntityException When input is null
+     */
     @Override
     public AccessRole verifyUser(LoginCredentialDTO loginCredentialDTO) throws NotFoundException, BadEntityException {
 
-//        if(loginCredentialDTO == null) throw new BadEntityException("Null userException error");
-//        if(userRepository.checkIfAccountExist(loginCredentialDTO)) throw new BadEntityException("Found entry with the same AMKA or email");
-//
-//        Users users = UsersDTO.getUsers(usersDTO);
-//        userRepository.save(users);
-//        return UsersDTO.getUsersDTO(users);
-        return null;
+        if (loginCredentialDTO == null) throw new BadEntityException("Null userException error");
+
+        List<LoginCredentialDTO> listWithUsers = userRepository.findUserWithCredential(loginCredentialDTO);
+        if (listWithUsers.size() == 0) throw new NotFoundException("User account not found !");
+
+        return listWithUsers.get(0).getUserRole();
     }
 
     @Override
-    public UsersDTO addUser(UsersDTO usersDTO) throws NotFoundException, BadEntityException {
+    public UsersDTO addUser(UsersDTO usersDTO) throws BadEntityException {
 
         //ResourceUtils.checkRole(this, GeneralFunctions.rolesWithAccess(false, true, true));
-        if(usersDTO == null) throw new BadEntityException("Null userException error");
-        if(userRepository.checkIfAccountExist(usersDTO)) throw new BadEntityException("Found entry with the same AMKA or email");
+        if (usersDTO == null) throw new BadEntityException("Null userException error");
+        if (userRepository.checkIfAccountExist(usersDTO))
+            throw new BadEntityException("Found entry with the same AMKA or email");
 
         Users users = UsersDTO.getUsers(usersDTO);
         userRepository.save(users);
