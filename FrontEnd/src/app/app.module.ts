@@ -25,6 +25,7 @@ import { AdminNoActivityComponent } from './admin/admin-no-activity/admin-no-act
 import { LogoutComponent } from './logout/logout.component';
 import { FooterComponent } from './footer/footer.component';
 import { PatientModule } from './patient/patient.module';
+import { UserService } from './services/user.service';
 
 
 
@@ -68,7 +69,7 @@ import { PatientModule } from './patient/patient.module';
     
     ],
 
-  providers: [PatientService,DoctorService],
+  providers: [PatientService,DoctorService,UserService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -1,7 +1,17 @@
 
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit,Input } from '@angular/core';
 import { MustMatch } from 'src/app/_helpers/must-match.validator';
 import { FormBuilder, FormControl, FormGroup ,Validators } from '@angular/forms';
+
+import {UserService} from '../services/user.service';
+import {UserClass} from '../classes/userClass';
+import { Router } from '@angular/router';
+import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
+
+
+
+
 
 @Component({
   selector: 'codehub-register',
@@ -11,11 +21,15 @@ import { FormBuilder, FormControl, FormGroup ,Validators } from '@angular/forms'
 export class RegisterComponent implements OnInit {
   userForm:FormGroup;
   submitted = false;
+  
+   
 
+  roles = ['ROLE_ADMIN','ROLE_DOCTOR', 'ROLE_PATIENT']
+  genders = ['NA','FEMALE', 'MALE']
+  constructor(private formBuilder: FormBuilder,public userS:UserService) { }
 
-  roles = ['Doctor', 'Patient']
-  genders = ['Female', 'Male','-']
-  constructor(private formBuilder: FormBuilder) { }
+  
+ 
   
   ngOnInit(): void {
     this.userForm= this.formBuilder.group({
@@ -47,6 +61,34 @@ export class RegisterComponent implements OnInit {
       }
 
       alert('SUCCESS!! :-)\n\n' + JSON.stringify(this.userForm.value))
+      this.userS.currentUser.first_name = this.userForm.get('firstName').value;
+      this.userS.currentUser.last_name=this.userForm.get('lastName').value;
+      this.userS.currentUser.address=this.userForm.get('address').value;
+      this.userS.currentUser.email=this.userForm.get('email').value;
+      this.userS.currentUser.mobile_phone_number=this.userForm.get('mobile').value;
+      this.userS.currentUser.phone_number=this.userForm.get('phone').value;
+      //dob?
+      if(this.userForm.get('gender').value=="MALE")
+      {
+        this.userS.currentUser.gender=1;
+      }else if(this.userForm.get('gender').value=="FEMALE")
+       {this.userS.currentUser.gender=2;}
+       else this.userS.currentUser.gender=0;
+
+      if(this.userForm.get('typeAccount').value=="ROLE_DOCTOR")
+      {
+        this.userS.currentUser.accountType=2;
+      }else if(this.userForm.get('typeAccount').value=="ROLE_PATIENT") 
+      {this.userS.currentUser.accountType=3;}
+      else this.userS.currentUser.accountType=1;
+
+
+      this.userS.currentUser.amka=this.userForm.get('amka').value;
+      this.userS.currentUser.password=this.userForm.get('password').value;
+
+        
+      this.userS.registerUser(this.userS.currentUser).subscribe();
+      
   }
 
   numberOnly(event): boolean {
@@ -57,4 +99,8 @@ export class RegisterComponent implements OnInit {
     return true;
 
   }
+
+
+
+ 
 }
