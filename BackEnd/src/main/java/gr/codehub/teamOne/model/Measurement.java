@@ -13,7 +13,7 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 @Entity
-public class Measurements {
+public class Measurement {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -26,10 +26,9 @@ public class Measurements {
     private Date measurementDate;
 
 //    @ManyToOne
-//    private Patients patients;
+//    @Column(nullable = false)
+//    private Users user;
 
 //    @OneToMany
 //    private List<PatientMeasurements> patientMeasurements = new ArrayList<>();
-
-
 }

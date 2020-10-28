@@ -6,24 +6,20 @@ import gr.codehub.teamOne.representation.MeasurementDTO;
 import gr.codehub.teamOne.representation.PatientDTO;
 import org.restlet.resource.*;
 
-public interface MeasurementsResource {
+public interface MeasurementResource {
 
     @Get("json")
-    public MeasurementDTO getBasket() throws NotFoundException;
+    public MeasurementDTO getMeasurementForUser() throws NotFoundException;
 
     @Delete
-    public void removeMeasurements() throws NotFoundException;
+    public void removeMeasurement() throws NotFoundException;
 
     @Put("json")
-    public MeasurementDTO updateMeasurements(PatientDTO patientRepresentation)
+    public MeasurementDTO updateMeasurement(PatientDTO patientRepresentation)
             throws NotFoundException, BadEntityException;
 
     @Post("json")
-    public MeasurementDTO createMeasurements()
-            throws NotFoundException, BadEntityException;
-
-    @Patch("json")
-    public MeasurementDTO assignPatient(MeasurementDTO measurementDTO)
+    public MeasurementDTO createMeasurement()
             throws NotFoundException, BadEntityException;
 }
 

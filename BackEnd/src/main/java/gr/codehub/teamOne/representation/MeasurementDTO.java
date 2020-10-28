@@ -1,6 +1,6 @@
 package gr.codehub.teamOne.representation;
 
-import gr.codehub.teamOne.model.Measurements;
+import gr.codehub.teamOne.model.Measurement;
 import lombok.Data;
 
 import java.util.Date;
@@ -9,27 +9,24 @@ import java.util.Date;
 public class MeasurementDTO {
 
     private Date measurementDate;
-    private long patientAMKA;
-    private long measurementID;
-    private String uri;
 
-    static public Measurements getMeasurements(MeasurementDTO measurementDTO){
+    static public Measurement getMeasurement(MeasurementDTO measurementDTO){
 
-        Measurements measurements = new Measurements();
-        measurements.setMeasurementDate(measurementDTO.getMeasurementDate());
-        return measurements;
+        Measurement measurement = new Measurement();
+        measurement.setMeasurementDate(measurementDTO.getMeasurementDate());
+        return measurement;
     }
 
-    static public MeasurementDTO getMeasurementsRepresentation(Measurements measurements){
+    static public MeasurementDTO getMeasurementsRepresentation(Measurement measurement){
 
         MeasurementDTO measurementDTO = new MeasurementDTO();
-        measurementDTO.setMeasurementDate(measurements.getMeasurementDate());
+        measurementDTO.setMeasurementDate(measurement.getMeasurementDate());
 
-//        if (measurements.getPatients()!=null)
-////            measurementDTO.setPatientAMKA(measurements.getPatients().getAMKA());
-//            measurementDTO.setMeasurementID(measurements.getId());
+//        if (measurement.getPatients()!=null)
+////            measurementDTO.setPatientAMKA(measurement.getPatients().getAMKA());
+//            measurementDTO.setMeasurementID(measurement.getId());
 //
-//           measurementDTO.setUri("http://localhost:9000/measurements/"+measurements.getId());
+//           measurementDTO.setUri("http://localhost:9000/measurements/"+measurement.getId());
            return null;//measurementDTO;
     }
 }

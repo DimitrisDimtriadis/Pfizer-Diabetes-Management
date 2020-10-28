@@ -36,4 +36,6 @@ public class Users {
 
     private Gender gender;
     private Date registration_date;
+
+//    @OneToMany(mappedBy = "")
 }
