@@ -1,8 +1,6 @@
 package gr.codehub.teamOne.router;
 
-import gr.codehub.teamOne.resource.impl.MeasurementResourceImpl;
-import gr.codehub.teamOne.resource.impl.PingServerResourceImpl;
-import gr.codehub.teamOne.resource.impl.LoginRegisterResourceImpl;
+import gr.codehub.teamOne.resource.impl.*;
 import org.restlet.Application;
 import org.restlet.routing.Router;
 
@@ -20,6 +18,8 @@ public class CustomRouter {
 
 //        router.attach("/measurements", MeasurementResourceImpl.class);
 //        router.attach("/users", LoginRegisterResourceImpl.class);
+        router.attach("/patient", PatientResourceImpl.class);
+        router.attach("/profile", ProfileResourceImpl.class);
 
         return router;
     }

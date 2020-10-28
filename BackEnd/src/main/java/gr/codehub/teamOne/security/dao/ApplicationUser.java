@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class ApplicationUser {
 
-    private String username;
+    private String first_name;
     private String password;
     private AccessRole accessRole;
 }
