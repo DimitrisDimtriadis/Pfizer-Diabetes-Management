@@ -1,70 +1,66 @@
-
-
-<nav class="navbar navbar-expand-sm navbar-dark bg-dark">
-    <li class="nav-item">
-        <a class="navbar-brand" href="/patient"  >Patient</a>
-      </li>
-      <li class="nav-item">
-        <a class="navbar-brand" href="/admin">Admin</a>
-      </li>
-      <li class="nav-item">
-        <a class="navbar-brand" href="/home">Logout</a>
-      </li>
-  </nav>
-<div class="container">
-  <div class="jumbotron">
-    <h2 style="text-align: center; color: blue">Angular CRUD Application</h2>
+<nav class="nav-header sticky-top py-1" style="background-color: #007cc2;">
+  <div class="container d-flex flex-column flex-md-row justify-content-between">
+    <li class="py-2 d-none d-md-inline-block" id =home  > Sacchon logout
+      <a class="navbar-brand" href="/">
+      <img src="/assets/images/home.png"  style="width:40px; padding-left: 10px;" >
+    </a>
+    </li>
+    <li class="py-2 d-none d-md-inline-block" id="account">Doctor Homepage
+      <a class="navbar-brand" href="/doctor" >
+        <img src="/assets/images/docHome.png"  style="width:40px; padding-left: 10px;" >
+      </a>
+    </li>
+    <li class="py-2 d-none d-md-inline-block" id="account">Add patients
+      <a class="navbar-brand" href="/doctorAddP" >
+        <img src="/assets/images/plus.png"  style="width:40px; padding-left: 10px;" >
+      </a>
+    </li>
+    <li class="py-2 d-none d-md-inline-block" id="account">Manage Account
+      <a class="navbar-brand" href="/doctorAcc" >
+        <img src="/assets/images/user.png"  style="width:40px; padding-left: 10px;" >
+      </a>
+    </li>
   </div>
-  <div class="row">
-    <div class="col-md-6">
-        <div class="doc-form">
-            <div class="row">
-              <div class="col-md-6 form-group">
-                <input placeholder="Name" class="form-control" [(ngModel)]="dservice.currentDoctor.name">
-              </div>
-              <div class="col-md-6 form-group">
-                <input placeholder="Email" class="form-control" [(ngModel)]="dservice.currentDoctor.email">
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-md-12 form-group">
-                <input placeholder="Body" class="form-control" [(ngModel)]="dservice.currentDoctor.body">
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-md-8">
-                <button class="btn btn-success btn-lg btn-block" (click)="createOrUpdateDoctor(dservice.currentDoctor)">
-                  <i class="fa fa-save"></i>
-                  SAVE
-                </button>
-              </div>
-              <div class="col-md-4">
-                <button class="btn btn-primary btn-lg btn-block" (click)="clearDoctor()">
-                  <i class="fa fa-retweet"></i>
-                  CLEAR
-                </button>
-              </div>
-            </div>
-          </div>
-    </div>
-    <div class="col-md-6">
-        <table class="table table-hover">
-            <tr *ngFor="let doc1 of dservice.allDoctors">
-              <td>{{doc1.id}}</td>
-              <td>{{doc1.email}}</td>
-              <td>
-                <a class="btn" (click)="editDoctor(doc1)">
-                    <i class="fa fa-edit"></i>
-                  </a>
-                </td>
-                <td>
-                  <a class="btn" (click)="deleteDoctor(doc1.id)">
-                    <i class="fa fa-trash"></i>
-                  </a>
-                </td>
-              </tr>
-            </table>
-    </div>
+</nav>
+
+
+<div class="jumbotron p-1 p-sm-1 " >
+  <div class="container">
+    <h2>Welcome Dr ....</h2>
   </div>
 </div>
+<div style="width: 70%; text-align: center; margin-left:5%;">
+<h4 class="display-5" style="padding: 1% ;">Your patients</h4>
+<table class="table table-hover table-responsive-sm " >
+  <thead class="thead-light">
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">First</th>
+      <th scope="col">Last</th>
+      <th scope="col">View patient measurements</th>
+      <th scope="col">Consult patient</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th scope="row">1</th>
+      <td>Mark</td>
+      <td>Otto</td>
+      <td>
+        <a class="navbar-brand" href="/doctorViewP" > 
+          <img src="/assets/images/seeData.png"  style="width:40px; padding-left: 10px;" >
+        </a>
+      </td>
+      <td>
+      <a class="navbar-brand" href="/doctorConsultP" > 
+        <img src="/assets/images/pen.jpg"  style="width:40px; padding-left: 10px;" >
+      </a>
+    </td>
+    </tr>
+  </tbody>
+</table>
+</div>
 
+
+   
+ 

@@ -1,12 +1,122 @@
-<nav class="navbar navbar-expand-sm navbar-dark bg-dark">
-    <li class="nav-item">
-        <a class="navbar-brand" href="/patient"  >Patient</a>
-      </li>
-      <li class="nav-item">
-        <a class="navbar-brand" href="/doctor">Doctor</a>
-      </li>
-      <li class="nav-item">
-        <a class="navbar-brand" href="/home">Logout</a>
-      </li>
-  </nav>
-<p>admin works!</p>
+<nav class="nav-header sticky-top py-1" style="background-color: #00c288;">
+  <div class="container d-flex flex-column flex-md-row justify-content-between">
+    <li class="py-2 d-none d-md-inline-block" id =home  > Sacchon logout
+      <a class="navbar-brand" href="/">
+      <img src="/assets/images/home.png"  style="width:40px; padding-left: 10px;" >
+    </a>
+    </li>
+    <li class="py-2 d-none d-md-inline-block" id="account">Admin Homepage
+      <a class="navbar-brand" href="/admin" >
+        <img src="/assets/images/docHome.png"  style="width:40px; padding-left: 10px;" >
+      </a>
+    </li>
+    <li class="py-2 d-none d-md-inline-block" id="account">Consult Pending
+      <a class="navbar-brand" href="/adminConW" >
+        <img src="/assets/images/consult.png"  style="width:40px; padding-left: 10px;" >
+      </a>
+    </li>
+    <li class="py-2 d-none d-md-inline-block" id="account">Monitor Activity
+      <a class="navbar-brand" href="/adminNoA" >
+        <img src="/assets/images/monitor.png"  style="width:40px; padding-left: 10px;" >
+      </a>
+    </li>
+  </div>
+</nav>
+<div class="jumbotron p-1 p-sm-1 " >
+  <div class="container">
+    <h2>Welcome Chief Dr........</h2>
+  </div>
+</div>
+
+
+
+<div id="bg" style="width:100%;">
+  <div class="container-fluid">
+              <div id="c" class="col-md-6 offset-md-3"> 
+                <h3 style="text-align: center;">Information submissions</h3>
+                <h5 style="margin: 5%; text-align: center;">Search for a patient or doctor activity</h5>
+                  
+                  <form [formGroup]="userForm" (ngSubmit)="onSubmit()">
+                      <div class="row">
+                     
+  
+                     
+                        <div class="form-group col-md-6">    
+                          <label>Account Type*</label>    
+                          <select class="form-control"formControlName="typeAccount"
+                          [ngClass]="{ 'is-invalid': submitted && f.typeAccount.errors }">
+                          <div *ngIf="submitted && f.typeAccount.errors" class="invalid-feedback">
+                          </div>    
+                             <option>Doctor</option>    
+                             <option>Patient</option>    
+                          </select>    
+                      </div>  
+                      
+                
+  
+                      <div class="form-group col-md-6">
+                          <label>Email*</label>
+                          <input type="text" formControlName="email" class="form-control" 
+                          [ngClass]="{ 'is-invalid': submitted && f.email.errors }" />
+                          <div *ngIf="submitted && f.email.errors" class="invalid-feedback">
+                              <div *ngIf="f.email.errors.required">Email is required</div>
+                              <div *ngIf="f.email.errors.email">Email must be a valid email address</div>
+                          </div>
+                      </div>
+
+                      
+                      <div class="form-group col-md-6">
+                      <label>Date start</label>
+                      <input type="date" onfocus="(this.type='date')" class="form-control" formControlName="dStart"
+                      [ngClass]="{ 'is-invalid': submitted && f.dob.errors }"/>
+                      <div *ngIf="submitted && f.dob.errors" class="invalid-feedback">
+                      </div>
+                      </div> 
+               
+                 
+                      <div class="form-group col-md-6">
+                        <label>Date end</label>
+                        <input type="date" onfocus="(this.type='date')" class="form-control" formControlName="dEnd"
+                        [ngClass]="{ 'is-invalid': submitted && f.dob.errors }"/>
+                        <div *ngIf="submitted && f.dob.errors" class="invalid-feedback">
+                        </div>
+                        </div>
+              
+                  
+                      <div class="col-md-6 offset-md-4">
+                      <div class="form-group">
+                          <button type="submit" class="btn btn-primary" style="margin: 4%;font-size: 18px;">Search</button>
+                          
+                      </div>
+                  </div>
+                  </div>
+                  </form>
+              </div>
+          </div>
+      </div>
+      
+      <div style="width: 60%; text-align: center; margin-left:5%;">
+        <h5 class="display-5" style="padding: 1% ;text-align: left;">Profile activity</h5>
+        <table class="table table-hover table-responsive-sm " >
+          <thead class="thead-dark">
+            <tr>
+              <th scope="col">Role</th>
+              <th scope="col">Email</th>
+              <th scope="col">Date of activity</th>
+              <th scope="col">Activity</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Doctor</td>
+              <td>myemail@.com</td>
+              <td>
+                20/10/2020
+              </td>
+              <td>
+              Consultation
+            </td>
+            </tr>
+          </tbody>
+        </table>
+        </div>
