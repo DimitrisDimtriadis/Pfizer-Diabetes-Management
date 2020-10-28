@@ -18,7 +18,7 @@ export class LoginComponent implements OnInit {
   loginRole:string;
   constructor(private formBuilder: FormBuilder,public userS:UserService,private router:Router) { }
 
-  ngOnInit(): void {
+  ngOnInit() {
     this.loginForm= this.formBuilder.group({
       email:['', [Validators.required, Validators.email, Validators.pattern("^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$")]],
       password: ['', [Validators.required, Validators.minLength(6)]],
@@ -42,23 +42,27 @@ export class LoginComponent implements OnInit {
       //sessionStorage.setItem("credentials", this.login + ":" + this.password)
       this.userS.loginUser(this.userS.currentLogin).subscribe(
         (response)=>{
-          console.log(response); this.loginRole=String(response);    }
+          console.log(response); this.loginRole=String(response);
+          sessionStorage.setItem("credentials",  this.userS.currentLogin.userEmail + ":" + this.userS.currentLogin.userPassword);
+          sessionStorage.setItem("LoginRole",this.loginRole);
+    
+          if(this.loginRole ==="ROLE_PATIENT") 
+          {this.router.navigate(['/patient']);}
+    
+          else if(this.loginRole==="ROLE_DOCTOR")
+          {this.router.navigate(['/doctor']);}
+    
+          else if(this.loginRole==="ROLE_ADMIN")
+          {this.router.navigate(['/admin']);}
+    
+          else this.router.navigate(['/login']);
+        }
+
+   
       );
 
-      sessionStorage.setItem("credentials",  this.userS.currentLogin.userEmail + ":" + this.userS.currentLogin.userPassword);
-      sessionStorage.setItem("LoginRole",this.loginRole);
+     
 
-      if(this.loginRole ==="ROLE_PATIENT") 
-      {this.router.navigate(['/patient']);}
-
-      else if(this.loginRole==="ROLE_DOCTOR")
-      {this.router.navigate(['/doctor']);}
-
-      else if(this.loginRole==="ROLE_ADMIN")
-      {this.router.navigate(['/admin']);}
-
-      else this.router.navigate(['/login']);
-
-     // alert('SUCCESS!! :-)\n\n' + JSON.stringify(this.loginForm.value))
+      //alert('SUCCESS!! :-)\n\n' + JSON.stringify(this.loginForm.value))
   }
 }
