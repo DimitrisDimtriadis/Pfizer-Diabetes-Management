@@ -1,6 +1,7 @@
 package gr.codehub.teamOne.router;
 
 import gr.codehub.teamOne.resource.impl.MeasurementResourceImpl;
+import gr.codehub.teamOne.resource.impl.PatientResourceImpl;
 import gr.codehub.teamOne.resource.impl.PingServerResourceImpl;
 import gr.codehub.teamOne.resource.impl.LoginRegisterResourceImpl;
 import org.restlet.Application;
@@ -29,6 +30,7 @@ public class CustomRouter {
         router.attach("/ping", PingServerResourceImpl.class);
         router.attach("/users", LoginRegisterResourceImpl.class);
         router.attach("/measurements", MeasurementResourceImpl.class);
+        router.attach("/patient", PatientResourceImpl.class);
         return router;
     }
 
