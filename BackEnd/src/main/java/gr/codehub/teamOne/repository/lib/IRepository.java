@@ -5,7 +5,8 @@ import java.util.Optional;
 
 public interface IRepository<T, K> {
 
-    Optional<T> findById(K id);
+    Optional<T> findById(long id);
+
 
     Optional<T> save(T t);
 

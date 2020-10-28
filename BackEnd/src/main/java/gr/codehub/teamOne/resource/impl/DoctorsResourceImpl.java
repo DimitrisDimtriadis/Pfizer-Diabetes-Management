@@ -4,9 +4,8 @@ import gr.codehub.teamOne.exceptions.NotFoundException;
 import gr.codehub.teamOne.model.Users;
 import gr.codehub.teamOne.repository.UserRepository;
 import gr.codehub.teamOne.repository.util.JpaUtil;
-import gr.codehub.teamOne.representation.DoctorDTO;
-import gr.codehub.teamOne.representation.PatientDTO;
-import gr.codehub.teamOne.resource.DoctorResource;
+import gr.codehub.teamOne.representation.DoctorsDTO;
+import gr.codehub.teamOne.resource.DoctorsResource;
 import gr.codehub.teamOne.security.AccessRole;
 import org.restlet.resource.ResourceException;
 import org.restlet.resource.ServerResource;
@@ -15,7 +14,7 @@ import javax.persistence.EntityManager;
 import java.util.ArrayList;
 import java.util.List;
 
-public class DoctorResourceImpl extends ServerResource implements DoctorResource {
+public class DoctorsResourceImpl extends ServerResource implements DoctorsResource {
 
 
 
@@ -40,14 +39,14 @@ public class DoctorResourceImpl extends ServerResource implements DoctorResource
     }
 
     @Override
-    public List<DoctorDTO> getsDoctors() throws NotFoundException {
+    public List<DoctorsDTO> getsDoctors() throws NotFoundException {
 
         List<Users> doctorList = userRepository.getAllUsersBasedOnRole(AccessRole.ROLE_DOCTOR);
 
-        List<DoctorDTO> doctorDTOList = new ArrayList<>();
-        doctorList.forEach(doctors -> doctorDTOList.add(DoctorDTO.getDoctorDTO(doctors)));
+        List<DoctorsDTO> doctorsDTOList = new ArrayList<>();
+        doctorList.forEach(doctors -> doctorsDTOList.add(DoctorsDTO.getDoctorDTO(doctors)));
 
-        return doctorDTOList;
+        return doctorsDTOList;
 }
 
 
