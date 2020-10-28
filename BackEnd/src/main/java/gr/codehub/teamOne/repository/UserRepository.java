@@ -45,10 +45,21 @@ public class UserRepository extends Repository<Users, Long> {
     }
 
     public List findUserWithCredential(LoginCredentialDTO loginCredentialDTO) {
-        return entityManager.createQuery("from Users u where u.email = :email or u.password = :password")
+        return entityManager.createQuery("from Users u where u.email = :email and u.password = :password")
                 .setParameter("email", loginCredentialDTO.getUserEmail())
                 .setParameter("password", loginCredentialDTO.getUserPassword())
                 .getResultList();
+    }
+
+    public Users getUserInfo(String usrEmail) {
+        List tempListWithInfo = entityManager.createQuery("from Users u where u.email = :email")
+                .setParameter("email", usrEmail)
+                .getResultList();
+
+        if(tempListWithInfo.size() > 0){
+            return (Users) tempListWithInfo.get(0);
+        }
+        return null;
     }
 
     public List getAllUsersBasedOnRole(AccessRole accessRole) {

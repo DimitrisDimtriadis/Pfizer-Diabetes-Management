@@ -15,14 +15,14 @@ import java.util.List;
 public interface LoginRegisterResource {
 
     @Get("json")
-    public List<UsersDTO> getsUsers() throws NotFoundException;
+    List<UsersDTO> getsUsers() throws NotFoundException;
 
     @Post("json")
-    public AccessRole verifyUser(LoginCredentialDTO loginCredentialDTO) throws NotFoundException, BadEntityException;
+    AccessRole verifyUser(LoginCredentialDTO loginCredentialDTO) throws NotFoundException, BadEntityException;
 
     @Put("json")
-    public UsersDTO addUser(UsersDTO usersDTO) throws NotFoundException, BadEntityException;
+    UsersDTO addUser(UsersDTO usersDTO) throws NotFoundException, BadEntityException;
 
     @Delete
-    public void removeUser() throws NotFoundException;
+    void removeUser() throws NotFoundException;
 }
