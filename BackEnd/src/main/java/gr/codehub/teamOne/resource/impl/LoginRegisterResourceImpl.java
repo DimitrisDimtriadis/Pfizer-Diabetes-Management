@@ -62,7 +62,7 @@ public class LoginRegisterResourceImpl extends ServerResource implements LoginRe
     @Override
     public AccessRole verifyUser(LoginCredentialDTO loginCredentialDTO) throws NotFoundException, BadEntityException {
 
-        ResourceUtils.checkRole(this, GeneralFunctions.rolesWithAccess(false, false, true));
+//        ResourceUtils.checkRole(this, GeneralFunctions.rolesWithAccess(false, false, true));
         if (loginCredentialDTO == null) throw new BadEntityException("Null userException error");
 
         List<Users> listWithUsers = userRepository.findUserWithCredential(loginCredentialDTO);

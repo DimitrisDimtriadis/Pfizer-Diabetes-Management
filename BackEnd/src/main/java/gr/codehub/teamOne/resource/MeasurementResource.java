@@ -22,7 +22,7 @@ public interface MeasurementResource {
             throws NotFoundException, BadEntityException;
 
     @Post("json")
-    public MeasurementDTO addMeasurement(MeasurementDTO measurementDTO)
+    public String addMeasurement(MeasurementDTO measurementDTO)
             throws NotFoundException, BadEntityException;
 }
 

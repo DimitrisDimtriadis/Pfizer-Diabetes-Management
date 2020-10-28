@@ -1,7 +1,6 @@
 package gr.codehub.teamOne.representation;
 
 import gr.codehub.teamOne.model.Measurement;
-import gr.codehub.teamOne.model.Users;
 import lombok.Data;
 
 import java.util.Date;
@@ -9,7 +8,7 @@ import java.util.Date;
 @Data
 public class MeasurementDTO {
 
-    private Users user;
+    private long user;
     private float bloodGlucoseLevel;
     private long carbIntake;
     private Date measurementDate;
@@ -23,7 +22,6 @@ public class MeasurementDTO {
     static public Measurement getMeasurement(MeasurementDTO measurementDTO) {
 
         Measurement measurement = new Measurement();
-        measurement.setUser(measurementDTO.getUser());
         measurement.setBloodGlucoseLevel(measurementDTO.getBloodGlucoseLevel());
         measurement.setCarbIntake(measurementDTO.getCarbIntake());
         measurement.setMeasurementDate(new Date());
@@ -39,7 +37,7 @@ public class MeasurementDTO {
     static public MeasurementDTO getMeasurementDTO(Measurement measurement) {
 
         MeasurementDTO measurementDTO = new MeasurementDTO();
-        measurementDTO.setUser(measurement.getUser());
+        measurementDTO.setUser(measurement.getUser().getId());
         measurementDTO.setBloodGlucoseLevel(measurement.getBloodGlucoseLevel());
         measurementDTO.setCarbIntake(measurement.getCarbIntake());
         measurementDTO.setMeasurementDate(measurement.getMeasurementDate());

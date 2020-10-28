@@ -32,19 +32,17 @@ public class SacchonApp extends Application {
         // Create the api router, protected by a guard
         CustomRouter customRouter = new CustomRouter(this);
         Shield shield = new Shield(this);
-
-        Router publicRouter = customRouter.publicResources();
         ChallengeAuthenticator apiGuard = shield.createApiGuard();
+        CustomCorsFilter corsFilter = new CustomCorsFilter(this);
+
 
         // Create the api router, protected by a guard
+        Router publicRouter = customRouter.publicResources();
         Router apiRouter = customRouter.createApiRouter();
-        apiGuard.setNext(apiRouter);
 
         publicRouter.attachDefault(apiGuard);
+        apiGuard.setNext(apiRouter);
 
-        CustomCorsFilter corsFilter = new CustomCorsFilter(this);
-        if(false) //TODO: For testing purpose
-            return corsFilter.createCorsFilter(apiGuard);
         return corsFilter.createCorsFilter(publicRouter);
     }
 
