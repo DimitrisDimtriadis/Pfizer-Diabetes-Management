@@ -13,23 +13,18 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 @Entity
-public class Measurements {
+public class Measurement {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
+    @ManyToOne
+    private Users user;
+
     //blood glucose level (date, time, measured in mg/dL)
-    private long bloodGlucoseLevel;
+    private float bloodGlucoseLevel;
     //carb intake (measured in grams)
     private long carbIntake;
     private Date measurementDate;
-
-//    @ManyToOne
-//    private Patients patients;
-
-//    @OneToMany
-//    private List<PatientMeasurements> patientMeasurements = new ArrayList<>();
-
-
 }
