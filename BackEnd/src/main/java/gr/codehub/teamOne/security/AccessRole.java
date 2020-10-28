@@ -25,4 +25,28 @@ public enum AccessRole {
         }
         return ROLE_NA;
     }
+
+    /**
+     * Function that takes index of role as String and try to find the equal AccessRole
+     *
+     * @param index The user role as string
+     * @return The equal AccessRole
+     */
+    public static AccessRole getRoleFromIndex(String index) {
+
+        int amkaKey;
+
+        try {
+            amkaKey = Integer.parseInt(index);
+        } catch (NumberFormatException e) {
+            throw new NumberFormatException("This is not amka number ! Error: " + e);
+        }
+
+        for (AccessRole accessRole : AccessRole.values()) {
+            if (amkaKey == accessRole.ordinal()) {
+                return accessRole;
+            }
+        }
+        return ROLE_NA;
+    }
 }
