@@ -43,6 +43,8 @@ public class SacchonApp extends Application {
         publicRouter.attachDefault(apiGuard);
 
         CustomCorsFilter corsFilter = new CustomCorsFilter(this);
+        if(false) //TODO: For testing purpose
+            return corsFilter.createCorsFilter(apiGuard);
         return corsFilter.createCorsFilter(publicRouter);
     }
 

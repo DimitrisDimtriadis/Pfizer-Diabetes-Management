@@ -19,8 +19,8 @@ public class CustomRouter {
         Router router = new Router(application.getContext());
 
         router.attach("/measurements", MeasurementResourceImpl.class);
-        router.attach("/users", LoginRegisterResourceImpl.class);
         router.attach("/measurements", MeasurementResourceImpl.class);
+        router.attach("/users", LoginRegisterResourceImpl.class);
 
         return router;
     }

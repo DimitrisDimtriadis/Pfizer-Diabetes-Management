@@ -7,7 +7,9 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @Getter
 @Setter
@@ -37,5 +39,6 @@ public class Users {
     private Gender gender;
     private Date registration_date;
 
-//    @OneToMany(mappedBy = "")
+    @OneToMany
+    List<Measurement> measurements = new ArrayList<>();
 }

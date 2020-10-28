@@ -81,7 +81,7 @@ public class LoginRegisterResourceImpl extends ServerResource implements LoginRe
     @Override
     public UsersDTO addUser(UsersDTO usersDTO) throws BadEntityException {
 
-        if (usersDTO == null) throw new BadEntityException("Null userException error");
+        if (usersDTO == null) throw new BadEntityException("Null user Exception error");
         if (userRepository.checkIfAccountExist(usersDTO))
             throw new BadEntityException("Found entry with the same AMKA or email");
 

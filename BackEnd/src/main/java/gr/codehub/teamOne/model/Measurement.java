@@ -19,16 +19,12 @@ public class Measurement {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
+    @ManyToOne
+    private Users user;
+
     //blood glucose level (date, time, measured in mg/dL)
-    private long bloodGlucoseLevel;
+    private float bloodGlucoseLevel;
     //carb intake (measured in grams)
     private long carbIntake;
     private Date measurementDate;
-
-//    @ManyToOne
-//    @Column(nullable = false)
-//    private Users user;
-
-//    @OneToMany
-//    private List<PatientMeasurements> patientMeasurements = new ArrayList<>();
 }

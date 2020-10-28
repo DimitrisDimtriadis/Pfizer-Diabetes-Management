@@ -6,8 +6,12 @@ import gr.codehub.teamOne.repository.lib.Repository;
 import javax.persistence.EntityManager;
 
 public class MeasurementsRepository extends Repository<Measurement, Long> {
+
+    private EntityManager entityManager;
+
     public MeasurementsRepository(EntityManager entityManager) {
         super(entityManager);
+        this.entityManager = entityManager;
     }
 
     @Override
