@@ -35,7 +35,7 @@ public class UserRepository extends Repository<Users, Long> {
      */
     public boolean checkIfAccountExist(UsersDTO usersDTO) {
 
-        List userList = entityManager.createQuery("from Users u where u.email = :email or u.amka = :amka")
+        List userList = entityManager.createQuery("from Users u where u.email = :email and u.amka = :amka")
                 .setParameter("email", usersDTO.getEmail())
                 .setParameter("amka", usersDTO.getAmka())
                 .getResultList();

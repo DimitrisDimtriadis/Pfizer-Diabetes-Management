@@ -23,13 +23,13 @@ public class ApplicationUserPersistence {
 
         try {
             connection = getConnection();
-            PreparedStatement preparedStatement = connection.prepareStatement("select * from userTable where userName=?");
+            PreparedStatement preparedStatement = connection.prepareStatement("select * from Users where email=?");
             preparedStatement.setString(1, username);
             ResultSet rs = preparedStatement.executeQuery();
 
             if (rs.next()) {
                 ApplicationUser user = new ApplicationUser();
-                user.setUsername(rs.getString("username"));
+                user.setUsername(rs.getString("email"));
                 user.setPassword(rs.getString("password"));
                 user.setAccessRole(AccessRole.getRoleValue(rs.getString("role")));
                 return user;
