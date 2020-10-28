@@ -37,6 +37,7 @@ public class LoginRegisterResourceImpl extends ServerResource implements LoginRe
         em.close();
     }
 
+    //TODO: Check if there is use on it
     @Override
     public List<UsersDTO> getsUsers() throws NotFoundException {
 
@@ -61,12 +62,19 @@ public class LoginRegisterResourceImpl extends ServerResource implements LoginRe
 
         if (loginCredentialDTO == null) throw new BadEntityException("Null userException error");
 
-        List<LoginCredentialDTO> listWithUsers = userRepository.findUserWithCredential(loginCredentialDTO);
+        List<Users> listWithUsers = userRepository.findUserWithCredential(loginCredentialDTO);
         if (listWithUsers.size() == 0) throw new NotFoundException("User account not found !");
 
-        return listWithUsers.get(0).getUserRole();
+        return listWithUsers.get(0).getAccountType();
     }
 
+    /**
+     * Method to add account to base
+     *
+     * @param usersDTO Representation object to save it on base
+     * @return Representation object that save in base
+     * @throws BadEntityException For wrong object as input
+     */
     @Override
     public UsersDTO addUser(UsersDTO usersDTO) throws BadEntityException {
 
