@@ -4,6 +4,7 @@ import gr.codehub.teamOne.model.Users;
 import gr.codehub.teamOne.repository.lib.Repository;
 import gr.codehub.teamOne.representation.LoginCredentialDTO;
 import gr.codehub.teamOne.representation.UsersDTO;
+import gr.codehub.teamOne.security.AccessRole;
 
 import javax.persistence.EntityManager;
 import java.util.List;
@@ -35,7 +36,7 @@ public class UserRepository extends Repository<Users, Long> {
      */
     public boolean checkIfAccountExist(UsersDTO usersDTO) {
 
-        List userList = entityManager.createQuery("from Users u where u.email = :email and u.amka = :amka")
+        List userList = entityManager.createQuery("from Users u where u.email = :email or u.amka = :amka")
                 .setParameter("email", usersDTO.getEmail())
                 .setParameter("amka", usersDTO.getAmka())
                 .getResultList();
@@ -44,9 +45,27 @@ public class UserRepository extends Repository<Users, Long> {
     }
 
     public List findUserWithCredential(LoginCredentialDTO loginCredentialDTO) {
-        return entityManager.createQuery("from Users u where u.email = :email or u.password = :password")
+        return entityManager.createQuery("from Users u where u.email = :email and u.password = :password")
                 .setParameter("email", loginCredentialDTO.getUserEmail())
                 .setParameter("password", loginCredentialDTO.getUserPassword())
+                .getResultList();
+    }
+
+    public Users getUserInfo(String usrEmail) {
+        List tempListWithInfo = entityManager.createQuery("from Users u where u.email = :email")
+                .setParameter("email", usrEmail)
+                .getResultList();
+
+        if(tempListWithInfo.size() > 0){
+            return (Users) tempListWithInfo.get(0);
+        }
+        return null;
+    }
+
+    public List getAllUsersBasedOnRole(AccessRole accessRole) {
+
+        return entityManager.createQuery("from Users u where u.accountType = :accessRole")
+                .setParameter("accessRole", accessRole)
                 .getResultList();
     }
 }

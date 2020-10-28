@@ -6,5 +6,5 @@ import org.restlet.resource.Get;
 public interface PingServerResource {
 
     @Get("txt")
-    public String ping() throws NotFoundException;
+    String ping() throws NotFoundException;
 }
