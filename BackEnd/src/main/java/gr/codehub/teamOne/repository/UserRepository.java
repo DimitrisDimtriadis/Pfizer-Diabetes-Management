@@ -57,4 +57,5 @@ public class UserRepository extends Repository<Users, Long> {
                 .setParameter("accessRole", accessRole)
                 .getResultList();
     }
+
 }
