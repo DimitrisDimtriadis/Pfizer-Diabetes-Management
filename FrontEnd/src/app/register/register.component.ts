@@ -2,12 +2,11 @@
 import { Component, OnInit,Input } from '@angular/core';
 import { MustMatch } from 'src/app/_helpers/must-match.validator';
 import { FormBuilder, FormControl, FormGroup ,Validators } from '@angular/forms';
-
 import {UserService} from '../services/user.service';
-import {UserClass} from '../classes/userClass';
 import { Router } from '@angular/router';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+
 
 
 
@@ -24,9 +23,9 @@ export class RegisterComponent implements OnInit {
   
    
 
-  roles = ['ROLE_ADMIN','ROLE_DOCTOR', 'ROLE_PATIENT']
+  roles = ['ROLE_DOCTOR', 'ROLE_PATIENT']
   genders = ['NA','FEMALE', 'MALE']
-  constructor(private formBuilder: FormBuilder,public userS:UserService) { }
+  constructor(private formBuilder: FormBuilder,public userS:UserService, private router: Router) { }
 
   
  
@@ -41,7 +40,6 @@ export class RegisterComponent implements OnInit {
       typeAccount:['', Validators.required],
       password: ['', [Validators.required, Validators.minLength(6)]],
       confirmPassword:['', Validators.required],
-      dob :['', Validators.required],
       mobile:['', [Validators.required, Validators.minLength(10), Validators.maxLength(10)]],
       phone:['', Validators.minLength(10)],
       amka:['', [Validators.required, Validators.minLength(9),Validators.maxLength(9)]]
@@ -60,7 +58,7 @@ export class RegisterComponent implements OnInit {
           return;
       }
 
-      alert('SUCCESS!! :-)\n\n' + JSON.stringify(this.userForm.value))
+     
       this.userS.currentUser.first_name = this.userForm.get('firstName').value;
       this.userS.currentUser.last_name=this.userForm.get('lastName').value;
       this.userS.currentUser.address=this.userForm.get('address').value;
@@ -87,7 +85,13 @@ export class RegisterComponent implements OnInit {
       this.userS.currentUser.password=this.userForm.get('password').value;
 
         
-      this.userS.registerUser(this.userS.currentUser).subscribe();
+      this.userS.registerUser(this.userS.currentUser).subscribe(
+      (response) => console.log(response),
+          (error) => console.log(error));
+         // sessionStorage.setItem("credentials",  this.userS.currentUser.email + ":" + this.userS.currentUser.password)
+         // sessionStorage.setItem("modified", "false")
+          alert('Welcome to Sacchon app!!');
+          this.router.navigate(['login']);
       
   }
 

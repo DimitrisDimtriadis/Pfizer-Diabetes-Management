@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import  { Observable } from 'rxjs';
 import {HttpClient,HttpParams,HttpHeaders} from '@angular/common/http';
 import {UserClass} from '../classes/UserClass';
+import {LoginClass} from '../classes/LoginClass';
 
 const headerOption = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
@@ -28,10 +29,28 @@ export class UserService {
     
   }
 
+
+  currentLogin: LoginClass = {
+    
+    
+    userEmail: '',
+    userPassword: ''
+    
+  }
+
+
+
+
   constructor(private http: HttpClient) { }
 
 
   registerUser(user: UserClass): Observable<UserClass> {
     return this.http.put<UserClass>(this.url, user, headerOption);
   }
+
+
+  loginUser(user:LoginClass):Observable<any>{
+    return this.http.post(this.url,user,headerOption);
+  }
+
 }
