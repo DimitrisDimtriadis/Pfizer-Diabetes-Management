@@ -1,6 +1,6 @@
 package gr.codehub.teamOne.representation;
 
-import gr.codehub.teamOne.model.Measurements;
+import gr.codehub.teamOne.model.Measurement;
 import lombok.Data;
 
 import java.util.Date;
@@ -8,28 +8,39 @@ import java.util.Date;
 @Data
 public class MeasurementDTO {
 
+    private long user;
+    private float bloodGlucoseLevel;
+    private long carbIntake;
     private Date measurementDate;
-    private long patientAMKA;
-    private long measurementID;
-    private String uri;
 
-    static public Measurements getMeasurements(MeasurementDTO measurementDTO){
+    /**
+     * Convert object from measurementDTO to measurement
+     *
+     * @param measurementDTO Object measurementDTO (for front)
+     * @return Object measurement (for base)
+     */
+    static public Measurement getMeasurement(MeasurementDTO measurementDTO) {
 
-        Measurements measurements = new Measurements();
-        measurements.setMeasurementDate(measurementDTO.getMeasurementDate());
-        return measurements;
+        Measurement measurement = new Measurement();
+        measurement.setBloodGlucoseLevel(measurementDTO.getBloodGlucoseLevel());
+        measurement.setCarbIntake(measurementDTO.getCarbIntake());
+        measurement.setMeasurementDate(new Date());
+        return measurement;
     }
 
-    static public MeasurementDTO getMeasurementsRepresentation(Measurements measurements){
+    /**
+     * Convert object from measurement to measurementDTO
+     *
+     * @param measurement  Object measurement (for base)
+     * @return Object measurementDTO (for front)
+     */
+    static public MeasurementDTO getMeasurementDTO(Measurement measurement) {
 
         MeasurementDTO measurementDTO = new MeasurementDTO();
-        measurementDTO.setMeasurementDate(measurements.getMeasurementDate());
-
-//        if (measurements.getPatients()!=null)
-////            measurementDTO.setPatientAMKA(measurements.getPatients().getAMKA());
-//            measurementDTO.setMeasurementID(measurements.getId());
-//
-//           measurementDTO.setUri("http://localhost:9000/measurements/"+measurements.getId());
-           return null;//measurementDTO;
+        measurementDTO.setUser(measurement.getUser().getId());
+        measurementDTO.setBloodGlucoseLevel(measurement.getBloodGlucoseLevel());
+        measurementDTO.setCarbIntake(measurement.getCarbIntake());
+        measurementDTO.setMeasurementDate(measurement.getMeasurementDate());
+        return measurementDTO;
     }
 }

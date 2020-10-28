@@ -22,7 +22,8 @@ public class CustomCorsFilter {
     }
 
     public Filter createCorsFilter(Restlet next) {
-        Filter filter = new Filter(application.getContext(), next) {
+
+        return new Filter(application.getContext(), next) {
 
             @Override
             protected int beforeHandle(Request request, Response response) {
@@ -57,6 +58,5 @@ public class CustomCorsFilter {
                 return super.beforeHandle(request, response);
             }
         };
-        return filter;
     }
 }
