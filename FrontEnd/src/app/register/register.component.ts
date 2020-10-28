@@ -34,14 +34,14 @@ export class RegisterComponent implements OnInit {
     this.userForm= this.formBuilder.group({
       firstName:['', Validators.required],
       lastName: ['', Validators.required],
-      address: ['', Validators.required],
+      address: [''],
       email:['', [Validators.required, Validators.email, Validators.pattern("^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$")]],
       gender:['', Validators.required],
       typeAccount:['', Validators.required],
       password: ['', [Validators.required, Validators.minLength(6)]],
       confirmPassword:['', Validators.required],
       mobile:['', [Validators.required, Validators.minLength(10), Validators.maxLength(10)]],
-      phone:['', Validators.minLength(10)],
+      phone:[''],
       amka:['', [Validators.required, Validators.minLength(9),Validators.maxLength(9)]]
     }, {
       validator: MustMatch('password', 'confirmPassword')

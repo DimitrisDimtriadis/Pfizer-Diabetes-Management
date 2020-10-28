@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import {Chart} from '../../../../node_modules/chart.js/dist/chart.js';
 
 @Component({
@@ -9,7 +10,7 @@ import {Chart} from '../../../../node_modules/chart.js/dist/chart.js';
 export class DoctorViewPComponent implements OnInit {
   chart=[];
 
-  constructor() { }
+  constructor(private _router: Router) { }
 
   ngOnInit(): void {
 
@@ -46,6 +47,11 @@ export class DoctorViewPComponent implements OnInit {
       }
   });
 
+  }
+
+  logout(){
+    sessionStorage.setItem('LoginRole',"");
+    this._router.navigate(['login']);
   }
 
 }

@@ -16,7 +16,7 @@ export class InsertDataComponent implements OnInit {
     this.insertform = this.formBuilder.group({
       carb: ['', Validators.required],
       glucose:['', Validators.required],
-      measuredDate: ['', Validators.required],
+      measuredDate: [''],
     });
   }
 

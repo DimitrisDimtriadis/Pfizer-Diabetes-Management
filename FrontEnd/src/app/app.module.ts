@@ -26,6 +26,9 @@ import { LogoutComponent } from './logout/logout.component';
 import { FooterComponent } from './footer/footer.component';
 import { PatientModule } from './patient/patient.module';
 import { UserService } from './services/user.service';
+import { FrontEndGuardD } from './classes/frontEndGuardD';
+import { FrontEndGuardA } from './classes/frontEndGuardA';
+import { FrontEndGuardP } from './classes/frontEndGuardP';
 
 
 
@@ -69,7 +72,7 @@ import { UserService } from './services/user.service';
     
     ],
 
-  providers: [PatientService,DoctorService,UserService],
+  providers: [PatientService,DoctorService,UserService,FrontEndGuardD,FrontEndGuardA,FrontEndGuardP],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-doctor-consult-p',
@@ -7,9 +8,14 @@ import { Component, OnInit } from '@angular/core';
 })
 export class DoctorConsultPComponent implements OnInit {
 
-  constructor() { }
+  constructor(private _router: Router) { }
 
   ngOnInit(): void {
+  }
+
+  logout(){
+    sessionStorage.setItem('LoginRole',"");
+    this._router.navigate(['login']);
   }
 
 }

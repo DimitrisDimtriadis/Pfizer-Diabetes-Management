@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MustMatch } from 'src/app/_helpers/must-match.validator';
 import { FormBuilder, FormControl, FormGroup ,Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-admin-no-activity',
@@ -14,7 +15,7 @@ export class AdminNoActivityComponent implements OnInit {
   userForm:FormGroup;
     submitted = false;
   
-    constructor(private formBuilder: FormBuilder) { }
+    constructor(private formBuilder: FormBuilder,private _router: Router) { }
     
     ngOnInit(): void {
       this.userForm= this.formBuilder.group({
@@ -45,6 +46,11 @@ export class AdminNoActivityComponent implements OnInit {
       }
       return true;
   
+    }
+
+    logout(){
+      sessionStorage.setItem('LoginRole',"");
+      this._router.navigate(['login']);
     }
 
 }

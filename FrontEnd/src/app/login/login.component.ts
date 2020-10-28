@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 import {UserService} from '../services/user.service';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { MustMatch } from 'src/app/_helpers/must-match.validator';
+
 
 
 @Component({
@@ -16,9 +16,10 @@ export class LoginComponent implements OnInit {
   loginForm:FormGroup;
   submitted = false;
   loginRole:string;
+  
   constructor(private formBuilder: FormBuilder,public userS:UserService,private router:Router) { }
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.loginForm= this.formBuilder.group({
       email:['', [Validators.required, Validators.email, Validators.pattern("^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$")]],
       password: ['', [Validators.required, Validators.minLength(6)]],
@@ -37,32 +38,29 @@ export class LoginComponent implements OnInit {
       }
 
       this.userS.currentLogin.userEmail = this.loginForm.get('email').value;
-
       this.userS.currentLogin.userPassword = this.loginForm.get('password').value;
+
       //sessionStorage.setItem("credentials", this.login + ":" + this.password)
       this.userS.loginUser(this.userS.currentLogin).subscribe(
         (response)=>{
-          console.log(response); this.loginRole=String(response);
-          sessionStorage.setItem("credentials",  this.userS.currentLogin.userEmail + ":" + this.userS.currentLogin.userPassword);
-          sessionStorage.setItem("LoginRole",this.loginRole);
-    
-          if(this.loginRole ==="ROLE_PATIENT") 
-          {this.router.navigate(['/patient']);}
-    
-          else if(this.loginRole==="ROLE_DOCTOR")
-          {this.router.navigate(['/doctor']);}
-    
-          else if(this.loginRole==="ROLE_ADMIN")
-          {this.router.navigate(['/admin']);}
-    
-          else this.router.navigate(['/login']);
-        }
+          console.log(response); this.loginRole=String(response);    
+          
+      sessionStorage.setItem("credentials",this.userS.currentLogin.userEmail + ":" + this.userS.currentLogin.userPassword);
+      sessionStorage.setItem("LoginRole",this.loginRole);
 
-   
+      if(this.loginRole ==="ROLE_PATIENT") 
+      {this.router.navigate(['/patient']);}
+
+      else if(this.loginRole==="ROLE_DOCTOR")
+      {this.router.navigate(['/doctor']);}
+
+      else if(this.loginRole==="ROLE_ADMIN")
+      {this.router.navigate(['/admin']);}
+
+      else this.router.navigate(['/login']);
+        
+          }
+        ,(error)=>{window.alert("wrong credentials")}
       );
-
-     
-
-      //alert('SUCCESS!! :-)\n\n' + JSON.stringify(this.loginForm.value))
-  }
+}
 }
