@@ -47,9 +47,5 @@ public class DoctorsDTO {
         doctorsDTO.setAddress(doctor.getAddress());
 
         return doctorsDTO;
-
-
-
-
     }
 }

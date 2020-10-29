@@ -40,7 +40,6 @@ public class PatientDTO {
         return patient;
     }
 
-
     public static PatientDTO getPatientDTO(Users patient) {
 
         PatientDTO patientDTO = new PatientDTO();

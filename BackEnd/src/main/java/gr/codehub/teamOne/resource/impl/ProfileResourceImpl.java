@@ -33,6 +33,7 @@ public class ProfileResourceImpl extends ServerResource implements ProfileResour
 
     @Override
     public UsersDTO getProfileInfo() throws NotFoundException {
+
         String usrEmail = this.getRequest().getClientInfo().getUser().getIdentifier();
 
         Users user = userRepository.getUserInfo(usrEmail);

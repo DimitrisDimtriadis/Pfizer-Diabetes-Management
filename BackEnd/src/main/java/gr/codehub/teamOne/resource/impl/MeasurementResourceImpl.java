@@ -8,7 +8,6 @@ import gr.codehub.teamOne.repository.MeasurementsRepository;
 import gr.codehub.teamOne.repository.UserRepository;
 import gr.codehub.teamOne.repository.util.JpaUtil;
 import gr.codehub.teamOne.representation.MeasurementDTO;
-import gr.codehub.teamOne.representation.UsersDTO;
 import gr.codehub.teamOne.resource.MeasurementResource;
 import org.restlet.resource.ResourceException;
 import org.restlet.resource.ServerResource;
@@ -63,12 +62,18 @@ public class MeasurementResourceImpl extends ServerResource implements Measureme
     @Override
     public String addMeasurement(MeasurementDTO measurementDTO) throws NotFoundException, BadEntityException {
 
+        String usrEmail = this.getRequest().getClientInfo().getUser().getIdentifier();
+
         if(measurementDTO == null) throw new BadEntityException("Null measurement Exception error");
-        Optional<Users> tempUser = userRepository.findById(measurementDTO.getUser());
-        if(!tempUser.isPresent()) throw new NotFoundException("Not such user");
+
+        Optional<Users> demandedUser = userRepository.findByEmail(usrEmail);
+
+        if(!demandedUser.isPresent()) throw new NotFoundException("Not such user");
+
+        measurementDTO.setUser(demandedUser.get().getId());
 
         Measurement measurementToSave = MeasurementDTO.getMeasurement(measurementDTO);
-        measurementToSave.setUser(tempUser.get());
+        measurementToSave.setUser(demandedUser.get());
         measurementsRepository.save(measurementToSave);
         return "Measurement saved successfully !";
     }

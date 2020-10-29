@@ -57,7 +57,6 @@ public class UsersDTO {
         usersDTO.setGender(users.getGender());
         usersDTO.setRegistration_date(users.getRegistration_date());
 
-
         return usersDTO;
     }
 }

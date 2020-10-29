@@ -62,6 +62,7 @@ public class LoginRegisterResourceImpl extends ServerResource implements LoginRe
 
         if (loginCredentialDTO == null) throw new BadEntityException("Null userException error");
 
+        //TODO: Add new Date() on last login
         List<Users> listWithUsers = userRepository.findUserWithCredential(loginCredentialDTO);
         if (listWithUsers.size() == 0) throw new NotFoundException("User account not found !");
 

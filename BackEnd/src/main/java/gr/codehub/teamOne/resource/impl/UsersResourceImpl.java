@@ -11,13 +11,10 @@ import org.restlet.resource.ServerResource;
 
 import javax.persistence.EntityManager;
 
-
-
 public class UsersResourceImpl extends ServerResource implements UsersResource {
 
     private UserRepository userRepository;
     private EntityManager em;
-
 
     @Override
     protected void doInit() throws ResourceException {
@@ -25,7 +22,6 @@ public class UsersResourceImpl extends ServerResource implements UsersResource {
         try {
             em = JpaUtil.getEntityManager();
             userRepository = new UserRepository(em);
-
         } catch (Exception e) {
             throw new ResourceException(e);
         }
@@ -39,39 +35,12 @@ public class UsersResourceImpl extends ServerResource implements UsersResource {
     @Override
     public UsersDTO findUserByAmka(UsersDTO usersDTO) throws NotFoundException {
 
-
-
       Users person = userRepository.getUserBasedOnAmka(usersDTO);
 
-
+      //TODO: Check if there is no entry
       if(person!=null){
           return UsersDTO.getUsersDTO(person);
       }
-
-
         return null;
     }
-
-   /* @Override
-    public UsersDTO getUser() throws NotFoundException {
-        Users users=userRepository.getAllUsersBasedOnRole();
-
-
-
-    public List<UsersDTO> getUser() throws NotFoundException {
-
-
-        List<Users> patientList = userRepository.getUserBasedOnAmka();
-        List<UsersDTO> usersDTOList = new ArrayList<>();
-        usersDTOList.forEach(user -> usersDTOList.add(UsersDTO.getUsersDTO(user)));
-
-        return usersDTOList;
-
-
-    }
-    }
-    */
-
-
-
 }

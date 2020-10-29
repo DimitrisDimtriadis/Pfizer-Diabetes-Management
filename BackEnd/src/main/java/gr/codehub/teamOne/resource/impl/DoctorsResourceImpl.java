@@ -16,8 +16,6 @@ import java.util.List;
 
 public class DoctorsResourceImpl extends ServerResource implements DoctorsResource {
 
-
-
     private UserRepository userRepository;
     private EntityManager em;
 

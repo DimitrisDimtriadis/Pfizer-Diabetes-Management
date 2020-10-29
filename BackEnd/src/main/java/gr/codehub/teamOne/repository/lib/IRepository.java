@@ -7,6 +7,7 @@ public interface IRepository<T, K> {
 
     Optional<T> findById(long id);
 
+    Optional<T> findByEmail(String userEmail);
 
     Optional<T> save(T t);
 
