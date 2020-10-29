@@ -42,4 +42,13 @@ export class UpdateComponent implements OnInit {
       }
       alert('SUCCESS!! :-)\n\n' + JSON.stringify(this.userForm.value))
   }
+
+  numberOnly(event): boolean {
+    const charCode = (event.which) ? event.which : event.keyCode;
+    if (charCode > 31 && (charCode < 48 || charCode > 57)) {
+      return false;
+    }
+    return true;
+
+  }
 }
