@@ -90,4 +90,6 @@ public abstract class Repository<T, K> implements IRepository<T, K> {
                 .getResultList()
                 .get(0);
     }
+     //TODO: update profile id-register date- last login && delete
+    //TODO: ASTheneis xoris giatro
 }

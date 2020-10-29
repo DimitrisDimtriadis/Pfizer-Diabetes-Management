@@ -8,8 +8,8 @@ import org.restlet.resource.Get;
 
 import java.util.List;
 
-public interface DoctorsResource  {
+public interface DoctorsResource {
+
     @Get("json")
     public List<DoctorsDTO> getsDoctors() throws NotFoundException;
-
 }

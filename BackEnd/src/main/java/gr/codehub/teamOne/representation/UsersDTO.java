@@ -21,7 +21,6 @@ public class UsersDTO {
     private String address;
     private Gender gender;
     private Date registration_date;
-    private String uri;
 
     public static Users getUsers(UsersDTO usersDTO){
 
@@ -58,5 +57,48 @@ public class UsersDTO {
         usersDTO.setRegistration_date(users.getRegistration_date());
 
         return usersDTO;
+    }
+
+    /**
+     * Get an existing user and set on it the new values
+     *
+     * @param baseUser Existing user
+     * @param updatesOfUsers User with changed values
+     * @return The user with new values
+     */
+    public static Users updateUserDTO(Users baseUser, UsersDTO updatesOfUsers){
+
+        if(updatesOfUsers.getFirst_name() != null){
+            baseUser.setFirst_name(updatesOfUsers.getFirst_name());
+        }
+        if(updatesOfUsers.getLast_name() != null){
+            baseUser.setLast_name(updatesOfUsers.getLast_name());
+        }
+        if(updatesOfUsers.getEmail() != null){
+            baseUser.setEmail(updatesOfUsers.getEmail());
+        }
+        if(updatesOfUsers.getPassword() != null){
+            baseUser.setPassword(updatesOfUsers.getPassword());
+        }
+        if(updatesOfUsers.getAccountType() != null){
+            baseUser.setAccountType(updatesOfUsers.getAccountType());
+        }
+        if(updatesOfUsers.getAmka() != null){
+            baseUser.setAmka(updatesOfUsers.getAmka());
+        }
+        if(updatesOfUsers.getMobile_phone_number() != null){
+            baseUser.setMobile_phone_number(updatesOfUsers.getMobile_phone_number());
+        }
+        if(updatesOfUsers.getPhone_number() != null){
+            baseUser.setPhone_number(updatesOfUsers.getPhone_number());
+        }
+        if(updatesOfUsers.getAddress() != null){
+            baseUser.setAddress(updatesOfUsers.getAddress());
+        }
+        if(updatesOfUsers.getGender() != null){
+            baseUser.setGender(updatesOfUsers.getGender());
+        }
+
+        return baseUser;
     }
 }

@@ -83,7 +83,6 @@ public class SacchonApp extends Application {
     }
 }
 
-//TODO: Base on email as id
 //TODO: measurement gia enan xristi (based on auth) ... exo kai ton doctor
 //TODO: Update measurements
 //TODO: Profile endpoint gia update

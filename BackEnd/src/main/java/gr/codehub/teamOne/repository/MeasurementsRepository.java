@@ -18,7 +18,7 @@ public class MeasurementsRepository extends Repository<Measurement, Long> {
     @Override
     public Class<Measurement> getEntityClass() {
         return Measurement.class;
-    }
+     }
 
     @Override
     public String getEntityClassName() {
