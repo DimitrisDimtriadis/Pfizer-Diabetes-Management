@@ -12,18 +12,17 @@ import java.util.List;
 public interface MeasurementResource {
 
     @Get("json")
-    public List<MeasurementDTO> getMeasurementForUser() throws NotFoundException;
+    List<MeasurementDTO> getMeasurementForUser() throws NotFoundException;
 
     @Delete
-    public void removeMeasurement() throws NotFoundException;
+    void removeMeasurement() throws NotFoundException;
 
     @Put("json")
-    public MeasurementDTO updateMeasurement(MeasurementDTO measurementDTO)
+    MeasurementDTO updateMeasurement(MeasurementDTO measurementDTO)
             throws NotFoundException, BadEntityException;
 
     @Post("json")
-    public String addMeasurement(MeasurementDTO measurementDTO)
+    String addMeasurement(MeasurementDTO measurementDTO)
             throws NotFoundException, BadEntityException;
 }
-
 

@@ -59,8 +59,6 @@ public class UserRepository extends Repository<Users, Long> {
     }
 
    public Users getUserBasedOnAmka(UsersDTO usersDTO){
-       ;
-
        List listWithAmka= entityManager.createQuery("from Users u where u.amka = :amka")
                .setParameter("amka",usersDTO.getAmka())
                .getResultList();
@@ -70,5 +68,15 @@ public class UserRepository extends Repository<Users, Long> {
 
        return null;
    }
+    public Users getUserInfo(String usrEmail) {
+        List tempListWithInfo = entityManager.createQuery("from Users u where u.email = :email")
+                .setParameter("email", usrEmail)
+                .getResultList();
+
+        if(tempListWithInfo.size() > 0){
+            return (Users) tempListWithInfo.get(0);
+        }
+        return null;
+    }
 
 }

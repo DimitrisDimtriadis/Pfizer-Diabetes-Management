@@ -39,10 +39,7 @@ public class UsersResourceImpl extends ServerResource implements UsersResource {
     @Override
     public UsersDTO findUserByAmka(UsersDTO usersDTO) throws NotFoundException {
 
-
-
       Users person = userRepository.getUserBasedOnAmka(usersDTO);
-
 
       if(person!=null){
           return UsersDTO.getUsersDTO(person);
@@ -51,27 +48,6 @@ public class UsersResourceImpl extends ServerResource implements UsersResource {
 
         return null;
     }
-
-   /* @Override
-    public UsersDTO getUser() throws NotFoundException {
-        Users users=userRepository.getAllUsersBasedOnRole();
-
-
-
-    public List<UsersDTO> getUser() throws NotFoundException {
-
-
-        List<Users> patientList = userRepository.getUserBasedOnAmka();
-        List<UsersDTO> usersDTOList = new ArrayList<>();
-        usersDTOList.forEach(user -> usersDTOList.add(UsersDTO.getUsersDTO(user)));
-
-        return usersDTOList;
-
-
-    }
-    }
-    */
-
 
 
 }

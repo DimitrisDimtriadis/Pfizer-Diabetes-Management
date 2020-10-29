@@ -10,6 +10,7 @@ import gr.codehub.teamOne.repository.util.JpaUtil;
 import gr.codehub.teamOne.representation.MeasurementDTO;
 import gr.codehub.teamOne.representation.UsersDTO;
 import gr.codehub.teamOne.resource.MeasurementResource;
+import org.restlet.engine.Engine;
 import org.restlet.resource.ResourceException;
 import org.restlet.resource.ServerResource;
 
@@ -19,7 +20,6 @@ import java.util.List;
 import java.util.Optional;
 
 public class MeasurementResourceImpl extends ServerResource implements MeasurementResource {
-
     private MeasurementsRepository measurementsRepository;
     private UserRepository userRepository;
     private EntityManager em;
@@ -57,7 +57,21 @@ public class MeasurementResourceImpl extends ServerResource implements Measureme
 
     @Override
     public MeasurementDTO updateMeasurement(MeasurementDTO measurementDTO) throws NotFoundException, BadEntityException {
-        return null;
+
+        if(measurementDTO == null) throw new BadEntityException("Null measurement Exception error");
+        Optional<Users>opUser=userRepository.findById(measurementDTO.getUser());
+        setExisting(opUser.isPresent());
+
+        if(isExisting()){
+            Measurement measurementToUpdate = MeasurementDTO.getMeasurement(measurementDTO);
+            measurementToUpdate.setBloodGlucoseLevel(measurementDTO.getBloodGlucoseLevel());
+            measurementToUpdate.setCarbIntake(measurementDTO.getCarbIntake());
+            measurementToUpdate.setUser(opUser.get());
+            measurementsRepository.save(measurementToUpdate);
+
+        }else throw new NotFoundException("Not such user");
+
+        return measurementDTO;
     }
 
     @Override
