@@ -5,14 +5,17 @@ import {UserClass} from '../classes/UserClass';
 import {LoginClass} from '../classes/LoginClass';
 
 const headerOption = {
-  headers: new HttpHeaders({ 'Content-Type': 'application/json' })
-};
+  headers: new HttpHeaders({ 'Content-Type': 'application/json' , 'Authorization': 'Basic ' + btoa(sessionStorage.getItem('credentials'))
+                      })
+      };
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserService {
   readonly url="http://localhost:9000/sacchon/users";
+
+  readonly urlGetUserdata="http://localhost:9000/sacchon/profile";
   
   currentUser: UserClass = {
     
@@ -51,6 +54,10 @@ export class UserService {
 
   loginUser(user:LoginClass):Observable<any>{
     return this.http.post(this.url,user,headerOption);
+  }
+
+  getUserData():Observable<any>{
+    return this.http.get(this.urlGetUserdata,headerOption);
   }
 
 }

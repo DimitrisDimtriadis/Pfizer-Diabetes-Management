@@ -4,6 +4,8 @@ import {DoctorClass} from '../classes/doctorClass';
 import { Router } from '@angular/router';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { UserService } from '../services/user.service';
+import { UserClass } from '../classes/UserClass';
 
 
 @Component({
@@ -13,59 +15,21 @@ import { CommonModule } from '@angular/common';
 })
 export class DoctorComponent implements OnInit {
 
-  constructor(public dservice:DoctorService,private _router: Router) { }
+  constructor(public Uservice:UserService,private _router: Router) { }
+    userObj:UserClass;
+
 
   ngOnInit(){
-    this.getAllDoctors();
+    this.Uservice.getUserData().subscribe(
+      data=>{
+        this.userObj=data;
+          }
+    );
   }
 
-  getAllDoctors() {
-    this.dservice.getAllDoctors();
-  }
-
-  createOrUpdateDoctor(currentDoctor: DoctorClass) {
-    if (currentDoctor.id === null) {
-      this.createDoctor(currentDoctor);
-    } else {
-      this.updateDoctor(currentDoctor);
-    }
-  }
-
-  createDoctor(doc: DoctorClass) {
-    this.dservice.createDoctor(doc).subscribe(
-      (result: DoctorClass) => {
-        this.dservice.getAllDoctors();
-        this.clearDoctor();
-      });
-  }
-
-  updateDoctor(doc: DoctorClass) {
-    this.dservice.updateDoctor(doc).subscribe(
-      (result: DoctorClass) => {
-        this.dservice.getAllDoctors();
-        this.clearDoctor();
-      });
-  }
-
-  clearDoctor() {
-    this.dservice.currentDoctor = {
-      id: null,
-      name: '',
-      email: '',
-      body: ''
-    };
-  }
-
-
-  editDoctor(doc: DoctorClass) {
-    this.dservice.currentDoctor = Object.assign({}, doc);
-  }
-
-  deleteDoctor(id: number) {
-    this.dservice.deleteDoctor(id).subscribe(
-      (data) => {
-        this.getAllDoctors();
-      });
+  logout(){
+    sessionStorage.setItem('LoginRole',"");
+    this._router.navigate(['login']);
   }
 
 

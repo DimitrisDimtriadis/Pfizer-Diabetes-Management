@@ -44,7 +44,7 @@ export class LoginComponent implements OnInit {
       this.userS.loginUser(this.userS.currentLogin).subscribe(
         (response)=>{
           console.log(response); this.loginRole=String(response);    
-      
+          
       sessionStorage.setItem("credentials",this.userS.currentLogin.userEmail + ":" + this.userS.currentLogin.userPassword);
       sessionStorage.setItem("LoginRole",this.loginRole);
 
@@ -60,7 +60,7 @@ export class LoginComponent implements OnInit {
       else this.router.navigate(['/login']);
         
           }
-        
+        ,(error)=>{window.alert("wrong credentials")}
       );
 }
 }

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'codehub-insert-data',
@@ -10,7 +11,7 @@ export class InsertDataComponent implements OnInit {
   insertform: FormGroup;
   submitted = false;
   
-  constructor(private formBuilder: FormBuilder) { }
+  constructor(private formBuilder: FormBuilder,private router: Router) { }
 
   ngOnInit(): void {
     this.insertform = this.formBuilder.group({
@@ -18,6 +19,10 @@ export class InsertDataComponent implements OnInit {
       glucose:['', Validators.required],
       measuredDate: [''],
     });
+  }
+  logout(){
+    sessionStorage.setItem('LoginRole',"");
+    this.router.navigate(['login']);
   }
 
  // convenience getter for easy access to form fields

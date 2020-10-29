@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'codehub-update-data',
@@ -10,7 +11,7 @@ export class UpdateDataComponent implements OnInit {
   formUpdate: FormGroup;
   submitted = false;
   
-  constructor(private formBuilder: FormBuilder) { }
+  constructor(private formBuilder: FormBuilder,private router: Router) { }
 
   ngOnInit(): void {
     this.formUpdate = this.formBuilder.group({
@@ -18,6 +19,11 @@ export class UpdateDataComponent implements OnInit {
       glucose:['', Validators.required],
 
     });
+  }
+
+  logout(){
+    sessionStorage.setItem('LoginRole',"");
+    this.router.navigate(['login']);
   }
   // convenience getter for easy access to form fields
  get f() { return this.formUpdate.controls; }
