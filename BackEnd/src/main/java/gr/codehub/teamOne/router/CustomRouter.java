@@ -29,6 +29,7 @@ public class CustomRouter {
         router.attach("/measurements", MeasurementResourceImpl.class);
         router.attach("/patient", PatientResourceImpl.class);
         router.attach("/doctors", DoctorsResourceImpl.class);
+        router.attach("/users/amka", UsersResourceImpl.class);
 
         return router;
     }
