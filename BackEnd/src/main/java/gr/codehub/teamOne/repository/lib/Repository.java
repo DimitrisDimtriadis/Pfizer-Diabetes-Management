@@ -13,8 +13,11 @@ public abstract class Repository<T, K> implements IRepository<T, K> {
         this.entityManager = entityManager;
     }
 
+
+
+
     @Override
-    public Optional<T> findById(K id) {
+    public Optional<T> findById(long id) {
         try {
             entityManager.getTransaction().begin();
             T t = entityManager.find(getEntityClass(), id);

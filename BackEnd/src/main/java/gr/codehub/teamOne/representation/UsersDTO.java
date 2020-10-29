@@ -56,7 +56,7 @@ public class UsersDTO {
         usersDTO.setAddress(users.getAddress());
         usersDTO.setGender(users.getGender());
         usersDTO.setRegistration_date(users.getRegistration_date());
-        usersDTO.setUri("Id of object " + users.getId());
+
 
         return usersDTO;
     }

@@ -29,6 +29,10 @@ public class CustomRouter {
         router.attach("/ping", PingServerResourceImpl.class);
         router.attach("/users", LoginRegisterResourceImpl.class);
         router.attach("/measurements", MeasurementResourceImpl.class);
+
+        router.attach("/doctors", DoctorsResourceImpl.class);
+        router.attach("/users/amka", UsersResourceImpl.class);
+
         return router;
     }
 

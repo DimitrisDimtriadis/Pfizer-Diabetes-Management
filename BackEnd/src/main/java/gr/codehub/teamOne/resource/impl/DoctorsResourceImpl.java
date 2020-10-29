@@ -1,13 +1,11 @@
 package gr.codehub.teamOne.resource.impl;
 
-import gr.codehub.teamOne.Utilities.GeneralFunctions;
 import gr.codehub.teamOne.exceptions.NotFoundException;
 import gr.codehub.teamOne.model.Users;
 import gr.codehub.teamOne.repository.UserRepository;
 import gr.codehub.teamOne.repository.util.JpaUtil;
-import gr.codehub.teamOne.representation.PatientDTO;
-import gr.codehub.teamOne.resource.PatientResource;
-import gr.codehub.teamOne.resource.util.ResourceUtils;
+import gr.codehub.teamOne.representation.DoctorsDTO;
+import gr.codehub.teamOne.resource.DoctorsResource;
 import gr.codehub.teamOne.security.AccessRole;
 import org.restlet.resource.ResourceException;
 import org.restlet.resource.ServerResource;
@@ -16,7 +14,9 @@ import javax.persistence.EntityManager;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PatientResourceImpl extends ServerResource implements PatientResource {
+public class DoctorsResourceImpl extends ServerResource implements DoctorsResource {
+
+
 
     private UserRepository userRepository;
     private EntityManager em;
@@ -39,13 +39,20 @@ public class PatientResourceImpl extends ServerResource implements PatientResour
     }
 
     @Override
-    public List<PatientDTO> getsPatients() throws NotFoundException {
+    public List<DoctorsDTO> getsDoctors() throws NotFoundException {
 
-        ResourceUtils.checkRole(this, GeneralFunctions.rolesWithAccess(true, true, true));
-        List<Users> patientList = userRepository.getAllUsersBasedOnRole(AccessRole.ROLE_PATIENT);
+        List<Users> doctorList = userRepository.getAllUsersBasedOnRole(AccessRole.ROLE_DOCTOR);
 
-        List<PatientDTO> patientDTOList = new ArrayList<>();
-        patientList.forEach(patient -> patientDTOList.add(PatientDTO.getPatientDTO(patient)));
+        List<DoctorsDTO> doctorsDTOList = new ArrayList<>();
+        doctorList.forEach(doctors -> doctorsDTOList.add(DoctorsDTO.getDoctorDTO(doctors)));
 
-        return patientDTOList;    }
+        return doctorsDTOList;
+}
+
+
+
+
+
+
+
 }
