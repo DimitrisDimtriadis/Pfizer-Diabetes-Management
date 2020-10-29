@@ -16,14 +16,7 @@ import { UserClass } from '../classes/UserClass';
 export class DoctorComponent implements OnInit {
 
   constructor(public Uservice:UserService,private _router: Router) { }
-   
-
-
   ngOnInit(){
    
   }
-
- 
-
-
 }

@@ -49,6 +49,8 @@ export class AdminComponent implements OnInit {
   
     }
 
-    
-
+    logout(){
+      sessionStorage.setItem('LoginRole',"");
+      this._router.navigate(['login']);
+    }
 }

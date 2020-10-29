@@ -2,6 +2,7 @@
   
 
   <div id="bg" style="width:100%; margin-bottom: 5%;">
+
     <div class="container-fluid">
                 <div id="c" class="col-md-6 offset-md-3"> 
                     <h3 style="text-align: center;">Account Information</h3>
@@ -11,6 +12,7 @@
                         <div class="form-group col-md-6">
                             <label>First Name*</label>
                             <input type="text" formControlName="firstName" class="form-control" value="{{userObj?.first_name}} "
+
                             [ngClass]="{ 'is-invalid': submitted && f.firstName.errors }" />
                             <div *ngIf="submitted && f.firstName.errors" class="invalid-feedback">
                                 <div *ngIf="f.firstName.errors.required">First Name is required</div>

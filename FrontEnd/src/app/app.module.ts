@@ -1,7 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
-
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { HomeComponent } from './home/home.component';
@@ -10,7 +9,6 @@ import { RegisterComponent } from './register/register.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { PatientComponent } from './patient/patient.component';
 import { HttpClientModule } from '@angular/common/http';
-
 import { DoctorComponent } from './doctor/doctor.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AdminComponent } from './admin/admin.component';
@@ -31,14 +29,6 @@ import { FrontEndGuardP } from './classes/frontEndGuardP';
 import { DoctorNavComponent } from './doctor/doctor-nav/doctor-nav.component';
 import { AdminNavComponent } from './admin/admin-nav/admin-nav.component';
 
-
-
-
-
-
-
-
-
 @NgModule({
   declarations: [
     AppComponent,
@@ -57,11 +47,7 @@ import { AdminNavComponent } from './admin/admin-nav/admin-nav.component';
     LogoutComponent,
     FooterComponent,
     DoctorNavComponent,
-    AdminNavComponent,
-	  
- 
-  
-  
+    AdminNavComponent,	  
   ],
   imports: [
     BrowserAnimationsModule,

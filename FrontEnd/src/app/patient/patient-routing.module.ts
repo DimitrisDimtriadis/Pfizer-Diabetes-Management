@@ -5,6 +5,7 @@ import { ChartsDataComponent } from './charts-data/charts-data.component';
 import { InsertDataComponent } from './insert-data/insert-data.component';
 import { ListDataComponent } from './list-data/list-data.component';
 import { UpdateDataComponent } from './update-data/update-data.component';
+import { UpdateComponent } from './update/update.component';
 
 
 const routes: Routes = 
@@ -14,7 +15,7 @@ const routes: Routes =
 {path: 'updatedata',  component: UpdateDataComponent},
 {path: 'averagedata',  component: AverageDataComponent},
 {path: 'chartsdata',  component: ChartsDataComponent},
-
+{path: 'updateaccount',  component: UpdateComponent},
 ];
 
 @NgModule({

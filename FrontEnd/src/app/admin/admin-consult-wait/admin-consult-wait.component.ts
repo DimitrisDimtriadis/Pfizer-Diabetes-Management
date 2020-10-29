@@ -12,7 +12,6 @@ export class AdminConsultWaitComponent implements OnInit {
 
   ngOnInit(): void {
   }
-
   
 
 }

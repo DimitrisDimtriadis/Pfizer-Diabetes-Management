@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 
 import { Router } from '@angular/router';
+import { UserClass } from '../classes/UserClass';
+import { UserService } from '../services/user.service';
 
 @Component({
   selector: 'app-patient',
@@ -9,8 +11,19 @@ import { Router } from '@angular/router';
 })
 export class PatientComponent implements OnInit {
 
+  constructor(public Uservice:UserService,private _router: Router) { }
+    userObj:UserClass;
+
   ngOnInit(): void {
+    this.Uservice.getUserData().subscribe(
+      data=>{
+        this.userObj=data;
+          }
+    );
   }
 
-
+  logout(){
+    sessionStorage.setItem('LoginRole',"");
+    this._router.navigate(['login']);
+  }
 }
