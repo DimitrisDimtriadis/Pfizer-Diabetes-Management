@@ -13,9 +13,5 @@ export class DoctorAddPComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  logout(){
-    sessionStorage.setItem('LoginRole',"");
-    this._router.navigate(['login']);
-  }
-
+  
 }

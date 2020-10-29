@@ -29,6 +29,8 @@ import { UserService } from './services/user.service';
 import { FrontEndGuardD } from './classes/frontEndGuardD';
 import { FrontEndGuardA } from './classes/frontEndGuardA';
 import { FrontEndGuardP } from './classes/frontEndGuardP';
+import { DoctorNavComponent } from './doctor/doctor-nav/doctor-nav.component';
+import { AdminNavComponent } from './admin/admin-nav/admin-nav.component';
 
 
 
@@ -55,6 +57,8 @@ import { FrontEndGuardP } from './classes/frontEndGuardP';
     AdminNoActivityComponent,
     LogoutComponent,
     FooterComponent,
+    DoctorNavComponent,
+    AdminNavComponent,
 	  
  
   

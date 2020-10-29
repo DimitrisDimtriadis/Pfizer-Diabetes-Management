@@ -16,21 +16,14 @@ import { UserClass } from '../classes/UserClass';
 export class DoctorComponent implements OnInit {
 
   constructor(public Uservice:UserService,private _router: Router) { }
-    userObj:UserClass;
+   
 
 
   ngOnInit(){
-    this.Uservice.getUserData().subscribe(
-      data=>{
-        this.userObj=data;
-          }
-    );
+   
   }
 
-  logout(){
-    sessionStorage.setItem('LoginRole',"");
-    this._router.navigate(['login']);
-  }
+ 
 
 
 }

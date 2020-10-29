@@ -13,9 +13,6 @@ export class AdminConsultWaitComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  logout(){
-    sessionStorage.setItem('LoginRole',"");
-    this._router.navigate(['login']);
-  }
+  
 
 }
