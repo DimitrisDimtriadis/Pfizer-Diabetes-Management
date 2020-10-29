@@ -10,9 +10,8 @@ import { RegisterComponent } from './register/register.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { PatientComponent } from './patient/patient.component';
 import { HttpClientModule } from '@angular/common/http';
-import { PatientService } from './services/patient.service';
+
 import { DoctorComponent } from './doctor/doctor.component';
-import { DoctorService } from './services/doctor.service';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AdminComponent } from './admin/admin.component';
 import { NavComponent } from './nav/nav.component';
@@ -76,7 +75,7 @@ import { AdminNavComponent } from './admin/admin-nav/admin-nav.component';
     
     ],
 
-  providers: [PatientService,DoctorService,UserService,FrontEndGuardD,FrontEndGuardA,FrontEndGuardP],
+  providers: [UserService,FrontEndGuardD,FrontEndGuardA,FrontEndGuardP],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

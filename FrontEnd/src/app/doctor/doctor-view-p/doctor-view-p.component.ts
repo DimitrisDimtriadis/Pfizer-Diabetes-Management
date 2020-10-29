@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import {Chart} from '../../../../node_modules/chart.js/dist/chart.js';
 
@@ -10,9 +11,41 @@ import {Chart} from '../../../../node_modules/chart.js/dist/chart.js';
 export class DoctorViewPComponent implements OnInit {
   chart=[];
 
-  constructor(private _router: Router) { }
-
-  ngOnInit(): void {
+  userForm:FormGroup;
+    submitted = false;
+  
+    constructor(private formBuilder: FormBuilder,private _router: Router) { }
+    
+    ngOnInit(): void {
+      this.userForm= this.formBuilder.group({
+       
+        email:['', [Validators.required, Validators.email]],
+        dEnd :['', Validators.required],
+        dStart :['', Validators.required]
+      });
+    }
+    // convenience getter for easy access to form fields
+    get f() { return this.userForm.controls; }
+  
+    onSubmit() {
+        this.submitted = true;
+  
+        // stop here if form is invalid
+        if (this.userForm.invalid) {
+            return;
+        }
+  
+       
+    }
+  
+    numberOnly(event): boolean {
+      const charCode = (event.which) ? event.which : event.keyCode;
+      if (charCode > 31 && (charCode < 48 || charCode > 57)) {
+        return false;
+      }
+      return true;
+  
+    
 
     this.chart = new Chart('myChart', {
       type: 'line',
