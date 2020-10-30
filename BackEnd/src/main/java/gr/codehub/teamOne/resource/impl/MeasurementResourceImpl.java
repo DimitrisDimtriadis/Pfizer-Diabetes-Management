@@ -41,13 +41,17 @@ public class MeasurementResourceImpl extends ServerResource implements Measureme
     }
 
     @Override
-    public List<MeasurementDTO> getMeasurementForUser() throws NotFoundException {
-        List<Measurement> measurementList = measurementsRepository.findAll();
+    public List<MeasurementDTO> getMeasurementForUser(MeasurementsSearchParamDTO paramDTO) throws NotFoundException, BadEntityException {
 
-        List<MeasurementDTO> measurementDTOList = new ArrayList<>();
-        measurementList.forEach(measurementForUser -> measurementDTOList.add(MeasurementDTO.getMeasurementDTO(measurementForUser)));
+        String usrEmail = this.getRequest().getClientInfo().getUser().getIdentifier();
+        Users currentUser = userRepository.getUserInfo(usrEmail);
 
-        return measurementDTOList;
+        paramDTO.setUserID(currentUser.getId());
+
+        List<Measurement> listWithMeasurements = measurementsRepository.getSpecificMeasurements(paramDTO);
+        List<MeasurementDTO> listWithDTO = new ArrayList<>();
+        listWithMeasurements.forEach( ms -> listWithDTO.add(MeasurementDTO.getMeasurementDTO(ms)));
+        return listWithDTO;
     }
 
     @Override
