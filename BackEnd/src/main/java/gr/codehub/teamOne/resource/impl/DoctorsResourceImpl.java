@@ -35,7 +35,11 @@ public class DoctorsResourceImpl extends ServerResource implements DoctorsResour
     protected void doRelease() throws ResourceException {
         em.close();
     }
-
+    /**
+     * Method to get all the doctors from base
+     *
+     * @return Doctors Representation List of objects
+     */
     @Override
     public List<DoctorsDTO> getsDoctors() throws NotFoundException {
 

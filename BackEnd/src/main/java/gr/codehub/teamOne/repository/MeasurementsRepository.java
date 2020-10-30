@@ -32,7 +32,12 @@ public class MeasurementsRepository extends Repository<Measurement, Long> {
         return Measurement.class.getName();
     }
 
-
+    /**
+     * Method to search specific measurements in base, based on user id.
+     * @param paramDTO Object from MeasurementsSearchParamDTO
+     * @return a list with measurements .
+     * @throw new NotFoundException("Not found measurements")
+     */
     public List getSpecificMeasurements(MeasurementsSearchParamDTO paramDTO) throws BadEntityException, NotFoundException {
 
         if (paramDTO == null) throw new BadEntityException("Wrong input model");

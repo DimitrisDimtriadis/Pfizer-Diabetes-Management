@@ -50,7 +50,7 @@ public class MeasurementDTO {
      * Update  object baseMeasurement from updatesForMeasurements
      *
      * @param baseMeasurement (from base) and @param updatesForMeasurements(with the new values)
-     * @return Object basemeasurement with the  new changing values .
+     * @return Object baseMeasurement with the  new changing values .
      */
     static public Measurement updateMeasurement(Measurement baseMeasurement, MeasurementDTO updatesForMeasurements) {
 

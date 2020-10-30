@@ -30,7 +30,11 @@ public class ProfileResourceImpl extends ServerResource implements ProfileResour
     protected void doRelease() throws ResourceException {
         em.close();
     }
-
+    /**
+     * Method to get Profile information for a user using email to identify user.
+     * @return Profile information .
+     * @throws NotFoundException When there is no user with this email.
+     */
     @Override
     public UsersDTO getProfileInfo() throws NotFoundException {
 
@@ -42,7 +46,12 @@ public class ProfileResourceImpl extends ServerResource implements ProfileResour
         }
         return null;
     }
-
+    /**
+     * Method to Update  Profile information for a user using email to identify user.
+     * @param usersDTO Users Representation Object.
+     * @return Profile information .
+     * @throws NotFoundException When there is no user with this email.
+     */
     @Override
     public UsersDTO updateProfileInfo(UsersDTO usersDTO) throws NotFoundException {
 

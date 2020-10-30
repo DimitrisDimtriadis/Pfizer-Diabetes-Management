@@ -37,8 +37,11 @@ public class LoginRegisterResourceImpl extends ServerResource implements LoginRe
     protected void doRelease() throws ResourceException {
         em.close();
     }
-
-    //TODO: Check if there is use on it
+    /**
+     * Method to get all the users from base
+     *
+     * @return Users Representation List of objects
+     */
     @Override
     public List<UsersDTO> getsUsers() throws NotFoundException {
 
@@ -83,7 +86,7 @@ public class LoginRegisterResourceImpl extends ServerResource implements LoginRe
     @Override
     public UsersDTO addUser(UsersDTO usersDTO) throws BadEntityException {
 
-//        ResourceUtils.checkRole(this, GeneralFunctions.rolesWithAccess(false, true, true));
+//       ResourceUtils.checkRole(this, GeneralFunctions.rolesWithAccess(false, true, true));
         if (usersDTO == null) throw new BadEntityException("Null userException error");
         if (userRepository.checkIfAccountExist(usersDTO))
             throw new BadEntityException("Found entry with the same AMKA or email");

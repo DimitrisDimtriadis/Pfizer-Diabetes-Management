@@ -38,6 +38,10 @@ public class PatientResourceImpl extends ServerResource implements PatientResour
         em.close();
     }
 
+    /**
+     * Method to get all patients, checking the role .
+     * @return Patient Representation Object List .
+     */
     @Override
     public List<PatientDTO> getsPatients() throws NotFoundException {
 

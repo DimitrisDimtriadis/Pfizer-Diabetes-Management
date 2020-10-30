@@ -39,7 +39,12 @@ public class MeasurementResourceImpl extends ServerResource implements Measureme
     protected void doRelease() throws ResourceException {
         em.close();
     }
-
+    /**
+     * Method to get measurements for a specific user using email to identify the user.
+     * @param paramDTO Object of MeasurementsSearchParamDTO.
+     * @return Measurement Representation Object List with measurements for the user.
+     * @throws NotFoundException,BadEntityException
+     */
     @Override
     public List<MeasurementDTO> getMeasurementForUser(MeasurementsSearchParamDTO paramDTO) throws NotFoundException, BadEntityException {
 
@@ -53,7 +58,12 @@ public class MeasurementResourceImpl extends ServerResource implements Measureme
         listWithMeasurements.forEach( ms -> listWithDTO.add(MeasurementDTO.getMeasurementDTO(ms)));
         return listWithDTO;
     }
-
+    /**
+     * Method that remove a measurement.
+     * @param measurementDTO Object of DeleteMeasurementDTO.
+     * @return A message that measurement has successfully deleted.
+     * @throws NotFoundException,BadEntityException
+     */
     @Override
     public String removeMeasurement(DeleteMeasurementDTO measurementDTO) throws NotFoundException, BadEntityException {
 
@@ -62,6 +72,12 @@ public class MeasurementResourceImpl extends ServerResource implements Measureme
         return "Successfully deleted";
     }
 
+    /**
+     * Method that update a measurement.
+     * @param measurementDTO Object of Measurement Representation.
+     * @return A Measurement Representation Object with the new values .
+     * @throws NotFoundException,BadEntityException
+     */
     @Override
     public MeasurementDTO updateMeasurement(MeasurementDTO measurementDTO) throws NotFoundException, BadEntityException {
 
@@ -76,7 +92,12 @@ public class MeasurementResourceImpl extends ServerResource implements Measureme
 
         return measurementDTO;
     }
-
+    /**
+     * Method that add a measurement and using email to identify the user .
+     * @param measurementDTO Object of Measurement Representation.
+     * @return A message that measurement saved successfully .
+     * @throws NotFoundException,BadEntityException
+     */
     @Override
     public String addMeasurement(MeasurementDTO measurementDTO) throws NotFoundException, BadEntityException {
 

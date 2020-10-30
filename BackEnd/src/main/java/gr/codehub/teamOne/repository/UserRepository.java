@@ -30,7 +30,7 @@ public class UserRepository extends Repository<Users, Long> {
     }
 
     /**
-     * Function to check if user exist on base before saving
+     * Method that  check if user exist on base before saving, based on email and Social Security number(amka).
      *
      * @param usersDTO Object of user that want to save on base
      * @return if exist other entry return true
@@ -45,7 +45,7 @@ public class UserRepository extends Repository<Users, Long> {
         return userList.size() > 0;
     }
     /**
-     * Function to check if user exist on base
+     * Method that check if user exist on base using email and password.
      *
      * @param  loginCredentialDTO contains the email and password
      * @return user with this email and password.
@@ -60,7 +60,7 @@ public class UserRepository extends Repository<Users, Long> {
     /**
      * Search users with specific email.
      *
-     * @param usrEmail  Containts the email  to search user.
+     * @param usrEmail  Contains the email  to search user.
      * @return User that found.
      */
     public Users getUserInfo(String usrEmail) {
@@ -76,7 +76,7 @@ public class UserRepository extends Repository<Users, Long> {
     /**
      * Search users with specific role.
      *
-     * @param accessRole  Containts the role  to search user.
+     * @param accessRole  Contains the role  to search user.
      * @return Users that found.
      */
     public List getAllUsersBasedOnRole(AccessRole accessRole) {
@@ -89,7 +89,7 @@ public class UserRepository extends Repository<Users, Long> {
     /**
      * Search user with specific amka. If input contains role, checks also if role is given
      *
-     * @param usersSearchDTO Containts amka to search user. If containes also role, searching on this criteria
+     * @param usersSearchDTO Contains Social Security number(amka)to search user. In additional If contains and role, search on this criteria
      * @return User that found
      */
     public Users getUserBasedOnAmka(UsersSearchDTO usersSearchDTO) {
