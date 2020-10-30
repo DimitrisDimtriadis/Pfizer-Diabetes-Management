@@ -70,8 +70,6 @@ public class UserRepository extends Repository<Users, Long> {
     }
 
    public Users getUserBasedOnAmka(UsersDTO usersDTO){
-       ;
-
        List listWithAmka= entityManager.createQuery("from Users u where u.amka = :amka")
                .setParameter("amka",usersDTO.getAmka())
                .getResultList();
@@ -81,5 +79,4 @@ public class UserRepository extends Repository<Users, Long> {
 
        return null;
    }
-
 }

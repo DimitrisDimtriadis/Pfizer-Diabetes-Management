@@ -26,4 +26,3 @@ public interface MeasurementResource {
             throws NotFoundException, BadEntityException;
 }
 
-
