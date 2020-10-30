@@ -54,7 +54,7 @@ public class MeasurementResourceImpl extends ServerResource implements Measureme
     public String removeMeasurement(DeleteMeasurementDTO measurementDTO) throws NotFoundException, BadEntityException {
 
         if (measurementDTO==null) throw new BadEntityException("Null object as input");
-        measurementsRepository.deleteById(measurementDTO.getId());
+        measurementsRepository.deleteById(measurementDTO.getMeasurementID());
         return "Successfully deleted";
     }
 
