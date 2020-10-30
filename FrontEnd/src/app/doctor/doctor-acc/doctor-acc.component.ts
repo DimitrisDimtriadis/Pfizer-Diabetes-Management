@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { MustMatch } from 'src/app/_helpers/must-match.validator';
 import { FormBuilder, FormControl, FormGroup ,Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { UserClass } from 'src/app/classes/UserClass';
+import { UserService } from 'src/app/services/user.service';
 
 
 @Component({
@@ -13,22 +15,29 @@ export class DoctorAccComponent implements OnInit {
 
   userForm:FormGroup;
   submitted = false;
-
-  constructor(private formBuilder: FormBuilder,private _router: Router) { }
+  genders = ['NA','FEMALE', 'MALE']
+  userObj:UserClass;
+  constructor(private formBuilder: FormBuilder,private _router: Router,public Uservice:UserService) { }
   
   ngOnInit(): void {
+
+    this.Uservice.getUserData().subscribe(
+      data=>{
+        this.userObj=data;
+          }
+    );
+
     this.userForm= this.formBuilder.group({
       firstName:['', Validators.required],
       lastName: ['', Validators.required],
-      userName: ['', Validators.required],
-      email:['', [Validators.required, Validators.email]],
+  
       gender:['', Validators.required],
       password: ['', [Validators.required, Validators.minLength(6)]],
       confirmPassword:['', Validators.required],
-      dob :['', Validators.required],
+      address: [''],
       mobile:['', [Validators.required, Validators.minLength(10), Validators.maxLength(10)]],
-      phone:['', [Validators.required, Validators.minLength(10)]],
-      amka:['', [Validators.required, Validators.minLength(9),Validators.maxLength(9)]]
+      phone:['', [Validators.required, Validators.minLength(10)]]
+      
     }, {
       validator: MustMatch('password', 'confirmPassword')
     });
@@ -57,9 +66,6 @@ export class DoctorAccComponent implements OnInit {
 
   }
 
-  logout(){
-    sessionStorage.setItem('LoginRole',"");
-    this._router.navigate(['login']);
-  }
+ 
 
 }

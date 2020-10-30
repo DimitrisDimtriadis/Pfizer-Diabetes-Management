@@ -1,7 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
-
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { HomeComponent } from './home/home.component';
@@ -10,9 +9,7 @@ import { RegisterComponent } from './register/register.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { PatientComponent } from './patient/patient.component';
 import { HttpClientModule } from '@angular/common/http';
-import { PatientService } from './services/patient.service';
 import { DoctorComponent } from './doctor/doctor.component';
-import { DoctorService } from './services/doctor.service';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AdminComponent } from './admin/admin.component';
 import { NavComponent } from './nav/nav.component';
@@ -29,14 +26,8 @@ import { UserService } from './services/user.service';
 import { FrontEndGuardD } from './classes/frontEndGuardD';
 import { FrontEndGuardA } from './classes/frontEndGuardA';
 import { FrontEndGuardP } from './classes/frontEndGuardP';
-
-
-
-
-
-
-
-
+import { DoctorNavComponent } from './doctor/doctor-nav/doctor-nav.component';
+import { AdminNavComponent } from './admin/admin-nav/admin-nav.component';
 
 @NgModule({
   declarations: [
@@ -55,10 +46,8 @@ import { FrontEndGuardP } from './classes/frontEndGuardP';
     AdminNoActivityComponent,
     LogoutComponent,
     FooterComponent,
-	  
- 
-  
-  
+    DoctorNavComponent,
+    AdminNavComponent,	  
   ],
   imports: [
     BrowserAnimationsModule,
@@ -72,7 +61,7 @@ import { FrontEndGuardP } from './classes/frontEndGuardP';
     
     ],
 
-  providers: [PatientService,DoctorService,UserService,FrontEndGuardD,FrontEndGuardA,FrontEndGuardP],
+  providers: [UserService,FrontEndGuardD,FrontEndGuardA,FrontEndGuardP],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -25,7 +25,7 @@
     <h2 class="title text-center" style="padding:30px 0 30px;">Medical Data</h2>
     <div class="container" style="align-items: center; ">
 
-      <form [formGroup]="form">
+      <form [formGroup]="form" (submit)="formSumbit()">
         <div class="form-group row">
   
           <label class="col-form-label">From:</label>
@@ -53,8 +53,20 @@
           <th scope="col">Carb Intake</th>
           <th scope="col">Blood Glucose Level</th>
           <th scope="col">Date</th>
+          <th scope="col">Update</th>
+          <th scope="col">Delete</th>
 
       </thead>
+      <tbody *ngFor="let medi of mediData; let i = index">
+        <tr>
+          <th scope="row">{{i+1}}</th>
+          <td>{{medi.carbIntake}}</td>
+          <td>{{medi.bloodGlucoseLevel}}</td>
+          <td>{{medi.measurementDate | date:'medium' }}</td>
+          <td><button class="btn" type="submit" (click)="onClickUpdate('edit', medi.uri)"><i class="fa fa-edit fa-lg" aria-hidden="true"></i></button></td>
+          <td><button class="btn" type="submit" (click)="deleteMedidata(medi_uri)"><i class="fa fa-trash-o fa-lg" aria-hidden="true"></i></button></td>
+        </tr>
+    </tbody>
     </table>
   </div>
 

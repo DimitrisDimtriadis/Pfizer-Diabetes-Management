@@ -9,6 +9,7 @@ import { Router } from '@angular/router';
 })
 export class AverageDataComponent implements OnInit {
   form: FormGroup;
+
   constructor(private formBuilder: FormBuilder,private router: Router) { }
 
   ngOnInit(): void {
@@ -23,4 +24,3 @@ logout(){
   this.router.navigate(['login']);
 }
 }
-

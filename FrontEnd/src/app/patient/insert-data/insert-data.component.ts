@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { MeasurementsService } from 'src/app/services/measurements.service';
 
 @Component({
   selector: 'codehub-insert-data',
@@ -11,13 +12,14 @@ export class InsertDataComponent implements OnInit {
   insertform: FormGroup;
   submitted = false;
   
-  constructor(private formBuilder: FormBuilder,private router: Router) { }
+  constructor(private formBuilder: FormBuilder,
+    public data:MeasurementsService, private router: Router) { }
 
   ngOnInit(): void {
     this.insertform = this.formBuilder.group({
-      carb: ['', Validators.required],
-      glucose:['', Validators.required],
-      measuredDate: [''],
+      carbIntake: ['', Validators.required],
+      bloodGlucoseLevel:['', Validators.required],
+     
     });
   }
   logout(){
@@ -35,8 +37,17 @@ export class InsertDataComponent implements OnInit {
      if (this.insertform.invalid) {
          return;
      }
+     this.data.addMeasurements.carbIntake= this.insertform.get('carbIntake').value;
+     this.data.addMeasurements.bloodGlucoseLevel=this.insertform.get('bloodGlucoseLevel').value;
 
-     alert('SUCCESS!! :-)\n\n' + JSON.stringify(this.insertform.value))
+     this.data.addDataMeasurements(this.data.addMeasurements).subscribe(
+      (response) => console.log(response),
+          (error) => console.log(error));
+         // sessionStorage.setItem("credentials",  this.userS.currentUser.email + ":" + this.userS.currentUser.password)
+         // sessionStorage.setItem("modified", "false")
+          alert('Your measurment has bees inserted!!');
+          this.router.navigate(['listdata']);
+
  }
   }
 

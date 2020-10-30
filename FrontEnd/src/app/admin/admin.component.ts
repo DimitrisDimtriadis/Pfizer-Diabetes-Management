@@ -53,5 +53,4 @@ export class AdminComponent implements OnInit {
       sessionStorage.setItem('LoginRole',"");
       this._router.navigate(['login']);
     }
-
 }

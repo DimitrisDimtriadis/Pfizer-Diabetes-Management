@@ -59,5 +59,8 @@ export class UserService {
   getUserData():Observable<any>{
     return this.http.get(this.urlGetUserdata,headerOption);
   }
+  editUserData(user:UserClass):Observable<UserClass>{​​​​​​​​ 
+    return this.http.put<UserClass>(this.urlGetUserdata,user,headerOption);
+}​​​​​​​​
 
 }

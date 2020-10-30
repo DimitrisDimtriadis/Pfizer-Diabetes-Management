@@ -21,7 +21,7 @@ import { UpdateComponent } from './update/update.component';
     FormsModule,
   ],
   exports:[
-    InsertDataComponent
+    //InsertDataComponent
   ]
 })
 export class PatientModule { }
