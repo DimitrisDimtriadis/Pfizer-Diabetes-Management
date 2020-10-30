@@ -37,18 +37,41 @@ public class MeasurementsRepository extends Repository<Measurement, Long> {
 
         if (paramDTO == null) throw new BadEntityException("Wrong input model");
 
-        String mQuery = "from Users u where";
+        Query baseQuery;
+        boolean hasID = (paramDTO.getUserID() != null);
+        boolean hasStart = (paramDTO.getStartAt() != null);
+        boolean hasEnd = (paramDTO.getEndAt() != null);
 
-        if (paramDTO.getUserID() != null) {
-            mQuery += " user_id = :userid";
+        if(hasID && hasStart && hasEnd){
+            baseQuery = entityManager.createQuery("from Measurement m where user_id = :userid and measurementDate > :startAt and measurementDate < :endAt")
+                    .setParameter("userid", paramDTO.getUserID())
+                    .setParameter("startAt", paramDTO.getStartAt())
+                    .setParameter("endAt", paramDTO.getEndAt());
+
+        } else if(hasID && hasStart) {
+            baseQuery = entityManager.createQuery("from Measurement m where user_id = :userid and measurementDate > :startAt")
+                    .setParameter("userid", paramDTO.getUserID())
+                    .setParameter("startAt", paramDTO.getStartAt());
+        } else if(hasStart && hasEnd){
+            baseQuery = entityManager.createQuery("from Measurement m where measurementDate > :startAt and measurementDate < :endAt")
+                    .setParameter("startAt", paramDTO.getStartAt())
+                    .setParameter("endAt", paramDTO.getEndAt());
+        } else if(hasID && hasEnd){
+            baseQuery = entityManager.createQuery("from Measurement m where user_id = :userid and measurementDate < :endAt")
+                    .setParameter("userid", paramDTO.getUserID())
+                    .setParameter("endAt", paramDTO.getEndAt());
+        } else if(hasEnd){
+            baseQuery = entityManager.createQuery("from Measurement m where measurementDate < :endAt")
+                    .setParameter("endAt", paramDTO.getEndAt());
+        } else if(hasStart){
+            baseQuery = entityManager.createQuery("from Measurement m where measurementDate > :startAt")
+                    .setParameter("startAt", paramDTO.getStartAt());
+        } else if(hasID){
+            baseQuery = entityManager.createQuery("from Measurement m where user_id = :userid")
+                    .setParameter("userid", paramDTO.getUserID());
+        } else {
+            baseQuery = entityManager.createQuery("from Measurement");
         }
-        if (paramDTO.getStartAt() != null && paramDTO.getEndAt() != null) {
-
-            mQuery += paramDTO.getUserID() != null ? " and " : " ";
-        }
-        Query baseQuery = entityManager.createQuery(mQuery)
-                .setParameter("userid", paramDTO.getUserID());
-
 
         List listWithMeasurements = baseQuery.getResultList();
 

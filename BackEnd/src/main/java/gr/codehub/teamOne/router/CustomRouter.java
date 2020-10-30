@@ -16,8 +16,6 @@ public class CustomRouter {
 
         Router router = new Router(application.getContext());
 
-//        router.attach("/measurements", MeasurementResourceImpl.class);
-//        router.attach("/users", LoginRegisterResourceImpl.class);
         router.attach("/patient", PatientResourceImpl.class);
         router.attach("/doctors", DoctorsResourceImpl.class);
         router.attach("/profile", ProfileResourceImpl.class);
@@ -27,10 +25,10 @@ public class CustomRouter {
     }
 
     public Router publicResources() {
+
         Router router = new Router();
         router.attach("/ping", PingServerResourceImpl.class);
         router.attach("/users", LoginRegisterResourceImpl.class);
-
         router.attach("/users/amka", UsersResourceImpl.class);
 
         return router;
