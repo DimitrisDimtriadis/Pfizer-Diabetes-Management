@@ -89,6 +89,7 @@ public class LoginRegisterResourceImpl extends ServerResource implements LoginRe
             throw new BadEntityException("Found entry with the same AMKA or email");
 
         Users users = UsersDTO.getUsers(usersDTO);
+        users.setVisibility(true);
         userRepository.save(users);
         return UsersDTO.getUsersDTO(users);
     }

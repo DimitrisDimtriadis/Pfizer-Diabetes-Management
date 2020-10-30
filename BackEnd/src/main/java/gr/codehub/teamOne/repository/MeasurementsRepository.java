@@ -4,7 +4,6 @@ import gr.codehub.teamOne.model.Measurement;
 import gr.codehub.teamOne.repository.lib.Repository;
 
 import javax.persistence.EntityManager;
-import java.util.Optional;
 
 public class MeasurementsRepository extends Repository<Measurement, Long> {
 
@@ -23,15 +22,5 @@ public class MeasurementsRepository extends Repository<Measurement, Long> {
     @Override
     public String getEntityClassName() {
         return Measurement.class.getName();
-    }
-
-    @Override
-    public Optional<Measurement> findById(long id) {
-        return super.findById(id);
-    }
-
-    @Override
-    public boolean deleteById(Long id) {
-        return false;
     }
 }

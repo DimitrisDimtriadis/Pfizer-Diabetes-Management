@@ -7,6 +7,7 @@ import gr.codehub.teamOne.model.Users;
 import gr.codehub.teamOne.repository.MeasurementsRepository;
 import gr.codehub.teamOne.repository.UserRepository;
 import gr.codehub.teamOne.repository.util.JpaUtil;
+import gr.codehub.teamOne.representation.DeleteMeasurementDTO;
 import gr.codehub.teamOne.representation.MeasurementDTO;
 import gr.codehub.teamOne.resource.MeasurementResource;
 import org.restlet.resource.ResourceException;
@@ -49,8 +50,10 @@ public class MeasurementResourceImpl extends ServerResource implements Measureme
     }
 
     @Override
-    public void removeMeasurement() throws NotFoundException {
+    public void removeMeasurement(DeleteMeasurementDTO measurementDTO) throws NotFoundException, BadEntityException {
 
+        if (measurementDTO==null) throw new BadEntityException("Null object as input");
+        measurementsRepository.deleteById(measurementDTO.getId());
     }
 
     @Override

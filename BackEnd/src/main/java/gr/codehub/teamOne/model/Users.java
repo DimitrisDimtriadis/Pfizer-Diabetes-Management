@@ -37,4 +37,6 @@ public class Users {
     private Gender gender;
     private Date registration_date;
     private Date lastLogin;
+
+    private Boolean visibility;
 }
