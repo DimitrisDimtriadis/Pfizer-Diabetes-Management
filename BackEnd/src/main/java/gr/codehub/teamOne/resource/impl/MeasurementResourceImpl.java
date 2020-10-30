@@ -9,6 +9,7 @@ import gr.codehub.teamOne.repository.UserRepository;
 import gr.codehub.teamOne.repository.util.JpaUtil;
 import gr.codehub.teamOne.representation.DeleteMeasurementDTO;
 import gr.codehub.teamOne.representation.MeasurementDTO;
+import gr.codehub.teamOne.representation.MeasurementsSearchParamDTO;
 import gr.codehub.teamOne.resource.MeasurementResource;
 import org.restlet.resource.ResourceException;
 import org.restlet.resource.ServerResource;
@@ -50,10 +51,11 @@ public class MeasurementResourceImpl extends ServerResource implements Measureme
     }
 
     @Override
-    public void removeMeasurement(DeleteMeasurementDTO measurementDTO) throws NotFoundException, BadEntityException {
+    public String removeMeasurement(DeleteMeasurementDTO measurementDTO) throws NotFoundException, BadEntityException {
 
         if (measurementDTO==null) throw new BadEntityException("Null object as input");
         measurementsRepository.deleteById(measurementDTO.getId());
+        return "Successfully deleted";
     }
 
     @Override
@@ -88,5 +90,14 @@ public class MeasurementResourceImpl extends ServerResource implements Measureme
         measurementToSave.setUser(demandedUser.get());
         measurementsRepository.save(measurementToSave);
         return "Measurement saved successfully !";
+    }
+
+    @Override
+    public List<MeasurementDTO> getAllMeasurementsBasedOn(MeasurementsSearchParamDTO paramDTO) throws NotFoundException, BadEntityException {
+        List<Measurement> listWithMeasurements = measurementsRepository.getSpecificMeasurements(paramDTO);
+        List<MeasurementDTO> listWithDTO = new ArrayList<>();
+        listWithMeasurements.forEach( ms -> listWithDTO.add(MeasurementDTO.getMeasurementDTO(ms)));
+
+        return listWithDTO;
     }
 }
