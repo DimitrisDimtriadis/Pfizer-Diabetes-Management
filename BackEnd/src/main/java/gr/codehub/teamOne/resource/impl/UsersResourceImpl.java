@@ -35,12 +35,10 @@ public class UsersResourceImpl extends ServerResource implements UsersResource {
     @Override
     public UsersDTO findUserByAmka(UsersDTO usersDTO) throws NotFoundException {
 
-      Users person = userRepository.getUserBasedOnAmka(usersDTO);
+        Users person = userRepository.getUserBasedOnAmka(usersDTO);
 
-      //TODO: Check if there is no entry
-      if(person!=null){
-          return UsersDTO.getUsersDTO(person);
-      }
-        return null;
+        //TODO: Check if there is no entry
+        if (person != null) throw new NotFoundException("There is no user with this amka");
+        return UsersDTO.getUsersDTO(person);
     }
 }
