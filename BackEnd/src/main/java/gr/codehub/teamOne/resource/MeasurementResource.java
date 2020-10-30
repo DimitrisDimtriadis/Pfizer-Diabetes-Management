@@ -3,7 +3,9 @@ package gr.codehub.teamOne.resource;
 import gr.codehub.teamOne.exceptions.BadEntityException;
 import gr.codehub.teamOne.exceptions.NotFoundException;
 import gr.codehub.teamOne.model.Measurement;
+import gr.codehub.teamOne.representation.DeleteMeasurementDTO;
 import gr.codehub.teamOne.representation.MeasurementDTO;
+import gr.codehub.teamOne.representation.MeasurementsSearchParamDTO;
 import gr.codehub.teamOne.representation.PatientDTO;
 import org.restlet.resource.*;
 
@@ -15,7 +17,7 @@ public interface MeasurementResource {
     List<MeasurementDTO> getMeasurementForUser() throws NotFoundException;
 
     @Delete
-    void removeMeasurement() throws NotFoundException;
+    String removeMeasurement(DeleteMeasurementDTO deleteMeasurementDTO) throws NotFoundException, BadEntityException;
 
     @Put("json")
     MeasurementDTO updateMeasurement(MeasurementDTO measurementDTO)
@@ -24,6 +26,8 @@ public interface MeasurementResource {
     @Post("json")
     String addMeasurement(MeasurementDTO measurementDTO)
             throws NotFoundException, BadEntityException;
-}
 
+    @Patch("json")
+    List<MeasurementDTO> getAllMeasurementsBasedOn(MeasurementsSearchParamDTO paramDTO) throws NotFoundException, BadEntityException;
+}
 

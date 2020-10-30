@@ -33,6 +33,7 @@ public class ProfileResourceImpl extends ServerResource implements ProfileResour
 
     @Override
     public UsersDTO getProfileInfo() throws NotFoundException {
+
         String usrEmail = this.getRequest().getClientInfo().getUser().getIdentifier();
 
         Users user = userRepository.getUserInfo(usrEmail);
@@ -41,4 +42,18 @@ public class ProfileResourceImpl extends ServerResource implements ProfileResour
         }
         return null;
     }
+
+    @Override
+    public UsersDTO updateProfileInfo(UsersDTO usersDTO) throws NotFoundException {
+
+        String usrEmail = this.getRequest().getClientInfo().getUser().getIdentifier();
+
+        Users user = userRepository.getUserInfo(usrEmail);
+        if (user != null){
+            userRepository.save(UsersDTO.updateUserDTO(user, usersDTO));
+            return UsersDTO.getUsersDTO(user);
+        }
+        return null;
+    }
 }
+
