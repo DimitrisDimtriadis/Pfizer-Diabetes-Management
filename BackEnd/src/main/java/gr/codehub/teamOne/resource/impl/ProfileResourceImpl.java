@@ -55,8 +55,5 @@ public class ProfileResourceImpl extends ServerResource implements ProfileResour
         }
         return null;
     }
-<<<<<<< HEAD
 }
-=======
-}
->>>>>>> hibernateAddition
+

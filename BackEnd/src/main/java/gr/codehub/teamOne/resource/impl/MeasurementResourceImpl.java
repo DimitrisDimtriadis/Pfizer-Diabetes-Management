@@ -57,17 +57,13 @@ public class MeasurementResourceImpl extends ServerResource implements Measureme
     public MeasurementDTO updateMeasurement(MeasurementDTO measurementDTO) throws NotFoundException, BadEntityException {
 
         if(measurementDTO == null) throw new BadEntityException("Null measurement Exception error");
-        Optional<Users>opUser=userRepository.findById(measurementDTO.getUser());
-        setExisting(opUser.isPresent());
+        if(measurementDTO.getMeasurementID() == null) throw new BadEntityException("No measurement id to update");
 
-        if(isExisting()){
-            Measurement measurementToUpdate = MeasurementDTO.getMeasurement(measurementDTO);
-            measurementToUpdate.setBloodGlucoseLevel(measurementDTO.getBloodGlucoseLevel());
-            measurementToUpdate.setCarbIntake(measurementDTO.getCarbIntake());
-            measurementToUpdate.setUser(opUser.get());
-            measurementsRepository.save(measurementToUpdate);
+        Optional<Measurement> demandMeasurement = measurementsRepository.findById(measurementDTO.getMeasurementID());
+        if(!demandMeasurement.isPresent()) throw new NotFoundException("Not such measure");
 
-        }else throw new NotFoundException("Not such user");
+        Measurement measurementToUpdate = MeasurementDTO.updateMeasurement(demandMeasurement.get(), measurementDTO);
+        measurementsRepository.save(measurementToUpdate);
 
         return measurementDTO;
     }

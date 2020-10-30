@@ -5,6 +5,7 @@ import gr.codehub.teamOne.model.Users;
 import gr.codehub.teamOne.repository.UserRepository;
 import gr.codehub.teamOne.repository.util.JpaUtil;
 import gr.codehub.teamOne.representation.UsersDTO;
+import gr.codehub.teamOne.representation.UsersSearchDTO;
 import gr.codehub.teamOne.resource.UsersResource;
 import org.restlet.resource.ResourceException;
 import org.restlet.resource.ServerResource;
@@ -33,12 +34,10 @@ public class UsersResourceImpl extends ServerResource implements UsersResource {
     }
 
     @Override
-    public UsersDTO findUserByAmka(UsersDTO usersDTO) throws NotFoundException {
+    public UsersDTO findUserByAmka(UsersSearchDTO usersSearchDTO) throws NotFoundException {
 
-        Users person = userRepository.getUserBasedOnAmka(usersDTO);
-
-        //TODO: Check if there is no entry
-        if (person != null) throw new NotFoundException("There is no user with this amka");
+        Users person = userRepository.getUserBasedOnAmka(usersSearchDTO);
+        if (person == null) throw new NotFoundException("There is no user with this amka");
         return UsersDTO.getUsersDTO(person);
     }
 }

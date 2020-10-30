@@ -4,6 +4,7 @@ import gr.codehub.teamOne.model.Users;
 import gr.codehub.teamOne.repository.lib.Repository;
 import gr.codehub.teamOne.representation.LoginCredentialDTO;
 import gr.codehub.teamOne.representation.UsersDTO;
+import gr.codehub.teamOne.representation.UsersSearchDTO;
 import gr.codehub.teamOne.security.AccessRole;
 
 import javax.persistence.EntityManager;
@@ -56,7 +57,7 @@ public class UserRepository extends Repository<Users, Long> {
                 .setParameter("email", usrEmail)
                 .getResultList();
 
-        if(tempListWithInfo.size() > 0){
+        if (tempListWithInfo.size() > 0) {
             return (Users) tempListWithInfo.get(0);
         }
         return null;
@@ -69,14 +70,25 @@ public class UserRepository extends Repository<Users, Long> {
                 .getResultList();
     }
 
-   public Users getUserBasedOnAmka(UsersDTO usersDTO){
-       List listWithAmka= entityManager.createQuery("from Users u where u.amka = :amka")
-               .setParameter("amka",usersDTO.getAmka())
-               .getResultList();
-       if(listWithAmka.size()>0){
-           return (Users) listWithAmka.get(0);
-       }
+    /**
+     * Search user with specific amka. If input contains role, checks also if role is given
+     *
+     * @param usersSearchDTO Containts amka to search user. If containes also role, searching on this criteria
+     * @return User that found
+     */
+    public Users getUserBasedOnAmka(UsersSearchDTO usersSearchDTO) {
 
-       return null;
-   }
+        List listWithAmka = entityManager.createQuery("from Users u where amka = :amka")
+                .setParameter("amka", usersSearchDTO.getAmka())
+                .getResultList();
+
+        if (listWithAmka.size() > 0 ) {
+
+            Users tempUsr = (Users) listWithAmka.get(0);
+            if(usersSearchDTO.getRole() == null || usersSearchDTO.getRole() == tempUsr.getAccountType()) {
+                return (Users) listWithAmka.get(0);
+            }
+        }
+        return null;
+    }
 }
