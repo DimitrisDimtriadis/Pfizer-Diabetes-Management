@@ -32,6 +32,7 @@ public class MeasurementsRepository extends Repository<Measurement, Long> {
         return Measurement.class.getName();
     }
 
+
     public List getSpecificMeasurements(MeasurementsSearchParamDTO paramDTO) throws BadEntityException, NotFoundException {
 
         if (paramDTO == null) throw new BadEntityException("Wrong input model");

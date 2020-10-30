@@ -44,7 +44,12 @@ public class UserRepository extends Repository<Users, Long> {
 
         return userList.size() > 0;
     }
-
+    /**
+     * Function to check if user exist on base
+     *
+     * @param  loginCredentialDTO contains the email and password
+     * @return user with this email and password.
+     */
     public List findUserWithCredential(LoginCredentialDTO loginCredentialDTO) {
         return entityManager.createQuery("from Users u where u.email = :email and u.password = :password")
                 .setParameter("email", loginCredentialDTO.getUserEmail())
@@ -52,6 +57,12 @@ public class UserRepository extends Repository<Users, Long> {
                 .getResultList();
     }
 
+    /**
+     * Search users with specific email.
+     *
+     * @param usrEmail  Containts the email  to search user.
+     * @return User that found.
+     */
     public Users getUserInfo(String usrEmail) {
         List tempListWithInfo = entityManager.createQuery("from Users u where u.email = :email")
                 .setParameter("email", usrEmail)
@@ -62,7 +73,12 @@ public class UserRepository extends Repository<Users, Long> {
         }
         return null;
     }
-
+    /**
+     * Search users with specific role.
+     *
+     * @param accessRole  Containts the role  to search user.
+     * @return Users that found.
+     */
     public List getAllUsersBasedOnRole(AccessRole accessRole) {
 
         return entityManager.createQuery("from Users u where u.accountType = :accessRole")

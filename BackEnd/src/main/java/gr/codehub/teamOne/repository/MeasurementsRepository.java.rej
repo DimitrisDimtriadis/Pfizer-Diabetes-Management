@@ -1,0 +1,37 @@
+diff a/BackEnd/src/main/java/gr/codehub/teamOne/repository/MeasurementsRepository.java b/BackEnd/src/main/java/gr/codehub/teamOne/repository/MeasurementsRepository.java	(rejected hunks)
+@@ -25,10 +25,33 @@
+     @Override
+     public Class<Measurement> getEntityClass() {
+         return Measurement.class;
+-     }
++    }
+ 
+     @Override
+     public String getEntityClassName() {
+         return Measurement.class.getName();
+     }
++
++    public List getSpecificMeasurements(MeasurementsSearchParamDTO paramDTO) throws BadEntityException, NotFoundException {
++
++        if (paramDTO == null) throw new BadEntityException("Wrong input model");
++
++        String mQuery = "from Users u where";
++
++        if (paramDTO.getUserID() != null) {
++            mQuery += " user_id = :userid";
++        }
++        if (paramDTO.getStartAt() != null && paramDTO.getEndAt() != null) {
++
++            mQuery += paramDTO.getUserID() != null ? " and " : " ";
++        }
++        Query baseQuery = entityManager.createQuery(mQuery)
++                .setParameter("userid", paramDTO.getUserID());
++
++
++        List listWithMeasurements = baseQuery.getResultList();
++
++        if (listWithMeasurements.size() == 0) throw new NotFoundException("Not found measurements");
++        return listWithMeasurements;
++    }
+ }
+\ No newline at end of file
