@@ -4,6 +4,8 @@ import gr.codehub.teamOne.model.Users;
 import gr.codehub.teamOne.security.AccessRole;
 import lombok.Data;
 
+import java.util.Date;
+
 @Data
 public class DoctorsDTO {
 
@@ -16,6 +18,7 @@ public class DoctorsDTO {
     private String phone_number;
     private String address;
     private AccessRole accountType;
+
 
     /**
      *Mapper: Convert a Doctor Representation Object to Users Object.
