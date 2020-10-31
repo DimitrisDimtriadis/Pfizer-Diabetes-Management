@@ -11,7 +11,7 @@ import java.util.List;
 public interface PatientDoctorAssociationResource {
 
     @Get("json")
-    List<PatientDoctorAssociationDTO> getAllAssociations();
+    List<PatientDoctorAssociationDTO> getAllAssociations() throws BadEntityException;
 
     @Post("json")
     PatientDoctorAssociationDTO addNewAssociation(PatientDoctorAssociationDTO newAssociationDTO) throws BadEntityException, WrongUserRoleException;

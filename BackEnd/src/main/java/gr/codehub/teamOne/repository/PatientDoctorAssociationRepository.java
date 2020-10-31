@@ -36,4 +36,10 @@ public class PatientDoctorAssociationRepository extends Repository<gr.codehub.te
         }
         return null;
     }
+
+    public List<PatientDoctorAssociation> getPatientWithoutDoctor(boolean withDoctor) {
+
+        return entityManager.createQuery("from PatientDoctorAssociation where doctor_id " + (withDoctor ?"!= NULL" : "= NULL"))
+                .getResultList();
+    }
 }

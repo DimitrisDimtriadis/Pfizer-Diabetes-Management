@@ -23,6 +23,7 @@ public class PatientDoctorAssociationResourceImpl extends ServerResource impleme
     private UserRepository userRepository;
     private PatientDoctorAssociationRepository associationRepository;
     private EntityManager em;
+    private Long categoryType;
 
     @Override
     protected void doInit() throws ResourceException {
@@ -30,6 +31,13 @@ public class PatientDoctorAssociationResourceImpl extends ServerResource impleme
             em = JpaUtil.getEntityManager();
             userRepository = new UserRepository(em);
             associationRepository = new PatientDoctorAssociationRepository(em);
+
+            String tempCategory = getQueryValue("categoryType");
+            if (tempCategory != null){
+                categoryType = Long.parseLong(getQueryValue("categoryType"));
+            } else {
+                categoryType = null;
+            }
         }catch(Exception e){
             throw new ResourceException(e);
         }
@@ -40,14 +48,33 @@ public class PatientDoctorAssociationResourceImpl extends ServerResource impleme
         em.close();
     }
 
+    /**
+     * Base on categoryType (url attribute) user gives, it return a list
+     * null = All associations
+     * 1 = patients without Doctor
+     * 2 = patients with Doctors
+     *
+     * @return List with association
+     */
     @Override
-    public List<PatientDoctorAssociationDTO> getAllAssociations() {
+    public List<PatientDoctorAssociationDTO> getAllAssociations() throws BadEntityException {
 
-        List<PatientDoctorAssociation> asd = associationRepository.findAll();
-        List<PatientDoctorAssociationDTO> templist = new ArrayList<>();
-        asd.forEach(mObj -> templist.add(PatientDoctorAssociationDTO.getAssociation(mObj)));
+        List<PatientDoctorAssociationDTO> tempListAssociationsDTO = new ArrayList<>();
+        List<PatientDoctorAssociation> associationsList;
 
-        return templist;
+        if(categoryType == null){
+            associationsList = associationRepository.findAll();
+        } else if(categoryType == 2){
+            associationsList = associationRepository.getPatientWithoutDoctor(true);
+        } else if(categoryType == 1){
+            associationsList = associationRepository.getPatientWithoutDoctor(false);
+        } else {
+            throw new BadEntityException("Wrong categoryType url attribute");
+        }
+
+        associationsList.forEach(mObj -> tempListAssociationsDTO.add(PatientDoctorAssociationDTO.getAssociation(mObj)));
+
+        return tempListAssociationsDTO;
     }
 
     @Override

@@ -23,7 +23,11 @@ public class PatientDoctorAssociationDTO {
 
         PatientDoctorAssociationDTO mAssociationDTO = new PatientDoctorAssociationDTO();
         mAssociationDTO.setPatient(mAssociation.getPatient().getId());
-        mAssociationDTO.setDoctor(mAssociation.getDoctor().getId());
+
+        if (mAssociation.getDoctor() != null){
+            mAssociationDTO.setDoctor(mAssociation.getDoctor().getId());
+        }
+
         mAssociationDTO.setLastConsulate(mAssociation.getLastConsulate());
         return mAssociationDTO;
     }
