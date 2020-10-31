@@ -116,14 +116,18 @@ public class MeasurementResourceImpl extends ServerResource implements Measureme
         measurementsRepository.save(measurementToSave);
         return "Measurement saved successfully !";
     }
-
+    /**
+     * Method that get all measurements based on user id and time constraints(start date and end date) .
+     * @param paramDTO Object of Measurement Search Representation.
+     * @return  A Measurement Object list.
+     * @throws NotFoundException,BadEntityException
+     */
     @Override
     public List<MeasurementDTO> getAllMeasurementsBasedOn(MeasurementsSearchParamDTO paramDTO) throws NotFoundException, BadEntityException {
 
         List<Measurement> listWithMeasurements = measurementsRepository.getSpecificMeasurements(paramDTO);
         List<MeasurementDTO> listWithDTO = new ArrayList<>();
         listWithMeasurements.forEach( ms -> listWithDTO.add(MeasurementDTO.getMeasurementDTO(ms)));
-
         return listWithDTO;
     }
 }
