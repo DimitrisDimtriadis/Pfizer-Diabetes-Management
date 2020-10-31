@@ -21,6 +21,8 @@ public class CustomRouter {
         router.attach("/profile", ProfileResourceImpl.class);
         router.attach("/measurements", MeasurementResourceImpl.class);
         router.attach("/associations", PatientDoctorAssociationResourceImpl.class);
+        router.attach("/consultation", ConsultationResourceImpl.class);
+        router.attach("/users/amka", UsersResourceImpl.class);
 
         return router;
     }
@@ -28,9 +30,9 @@ public class CustomRouter {
     public Router publicResources() {
 
         Router router = new Router();
+
         router.attach("/ping", PingServerResourceImpl.class);
         router.attach("/users", LoginRegisterResourceImpl.class);
-        router.attach("/users/amka", UsersResourceImpl.class);
 
         return router;
     }
