@@ -33,11 +33,7 @@ public class PatientDoctorAssociationResourceImpl extends ServerResource impleme
             associationRepository = new PatientDoctorAssociationRepository(em);
 
             String tempCategory = getQueryValue("categoryType");
-            if (tempCategory != null){
-                categoryType = Long.parseLong(getQueryValue("categoryType"));
-            } else {
-                categoryType = null;
-            }
+            categoryType = (tempCategory != null) ? Long.parseLong(getQueryValue("categoryType")) : null;
         }catch(Exception e){
             throw new ResourceException(e);
         }

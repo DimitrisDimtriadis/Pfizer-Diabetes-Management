@@ -2,7 +2,7 @@ package gr.codehub.teamOne.resource;
 
 import gr.codehub.teamOne.exceptions.BadEntityException;
 import gr.codehub.teamOne.exceptions.NotFoundException;
-import gr.codehub.teamOne.representation.DeleteMeasurementDTO;
+import gr.codehub.teamOne.representation.MeasurementDeleteDTO;
 import gr.codehub.teamOne.representation.MeasurementDTO;
 import gr.codehub.teamOne.representation.MeasurementsSearchParamDTO;
 import org.restlet.resource.*;
@@ -12,7 +12,7 @@ import java.util.List;
 public interface MeasurementResource {
 
     @Delete
-    String removeMeasurement(DeleteMeasurementDTO deleteMeasurementDTO) throws NotFoundException, BadEntityException;
+    String deleteMeasurement(MeasurementDeleteDTO measurementDeleteDTO) throws NotFoundException, BadEntityException;
 
     @Put("json")
     MeasurementDTO updateMeasurement(MeasurementDTO measurementDTO)

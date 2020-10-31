@@ -10,12 +10,10 @@ public class PatientDoctorAssociationDTO {
 
     private long patient;
     private Long doctor;
-    private Date lastConsulate;
 
     public static PatientDoctorAssociation getAssociation(PatientDoctorAssociationDTO mAssociationDTO){
 
         PatientDoctorAssociation mAssociation = new PatientDoctorAssociation();
-        mAssociation.setLastConsulate(mAssociationDTO.getLastConsulate());
         return mAssociation;
     }
 
@@ -27,8 +25,6 @@ public class PatientDoctorAssociationDTO {
         if (mAssociation.getDoctor() != null){
             mAssociationDTO.setDoctor(mAssociation.getDoctor().getId());
         }
-
-        mAssociationDTO.setLastConsulate(mAssociation.getLastConsulate());
         return mAssociationDTO;
     }
 }

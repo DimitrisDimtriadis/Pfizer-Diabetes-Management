@@ -27,11 +27,26 @@ public class ConsultationDTO {
     public static ConsultationDTO getConsultationDTO(Consultation consultation){
 
         ConsultationDTO consultationDTO = new ConsultationDTO();
+        consultationDTO.setConsultationID(consultation.getId());
         consultationDTO.setPatientID(consultation.getPatient().getId());
         consultationDTO.setRegisterDate(consultation.getRegisterDate());
         consultationDTO.setConsultationMsg(consultationDTO.getConsultationMsg());
         consultationDTO.setIsRead(consultation.isRead());
 
         return consultationDTO;
+    }
+
+    public static Consultation updateModel(Consultation baseConsultation, ConsultationDTO updatedConsultation){
+
+        if(updatedConsultation.getRegisterDate() != null){
+            baseConsultation.setRegisterDate(updatedConsultation.getRegisterDate());
+        }
+        if(updatedConsultation.getConsultationMsg() != null){
+            baseConsultation.setConsultationMsg(updatedConsultation.getConsultationMsg());
+        }
+        if(updatedConsultation.getIsRead() != null){
+            baseConsultation.setRead(updatedConsultation.getIsRead());
+        }
+        return baseConsultation;
     }
 }

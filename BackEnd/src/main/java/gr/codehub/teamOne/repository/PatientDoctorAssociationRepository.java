@@ -37,7 +37,7 @@ public class PatientDoctorAssociationRepository extends Repository<PatientDoctor
         return null;
     }
 
-    public List<PatientDoctorAssociation> getPatientWithoutDoctor(boolean withDoctor) {
+    public List getPatientWithoutDoctor(boolean withDoctor) {
 
         return entityManager.createQuery("from PatientDoctorAssociation where doctor_id " + (withDoctor ?"!= NULL" : "= NULL"))
                 .getResultList();

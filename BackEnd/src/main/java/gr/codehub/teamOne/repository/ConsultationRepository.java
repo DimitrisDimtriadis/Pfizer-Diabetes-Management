@@ -4,6 +4,7 @@ import gr.codehub.teamOne.model.Consultation;
 import gr.codehub.teamOne.repository.lib.Repository;
 
 import javax.persistence.EntityManager;
+import java.util.List;
 
 public class ConsultationRepository extends Repository<Consultation, Long> {
 
@@ -16,11 +17,18 @@ public class ConsultationRepository extends Repository<Consultation, Long> {
 
     @Override
     public Class<Consultation> getEntityClass() {
-        return null;
+        return Consultation.class;
     }
 
     @Override
     public String getEntityClassName() {
-        return null;
+        return Consultation.class.getName();
+    }
+
+    public List getConsultationForUser(long userID){
+        return entityManager.createQuery("from Consultation where patient_id = : patientID")
+                .setParameter("patientID", userID)
+                .getResultList();
+
     }
 }

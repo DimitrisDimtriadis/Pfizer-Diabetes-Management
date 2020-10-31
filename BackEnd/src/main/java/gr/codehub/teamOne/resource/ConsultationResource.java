@@ -1,18 +1,26 @@
 package gr.codehub.teamOne.resource;
 
 import gr.codehub.teamOne.exceptions.BadEntityException;
-import gr.codehub.teamOne.model.Consultation;
 import gr.codehub.teamOne.representation.ConsultationDTO;
+import gr.codehub.teamOne.representation.ConsultationDeleteDTO;
+import org.restlet.resource.Delete;
 import org.restlet.resource.Get;
 import org.restlet.resource.Post;
+import org.restlet.resource.Put;
 
 import java.util.List;
 
 public interface ConsultationResource {
 
     @Get("json")
-    List<Consultation> getConsultation();
+    List<ConsultationDTO> getConsultation() throws BadEntityException;
 
     @Post("json")
-    ConsultationDTO addConsultation(ConsultationDTO consultationDTO) throws BadEntityException;
+    String addConsultation(ConsultationDTO consultationDTO) throws BadEntityException;
+
+    @Put("json")
+    String updateConsultation(ConsultationDTO consultationDTO) throws BadEntityException;
+
+    @Delete("json")
+    String deleteConsultation(ConsultationDeleteDTO consultationDeleteDTO) throws BadEntityException;
 }

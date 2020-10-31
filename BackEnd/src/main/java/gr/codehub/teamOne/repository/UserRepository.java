@@ -111,7 +111,7 @@ public class UserRepository extends Repository<Users, Long> {
 
     public List getExpiredDoctors(){
 
-        return entityManager.createQuery("from Users where accountType = :accountType and lastLogin != NULL and lastLogin > current_Date() - :daysToExp")
+        return entityManager.createQuery("from Users where accountType = :accountType and lastLogin != NULL and lastLogin < current_Date() - :daysToExp")
                 .setParameter("accountType", AccessRole.ROLE_DOCTOR)
                 .setParameter("daysToExp", GeneralFunctions.DaysToConsiderUserExpired)
                 .getResultList();
