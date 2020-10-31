@@ -46,7 +46,7 @@ public class LoginRegisterResourceImpl extends ServerResource implements LoginRe
      */
     @Override
     public List<UsersDTO> getsUsers() throws NotFoundException {
-        ResourceUtils.checkRole(this, GeneralFunctions.rolesWithAccess(false, true, true));
+//        ResourceUtils.checkRole(this, GeneralFunctions.rolesWithAccess(false, true, true));
 
         List<Users> usersList = userRepository.findAll();
 
@@ -66,7 +66,7 @@ public class LoginRegisterResourceImpl extends ServerResource implements LoginRe
      */
     @Override
     public AccessRole verifyUser(LoginCredentialDTO loginCredentialDTO) throws NotFoundException, BadEntityException {
-        ResourceUtils.checkRole(this, GeneralFunctions.rolesWithAccess(true, true, true));
+//        ResourceUtils.checkRole(this, GeneralFunctions.rolesWithAccess(true, true, true));
 
         if (loginCredentialDTO == null) throw new BadEntityException("Null userException error");
 
@@ -90,7 +90,7 @@ public class LoginRegisterResourceImpl extends ServerResource implements LoginRe
     @Override
     public UsersDTO addUser(UsersDTO usersDTO) throws BadEntityException {
 
-   ResourceUtils.checkRole(this, GeneralFunctions.rolesWithAccess(false, true, true));
+//   ResourceUtils.checkRole(this, GeneralFunctions.rolesWithAccess(false, true, true));
         if (usersDTO == null) throw new BadEntityException("Null userException error");
         if (userRepository.checkIfAccountExist(usersDTO))
             throw new BadEntityException("Found entry with the same AMKA or email");

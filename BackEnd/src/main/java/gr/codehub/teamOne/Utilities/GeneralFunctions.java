@@ -7,6 +7,8 @@ import java.util.List;
 
 public class GeneralFunctions {
 
+    public static int DaysToConsiderUserExpired = 15;
+
     /**
      * To avoid multiple creation of List only to set roles that have access on method
      *

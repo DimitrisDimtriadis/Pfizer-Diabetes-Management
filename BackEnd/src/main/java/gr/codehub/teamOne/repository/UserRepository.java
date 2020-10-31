@@ -1,5 +1,6 @@
 package gr.codehub.teamOne.repository;
 
+import gr.codehub.teamOne.Utilities.GeneralFunctions;
 import gr.codehub.teamOne.model.Users;
 import gr.codehub.teamOne.repository.lib.Repository;
 import gr.codehub.teamOne.representation.LoginCredentialDTO;
@@ -106,5 +107,13 @@ public class UserRepository extends Repository<Users, Long> {
             }
         }
         return null;
+    }
+
+    public List getExpiredDoctors(){
+
+        return entityManager.createQuery("from Users where accountType = :accountType and lastLogin != NULL and lastLogin > current_Date() - :daysToExp")
+                .setParameter("accountType", AccessRole.ROLE_DOCTOR)
+                .setParameter("daysToExp", GeneralFunctions.DaysToConsiderUserExpired)
+                .getResultList();
     }
 }
