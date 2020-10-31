@@ -3,21 +3,18 @@ package gr.codehub.teamOne.repository;
 import gr.codehub.teamOne.exceptions.BadEntityException;
 import gr.codehub.teamOne.exceptions.NotFoundException;
 import gr.codehub.teamOne.model.Measurement;
-import gr.codehub.teamOne.model.Users;
 import gr.codehub.teamOne.repository.lib.Repository;
 import gr.codehub.teamOne.representation.MeasurementsSearchParamDTO;
-import gr.codehub.teamOne.representation.UsersSearchDTO;
 
-import javax.persistence.EntityGraph;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 import java.util.List;
 
-public class MeasurementsRepository extends Repository<Measurement, Long> {
+public class MeasurementRepository extends Repository<Measurement, Long> {
 
     private EntityManager entityManager;
 
-    public MeasurementsRepository(EntityManager entityManager) {
+    public MeasurementRepository(EntityManager entityManager) {
         super(entityManager);
         this.entityManager = entityManager;
     }
@@ -73,8 +70,6 @@ public class MeasurementsRepository extends Repository<Measurement, Long> {
         }
 
         List listWithMeasurements = baseQuery.getResultList();
-
-        if (listWithMeasurements.size() == 0) throw new NotFoundException("Not found measurements");
         return listWithMeasurements;
     }
 }
