@@ -4,5 +4,5 @@ import lombok.Data;
 
 @Data
 public class DeleteMeasurementDTO {
-    private Long id;
+    private Long measurementID;
 }

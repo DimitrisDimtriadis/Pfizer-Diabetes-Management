@@ -9,5 +9,4 @@ public class MeasurementsSearchParamDTO {
     private Long userID;
     private Date startAt;
     private Date endAt;
-    //TODO: Need a list i think
 }

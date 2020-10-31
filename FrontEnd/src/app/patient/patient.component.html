@@ -20,8 +20,8 @@
   <li style="float:right"><a class="active" (click)="logout()">Logout</a></li>
 </ul>
 
-<div class="container">
-<h3>Welcome  {{userObj.first_name}}</h3>
+<div id="w"class="container"> Welcome {{userObj?.last_name}} {{userObj?.first_name}}
+
 <h5>As patient, you be able to use the system to store diabetes data 
   at any time. After a month of data
   recording, a doctor will review 

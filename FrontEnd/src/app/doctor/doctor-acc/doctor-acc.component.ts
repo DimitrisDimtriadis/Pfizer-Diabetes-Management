@@ -86,8 +86,10 @@ export class DoctorAccComponent implements OnInit {
 
     this.Uservice.currentUser.amka=parseInt(sessionStorage.getItem("amka"));
     this.Uservice.currentUser.email=String(sessionStorage.getItem("email")).replace(/\s/g, "");
+
     this.Uservice.currentLogin.userPassword=this.Uservice.currentUser.password;
     this.Uservice.currentLogin.userEmail=this.Uservice.currentUser.email;
+    
     if((<HTMLInputElement>document.getElementById('gender')).value=="MALE")
     {
       this.Uservice.currentUser.gender=1;
