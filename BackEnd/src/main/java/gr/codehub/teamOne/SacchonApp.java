@@ -82,3 +82,24 @@ public class SacchonApp extends Application {
         }
     }
 }
+
+//TODO: measurement gia enan xristi (based on auth) ... exo kai ton doctor
+//TODO: Update measurements
+//TODO: Profile endpoint gia update
+//TODO: ALL patient without doctor
+//TODO: Patients with doctor
+//TODO: check tha measurments get dates
+//TODO: Gia enan astheni oles tis metrisis kai enan meso oro (kathimerina kai miniaia carb and glosure)
+//TODO: Reservations -> Gnomateusi giatrou
+//TODO: Visibilite gia to delete
+//TODO: Doc to see measurement of all his patients and on specific
+//TODO: Doc poious den exei kanei consult
+//TODO: Doc to na stelnei consult
+//TODO: Kane elenxo poio asthenis den exoun consult meta apo 30 meres
+//TODO: O asthenis na ginetai availble otan o doc feugei
+//TODO: An o astheneis exei gnomateusei na eidopoieitai
+//TODO: Admin kataxorisis asthenei
+//TODO: Admin gnomateuseis doc
+//TODO: List without assignment
+//TODO: List without entries
+//TODO: Check if doc is offline for long time ===>  change login procedure

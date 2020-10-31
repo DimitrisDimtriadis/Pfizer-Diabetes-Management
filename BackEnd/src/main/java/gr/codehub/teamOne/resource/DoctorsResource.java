@@ -1,13 +1,15 @@
 package gr.codehub.teamOne.resource;
+
+
 import gr.codehub.teamOne.exceptions.NotFoundException;
-import gr.codehub.teamOne.representation.PatientDTO;
+import gr.codehub.teamOne.representation.DoctorsDTO;
+
 import org.restlet.resource.Get;
 
 import java.util.List;
 
-public interface PatientResource {
+public interface DoctorsResource {
 
     @Get("json")
-    List<PatientDTO> getsPatients() throws NotFoundException;
-
+    public List<DoctorsDTO> getsDoctors() throws NotFoundException;
 }

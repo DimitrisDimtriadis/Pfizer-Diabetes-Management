@@ -14,6 +14,7 @@ import org.restlet.resource.ServerResource;
 
 import javax.persistence.EntityManager;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class LoginRegisterResourceImpl extends ServerResource implements LoginRegisterResource {
@@ -65,7 +66,11 @@ public class LoginRegisterResourceImpl extends ServerResource implements LoginRe
         List<Users> listWithUsers = userRepository.findUserWithCredential(loginCredentialDTO);
         if (listWithUsers.size() == 0) throw new NotFoundException("User account not found !");
 
-        return listWithUsers.get(0).getAccountType();
+        //Update the lastLogin to keep last entry of user
+        Users userToLogin = listWithUsers.get(0);
+        userToLogin.setLastLogin(new Date());
+        userRepository.save(userToLogin);
+        return userToLogin.getAccountType();
     }
 
     /**
@@ -84,6 +89,7 @@ public class LoginRegisterResourceImpl extends ServerResource implements LoginRe
             throw new BadEntityException("Found entry with the same AMKA or email");
 
         Users users = UsersDTO.getUsers(usersDTO);
+        users.setVisibility(true);
         userRepository.save(users);
         return UsersDTO.getUsersDTO(users);
     }

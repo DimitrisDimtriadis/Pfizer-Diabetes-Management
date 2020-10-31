@@ -1,18 +1,16 @@
 package gr.codehub.teamOne.resource.impl;
 
-import gr.codehub.teamOne.exceptions.BadEntityException;
 import gr.codehub.teamOne.exceptions.NotFoundException;
 import gr.codehub.teamOne.model.Users;
 import gr.codehub.teamOne.repository.UserRepository;
 import gr.codehub.teamOne.repository.util.JpaUtil;
 import gr.codehub.teamOne.representation.UsersDTO;
+import gr.codehub.teamOne.representation.UsersSearchDTO;
 import gr.codehub.teamOne.resource.UsersResource;
 import org.restlet.resource.ResourceException;
 import org.restlet.resource.ServerResource;
 
 import javax.persistence.EntityManager;
-import java.util.ArrayList;
-import java.util.List;
 
 public class UsersResourceImpl extends ServerResource implements UsersResource {
 
@@ -22,10 +20,10 @@ public class UsersResourceImpl extends ServerResource implements UsersResource {
     @Override
     protected void doInit() throws ResourceException {
 
-        try{
+        try {
             em = JpaUtil.getEntityManager();
             userRepository = new UserRepository(em);
-        }catch(Exception e){
+        } catch (Exception e) {
             throw new ResourceException(e);
         }
     }
@@ -36,29 +34,10 @@ public class UsersResourceImpl extends ServerResource implements UsersResource {
     }
 
     @Override
-    public List<UsersDTO> getsUsers() throws NotFoundException {
+    public UsersDTO findUserByAmka(UsersSearchDTO usersSearchDTO) throws NotFoundException {
 
-        List<Users> usersList = userRepository.findAll();
-
-        List<UsersDTO> usersDTOList = new ArrayList<>();
-        usersList.forEach( users -> usersDTOList.add(UsersDTO.getUsersDTO(users)));
-
-        return usersDTOList;
-    }
-
-    @Override
-    public UsersDTO addUser(UsersDTO usersDTO) throws NotFoundException, BadEntityException {
-
-        //ResourceUtils.checkRole(this, GeneralFunctions.rolesWithAccess(false, true, true));
-        //TODO: Add check for user existance
-        if(usersDTO == null) throw new BadEntityException("Null userException error");
-        Users users = UsersDTO.getUsers(usersDTO);
-        userRepository.save(users);
-        return UsersDTO.getUsersDTO(users);
-    }
-
-    @Override
-    public void removeUser() throws NotFoundException {
-
+        Users person = userRepository.getUserBasedOnAmka(usersSearchDTO);
+        if (person == null) throw new NotFoundException("There is no user with this amka");
+        return UsersDTO.getUsersDTO(person);
     }
 }

@@ -4,10 +4,10 @@ import {HttpClient,HttpParams,HttpHeaders} from '@angular/common/http';
 import {UserClass} from '../classes/UserClass';
 import {LoginClass} from '../classes/LoginClass';
 
-const headerOption = {
-  headers: new HttpHeaders({ 'Content-Type': 'application/json' , 'Authorization': 'Basic ' + btoa(sessionStorage.getItem('credentials'))
-                      })
-      };
+//const headerOption = {
+ // headers1: new HttpHeaders({ 'Content-Type': 'application/json' , 'Authorization': 'Basic ' + btoa(sessionStorage.getItem("credentials"))
+  //                    })
+  //    };
 
 @Injectable({
   providedIn: 'root'
@@ -48,16 +48,33 @@ export class UserService {
 
 
   registerUser(user: UserClass): Observable<UserClass> {
-    return this.http.put<UserClass>(this.url, user, headerOption);
+    let header= { headers:new HttpHeaders().set('Content-Type', 'application/json')
+    //.set('Authorization',`Basic ${btoa(sessionStorage.getItem("credentials"))}`)
+  }
+    return this.http.put<UserClass>(this.url, user, header);
   }
 
 
   loginUser(user:LoginClass):Observable<any>{
-    return this.http.post(this.url,user,headerOption);
+    let header= { headers:new HttpHeaders().set('Content-Type', 'application/json')
+   // .set('Authorization',`Basic ${btoa(sessionStorage.getItem("credentials"))}`)
+  }
+    return this.http.post(this.url,user,header);
   }
 
   getUserData():Observable<any>{
-    return this.http.get(this.urlGetUserdata,headerOption);
+    let header= { headers:new HttpHeaders().set('Content-Type', 'application/json')
+    .set('Authorization',`Basic ${btoa(sessionStorage.getItem("credentials"))}`)
   }
+    return this.http.get(this.urlGetUserdata,header);
+  }
+
+  editUserData(user:UserClass):Observable<UserClass>{
+    let header= { headers:new HttpHeaders().set('Content-Type', 'application/json')
+    .set('Authorization',`Basic ${btoa(sessionStorage.getItem("credentials"))}`)
+  }
+    return this.http.put<UserClass>(this.urlGetUserdata,user,header);
+  }
+ 
 
 }

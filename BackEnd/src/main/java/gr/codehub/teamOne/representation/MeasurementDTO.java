@@ -8,9 +8,10 @@ import java.util.Date;
 @Data
 public class MeasurementDTO {
 
+    private Long measurementID;
     private long user;
-    private float bloodGlucoseLevel;
-    private long carbIntake;
+    private Float bloodGlucoseLevel;
+    private Long carbIntake;
     private Date measurementDate;
 
     /**
@@ -37,10 +38,25 @@ public class MeasurementDTO {
     static public MeasurementDTO getMeasurementDTO(Measurement measurement) {
 
         MeasurementDTO measurementDTO = new MeasurementDTO();
+        measurementDTO.setMeasurementID(measurement.getId());
         measurementDTO.setUser(measurement.getUser().getId());
         measurementDTO.setBloodGlucoseLevel(measurement.getBloodGlucoseLevel());
         measurementDTO.setCarbIntake(measurement.getCarbIntake());
         measurementDTO.setMeasurementDate(measurement.getMeasurementDate());
         return measurementDTO;
+    }
+
+    static public Measurement updateMeasurement(Measurement baseMeasurement, MeasurementDTO updatesForMeasurements) {
+
+        if(updatesForMeasurements.getBloodGlucoseLevel() != null){
+            baseMeasurement.setBloodGlucoseLevel(updatesForMeasurements.getBloodGlucoseLevel());
+        }
+        if(updatesForMeasurements.getCarbIntake() != null){
+            baseMeasurement.setCarbIntake(updatesForMeasurements.getCarbIntake());
+        }
+        if(updatesForMeasurements.getMeasurementDate() != null){
+            baseMeasurement.setMeasurementDate(updatesForMeasurements.getMeasurementDate());
+        }
+        return baseMeasurement;
     }
 }

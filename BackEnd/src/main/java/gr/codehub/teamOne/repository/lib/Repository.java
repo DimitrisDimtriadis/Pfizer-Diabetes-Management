@@ -1,5 +1,8 @@
 package gr.codehub.teamOne.repository.lib;
 
+import gr.codehub.teamOne.model.Users;
+import gr.codehub.teamOne.representation.LoginCredentialDTO;
+
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
 import java.util.List;
@@ -8,13 +11,12 @@ import java.util.Optional;
 public abstract class Repository<T, K> implements IRepository<T, K> {
 
     private EntityManager entityManager;
-
     public Repository(EntityManager entityManager) {
         this.entityManager = entityManager;
     }
 
     @Override
-    public Optional<T> findById(K id) {
+    public Optional<T> findById(long id) {
         try {
             entityManager.getTransaction().begin();
             T t = entityManager.find(getEntityClass(), id);
@@ -30,6 +32,20 @@ public abstract class Repository<T, K> implements IRepository<T, K> {
     public List<T> findAll() {
         TypedQuery<T> query = entityManager.createQuery("from " + getEntityClassName(), getEntityClass());
         return query.getResultList();
+    }
+
+    @Override
+    public Optional<T> findByEmail(String userEmail) {
+
+        try {
+            entityManager.getTransaction().begin();
+            T t = (T) findUserWithCredential(userEmail);
+            entityManager.getTransaction().commit();
+            return Optional.of(t);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return Optional.empty();
     }
 
     @Override
@@ -57,7 +73,6 @@ public abstract class Repository<T, K> implements IRepository<T, K> {
                 entityManager.getTransaction().begin();
                 entityManager.remove(persistentInstance);
                 entityManager.getTransaction().commit();
-
             } catch (Exception e) {
                 return false;
             }
@@ -68,4 +83,13 @@ public abstract class Repository<T, K> implements IRepository<T, K> {
 
     public abstract Class<T> getEntityClass();
     public abstract String getEntityClassName();
+
+    private Users findUserWithCredential(String usrEmail) {
+        return (Users) entityManager.createQuery("from Users u where email = :email ")
+                .setParameter("email", usrEmail)
+                .getResultList()
+                .get(0);
+    }
+     //TODO: update profile id-register date- last login && delete
+    //TODO: ASTheneis xoris giatro
 }
