@@ -83,12 +83,8 @@ public class SacchonApp extends Application {
     }
 }
 
-//TODO: measurement gia enan xristi (based on auth) ... exo kai ton doctor
-//TODO: Update measurements
-//TODO: Profile endpoint gia update
 //TODO: ALL patient without doctor
 //TODO: Patients with doctor
-//TODO: check tha measurments get dates
 //TODO: Gia enan astheni oles tis metrisis kai enan meso oro (kathimerina kai miniaia carb and glosure)
 //TODO: Reservations -> Gnomateusi giatrou
 //TODO: Visibilite gia to delete

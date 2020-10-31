@@ -58,13 +58,13 @@ public class PatientDoctorAssociationResourceImpl extends ServerResource impleme
 
         Optional<Users> patient = userRepository.findById(newAssociationDTO.getPatientID());
         if(!patient.isPresent()) throw new BadEntityException("There is no patient with that id");
-        mAssociation.setPatientID(patient.get());
+        mAssociation.setPatient(patient.get());
 
         if(newAssociationDTO.getDoctorID() != null ){
 
             Optional<Users> doctor = userRepository.findById(newAssociationDTO.getDoctorID());
             if(!doctor.isPresent()) throw new BadEntityException("There is no doctor with that id");
-            mAssociation.setDoctorID(doctor.get());
+            mAssociation.setDoctor(doctor.get());
         }
 
         associationRepository.save(mAssociation);

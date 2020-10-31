@@ -20,9 +20,10 @@ public class PatientDoctorAssociationDTO {
     }
 
     public static PatientDoctorAssociationDTO getAssociation(PatientDoctorAssociation mAssociation){
+
         PatientDoctorAssociationDTO mAssociationDTO = new PatientDoctorAssociationDTO();
-        mAssociationDTO.setPatientID(mAssociation.getPatientID().getId());
-        mAssociationDTO.setDoctorID(mAssociation.getDoctorID().getId());
+        mAssociationDTO.setPatientID(mAssociation.getPatient().getId());
+        mAssociationDTO.setDoctorID(mAssociation.getDoctor().getId());
         mAssociationDTO.setLastConsulate(mAssociation.getLastConsulate());
         return mAssociationDTO;
     }

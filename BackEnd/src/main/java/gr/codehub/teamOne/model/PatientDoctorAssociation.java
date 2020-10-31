@@ -11,6 +11,8 @@ import java.util.Date;
 @Setter
 @NoArgsConstructor
 @Entity
+@Table(uniqueConstraints = {@UniqueConstraint(name = "patient", columnNames = {"patient_id"})})
+
 public class PatientDoctorAssociation {
 
     @Id
@@ -18,11 +20,10 @@ public class PatientDoctorAssociation {
     private long id;
 
     @OneToOne(optional = false)
-//    @Column(unique = true)
-    private Users patientID;
+    private Users patient;
 
     @ManyToOne
-    private Users doctorID;
+    private Users doctor;
 
     private Date lastConsulate;
 }
