@@ -1,11 +1,13 @@
 package gr.codehub.teamOne.resource.impl;
 
+import gr.codehub.teamOne.Utilities.GeneralFunctions;
 import gr.codehub.teamOne.exceptions.NotFoundException;
 import gr.codehub.teamOne.model.Users;
 import gr.codehub.teamOne.repository.UserRepository;
 import gr.codehub.teamOne.repository.util.JpaUtil;
 import gr.codehub.teamOne.representation.DoctorsDTO;
 import gr.codehub.teamOne.resource.DoctorsResource;
+import gr.codehub.teamOne.resource.util.ResourceUtils;
 import gr.codehub.teamOne.security.AccessRole;
 import org.restlet.resource.ResourceException;
 import org.restlet.resource.ServerResource;
@@ -35,10 +37,15 @@ public class DoctorsResourceImpl extends ServerResource implements DoctorsResour
     protected void doRelease() throws ResourceException {
         em.close();
     }
-
+    /**
+     * Method to get all the doctors from base
+     *
+     * @return Doctors Representation List of objects
+     */
     @Override
     public List<DoctorsDTO> getsDoctors() throws NotFoundException {
 
+        ResourceUtils.checkRole(this, GeneralFunctions.rolesWithAccess(false, false, true));
         List<Users> doctorList = userRepository.getAllUsersBasedOnRole(AccessRole.ROLE_DOCTOR);
 
         List<DoctorsDTO> doctorsDTOList = new ArrayList<>();

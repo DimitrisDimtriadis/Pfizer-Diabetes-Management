@@ -30,7 +30,7 @@ public class UserRepository extends Repository<Users, Long> {
     }
 
     /**
-     * Function to check if user exist on base before saving
+     * Method that  check if user exist on base before saving, based on email and Social Security number(amka).
      *
      * @param usersDTO Object of user that want to save on base
      * @return if exist other entry return true
@@ -44,7 +44,12 @@ public class UserRepository extends Repository<Users, Long> {
 
         return userList.size() > 0;
     }
-
+    /**
+     * Method that check if user exist on base using email and password.
+     *
+     * @param  loginCredentialDTO contains the email and password
+     * @return user with this email and password.
+     */
     public List findUserWithCredential(LoginCredentialDTO loginCredentialDTO) {
         return entityManager.createQuery("from Users u where u.email = :email and u.password = :password")
                 .setParameter("email", loginCredentialDTO.getUserEmail())
@@ -52,6 +57,12 @@ public class UserRepository extends Repository<Users, Long> {
                 .getResultList();
     }
 
+    /**
+     * Search users with specific email.
+     *
+     * @param usrEmail  Contains the email  to search user.
+     * @return User that found.
+     */
     public Users getUserInfo(String usrEmail) {
         List tempListWithInfo = entityManager.createQuery("from Users u where u.email = :email")
                 .setParameter("email", usrEmail)
@@ -62,7 +73,12 @@ public class UserRepository extends Repository<Users, Long> {
         }
         return null;
     }
-
+    /**
+     * Search users with specific role.
+     *
+     * @param accessRole  Contains the role  to search user.
+     * @return Users that found.
+     */
     public List getAllUsersBasedOnRole(AccessRole accessRole) {
 
         return entityManager.createQuery("from Users u where u.accountType = :accessRole")
@@ -73,7 +89,7 @@ public class UserRepository extends Repository<Users, Long> {
     /**
      * Search user with specific amka. If input contains role, checks also if role is given
      *
-     * @param usersSearchDTO Containts amka to search user. If containes also role, searching on this criteria
+     * @param usersSearchDTO Contains Social Security number(amka)to search user. In additional If contains and role, search on this criteria
      * @return User that found
      */
     public Users getUserBasedOnAmka(UsersSearchDTO usersSearchDTO) {

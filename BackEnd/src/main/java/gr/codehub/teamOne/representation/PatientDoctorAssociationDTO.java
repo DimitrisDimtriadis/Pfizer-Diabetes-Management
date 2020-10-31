@@ -8,8 +8,8 @@ import java.util.Date;
 @Data
 public class PatientDoctorAssociationDTO {
 
-    private long patientID;
-    private Long doctorID;
+    private long patient;
+    private Long doctor;
     private Date lastConsulate;
 
     public static PatientDoctorAssociation getAssociation(PatientDoctorAssociationDTO mAssociationDTO){
@@ -22,8 +22,12 @@ public class PatientDoctorAssociationDTO {
     public static PatientDoctorAssociationDTO getAssociation(PatientDoctorAssociation mAssociation){
 
         PatientDoctorAssociationDTO mAssociationDTO = new PatientDoctorAssociationDTO();
-        mAssociationDTO.setPatientID(mAssociation.getPatient().getId());
-        mAssociationDTO.setDoctorID(mAssociation.getDoctor().getId());
+        mAssociationDTO.setPatient(mAssociation.getPatient().getId());
+
+        if (mAssociation.getDoctor() != null){
+            mAssociationDTO.setDoctor(mAssociation.getDoctor().getId());
+        }
+
         mAssociationDTO.setLastConsulate(mAssociation.getLastConsulate());
         return mAssociationDTO;
     }

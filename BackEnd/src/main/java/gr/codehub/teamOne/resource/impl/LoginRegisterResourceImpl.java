@@ -1,5 +1,6 @@
 package gr.codehub.teamOne.resource.impl;
 
+import gr.codehub.teamOne.Utilities.GeneralFunctions;
 import gr.codehub.teamOne.exceptions.BadEntityException;
 import gr.codehub.teamOne.exceptions.NotFoundException;
 import gr.codehub.teamOne.model.Users;
@@ -8,6 +9,7 @@ import gr.codehub.teamOne.repository.util.JpaUtil;
 import gr.codehub.teamOne.representation.LoginCredentialDTO;
 import gr.codehub.teamOne.representation.UsersDTO;
 import gr.codehub.teamOne.resource.LoginRegisterResource;
+import gr.codehub.teamOne.resource.util.ResourceUtils;
 import gr.codehub.teamOne.security.AccessRole;
 import org.restlet.resource.ResourceException;
 import org.restlet.resource.ServerResource;
@@ -37,10 +39,14 @@ public class LoginRegisterResourceImpl extends ServerResource implements LoginRe
     protected void doRelease() throws ResourceException {
         em.close();
     }
-
-    //TODO: Check if there is use on it
+    /**
+     * Method to get all the users from base
+     *
+     * @return Users Representation List of objects
+     */
     @Override
     public List<UsersDTO> getsUsers() throws NotFoundException {
+        ResourceUtils.checkRole(this, GeneralFunctions.rolesWithAccess(false, true, true));
 
         List<Users> usersList = userRepository.findAll();
 
@@ -60,6 +66,7 @@ public class LoginRegisterResourceImpl extends ServerResource implements LoginRe
      */
     @Override
     public AccessRole verifyUser(LoginCredentialDTO loginCredentialDTO) throws NotFoundException, BadEntityException {
+        ResourceUtils.checkRole(this, GeneralFunctions.rolesWithAccess(true, true, true));
 
         if (loginCredentialDTO == null) throw new BadEntityException("Null userException error");
 
@@ -83,7 +90,7 @@ public class LoginRegisterResourceImpl extends ServerResource implements LoginRe
     @Override
     public UsersDTO addUser(UsersDTO usersDTO) throws BadEntityException {
 
-//        ResourceUtils.checkRole(this, GeneralFunctions.rolesWithAccess(false, true, true));
+   ResourceUtils.checkRole(this, GeneralFunctions.rolesWithAccess(false, true, true));
         if (usersDTO == null) throw new BadEntityException("Null userException error");
         if (userRepository.checkIfAccountExist(usersDTO))
             throw new BadEntityException("Found entry with the same AMKA or email");

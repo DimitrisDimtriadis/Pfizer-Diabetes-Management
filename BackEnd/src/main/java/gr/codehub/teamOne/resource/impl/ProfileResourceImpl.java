@@ -1,11 +1,13 @@
 package gr.codehub.teamOne.resource.impl;
 
+import gr.codehub.teamOne.Utilities.GeneralFunctions;
 import gr.codehub.teamOne.exceptions.NotFoundException;
 import gr.codehub.teamOne.model.Users;
 import gr.codehub.teamOne.repository.UserRepository;
 import gr.codehub.teamOne.repository.util.JpaUtil;
 import gr.codehub.teamOne.representation.UsersDTO;
 import gr.codehub.teamOne.resource.ProfileResource;
+import gr.codehub.teamOne.resource.util.ResourceUtils;
 import org.restlet.resource.ResourceException;
 import org.restlet.resource.ServerResource;
 
@@ -30,9 +32,14 @@ public class ProfileResourceImpl extends ServerResource implements ProfileResour
     protected void doRelease() throws ResourceException {
         em.close();
     }
-
+    /**
+     * Method to get Profile information for a user using email to identify user.
+     * @return Profile information .
+     * @throws NotFoundException When there is no user with this email.
+     */
     @Override
     public UsersDTO getProfileInfo() throws NotFoundException {
+        ResourceUtils.checkRole(this, GeneralFunctions.rolesWithAccess(true, true, true));
 
         String usrEmail = this.getRequest().getClientInfo().getUser().getIdentifier();
 
@@ -42,7 +49,12 @@ public class ProfileResourceImpl extends ServerResource implements ProfileResour
         }
         return null;
     }
-
+    /**
+     * Method to Update  Profile information for a user using email to identify user.
+     * @param usersDTO Users Representation Object.
+     * @return Profile information .
+     * @throws NotFoundException When there is no user with this email.
+     */
     @Override
     public UsersDTO updateProfileInfo(UsersDTO usersDTO) throws NotFoundException {
 

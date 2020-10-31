@@ -1,5 +1,6 @@
 package gr.codehub.teamOne.resource.impl;
 
+import gr.codehub.teamOne.exceptions.BadEntityException;
 import gr.codehub.teamOne.exceptions.NotFoundException;
 import gr.codehub.teamOne.model.Users;
 import gr.codehub.teamOne.repository.UserRepository;
@@ -33,6 +34,12 @@ public class UsersResourceImpl extends ServerResource implements UsersResource {
         em.close();
     }
 
+    /**
+     * Method to search user in base, based on Social Security number(amka).
+     * @param usersSearchDTO Object with Social Security number(amka).
+     * @return the user with the Social Security number(amka).
+     * @throws NotFoundException When there is no user with this Social Security number(amka)
+     */
     @Override
     public UsersDTO findUserByAmka(UsersSearchDTO usersSearchDTO) throws NotFoundException {
 
