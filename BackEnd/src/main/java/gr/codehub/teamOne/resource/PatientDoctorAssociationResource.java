@@ -1,6 +1,7 @@
 package gr.codehub.teamOne.resource;
 
 import gr.codehub.teamOne.exceptions.BadEntityException;
+import gr.codehub.teamOne.exceptions.WrongUserRoleException;
 import gr.codehub.teamOne.representation.PatientDoctorAssociationDTO;
 import org.restlet.resource.Get;
 import org.restlet.resource.Post;
@@ -13,5 +14,5 @@ public interface PatientDoctorAssociationResource {
     List<PatientDoctorAssociationDTO> getAllAssociations();
 
     @Post("json")
-    PatientDoctorAssociationDTO addNewAssociation(PatientDoctorAssociationDTO newAssociationDTO) throws BadEntityException;
+    PatientDoctorAssociationDTO addNewAssociation(PatientDoctorAssociationDTO newAssociationDTO) throws BadEntityException, WrongUserRoleException;
 }

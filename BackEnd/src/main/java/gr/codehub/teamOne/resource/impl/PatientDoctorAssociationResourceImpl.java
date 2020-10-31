@@ -1,6 +1,7 @@
 package gr.codehub.teamOne.resource.impl;
 
 import gr.codehub.teamOne.exceptions.BadEntityException;
+import gr.codehub.teamOne.exceptions.WrongUserRoleException;
 import gr.codehub.teamOne.model.PatientDoctorAssociation;
 import gr.codehub.teamOne.model.Users;
 import gr.codehub.teamOne.repository.PatientDoctorAssociationRepository;
@@ -8,6 +9,7 @@ import gr.codehub.teamOne.repository.UserRepository;
 import gr.codehub.teamOne.repository.util.JpaUtil;
 import gr.codehub.teamOne.representation.PatientDoctorAssociationDTO;
 import gr.codehub.teamOne.resource.PatientDoctorAssociationResource;
+import gr.codehub.teamOne.security.AccessRole;
 import org.restlet.resource.ResourceException;
 import org.restlet.resource.ServerResource;
 
@@ -49,21 +51,29 @@ public class PatientDoctorAssociationResourceImpl extends ServerResource impleme
     }
 
     @Override
-    public PatientDoctorAssociationDTO addNewAssociation(PatientDoctorAssociationDTO newAssociationDTO) throws BadEntityException {
+    public PatientDoctorAssociationDTO addNewAssociation(PatientDoctorAssociationDTO newAssociationDTO) throws BadEntityException, WrongUserRoleException {
 
-        //TODO: add check for roles
         if (newAssociationDTO == null) throw new BadEntityException("Null userException error");
 
-        PatientDoctorAssociation mAssociation = PatientDoctorAssociationDTO.getAssociation(newAssociationDTO);
+        //Take saved association(if exist)
+        PatientDoctorAssociation mAssociation = associationRepository.getAssociationIfExist(newAssociationDTO.getPatient());
 
-        Optional<Users> patient = userRepository.findById(newAssociationDTO.getPatientID());
+        //If there is no entry, Create a new one
+        if(mAssociation == null){
+            mAssociation = PatientDoctorAssociationDTO.getAssociation(newAssociationDTO);
+        }
+
+        Optional<Users> patient = userRepository.findById(newAssociationDTO.getPatient());
         if(!patient.isPresent()) throw new BadEntityException("There is no patient with that id");
+
+        if(patient.get().getAccountType() != AccessRole.ROLE_PATIENT) throw new WrongUserRoleException("The user you add as patient, has wrong role");
         mAssociation.setPatient(patient.get());
 
-        if(newAssociationDTO.getDoctorID() != null ){
+        if(newAssociationDTO.getDoctor() != null ){
 
-            Optional<Users> doctor = userRepository.findById(newAssociationDTO.getDoctorID());
+            Optional<Users> doctor = userRepository.findById(newAssociationDTO.getDoctor());
             if(!doctor.isPresent()) throw new BadEntityException("There is no doctor with that id");
+            if(doctor.get().getAccountType() != AccessRole.ROLE_DOCTOR) throw new WrongUserRoleException("The user you add as doctor, has wrong role");
             mAssociation.setDoctor(doctor.get());
         }
 
