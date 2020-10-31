@@ -41,20 +41,6 @@ public class MeasurementResourceImpl extends ServerResource implements Measureme
     }
 
     @Override
-    public List<MeasurementDTO> getMeasurementForUser(MeasurementsSearchParamDTO paramDTO) throws NotFoundException, BadEntityException {
-
-        String usrEmail = this.getRequest().getClientInfo().getUser().getIdentifier();
-        Users currentUser = userRepository.getUserInfo(usrEmail);
-
-        paramDTO.setUserID(currentUser.getId());
-
-        List<Measurement> listWithMeasurements = measurementRepository.getSpecificMeasurements(paramDTO);
-        List<MeasurementDTO> listWithDTO = new ArrayList<>();
-        listWithMeasurements.forEach( ms -> listWithDTO.add(MeasurementDTO.getMeasurementDTO(ms)));
-        return listWithDTO;
-    }
-
-    @Override
     public String removeMeasurement(DeleteMeasurementDTO measurementDTO) throws NotFoundException, BadEntityException {
 
         if (measurementDTO==null) throw new BadEntityException("Null object as input");

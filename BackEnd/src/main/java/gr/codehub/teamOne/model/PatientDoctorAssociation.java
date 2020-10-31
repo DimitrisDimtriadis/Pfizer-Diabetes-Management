@@ -18,7 +18,7 @@ public class PatientDoctorAssociation {
     private long id;
 
     @OneToOne(optional = false)
-    @Column(unique = true)
+//    @Column(unique = true)
     private Users patientID;
 
     @ManyToOne

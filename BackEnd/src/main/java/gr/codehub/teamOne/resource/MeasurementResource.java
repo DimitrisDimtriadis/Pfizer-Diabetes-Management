@@ -11,9 +11,6 @@ import java.util.List;
 
 public interface MeasurementResource {
 
-    @Get("json")
-    List<MeasurementDTO> getMeasurementForUser(MeasurementsSearchParamDTO paramDTO) throws NotFoundException, BadEntityException;
-
     @Delete
     String removeMeasurement(DeleteMeasurementDTO deleteMeasurementDTO) throws NotFoundException, BadEntityException;
 
