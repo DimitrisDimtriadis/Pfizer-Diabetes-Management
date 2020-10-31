@@ -1,5 +1,6 @@
 package gr.codehub.teamOne.resource.impl;
 
+import gr.codehub.teamOne.Utilities.GeneralFunctions;
 import gr.codehub.teamOne.exceptions.BadEntityException;
 import gr.codehub.teamOne.exceptions.NotFoundException;
 import gr.codehub.teamOne.model.Measurement;
@@ -11,6 +12,7 @@ import gr.codehub.teamOne.representation.DeleteMeasurementDTO;
 import gr.codehub.teamOne.representation.MeasurementDTO;
 import gr.codehub.teamOne.representation.MeasurementsSearchParamDTO;
 import gr.codehub.teamOne.resource.MeasurementResource;
+import gr.codehub.teamOne.resource.util.ResourceUtils;
 import org.restlet.resource.ResourceException;
 import org.restlet.resource.ServerResource;
 
@@ -48,6 +50,8 @@ public class MeasurementResourceImpl extends ServerResource implements Measureme
     @Override
     public List<MeasurementDTO> getMeasurementForUser(MeasurementsSearchParamDTO paramDTO) throws NotFoundException, BadEntityException {
 
+
+        ResourceUtils.checkRole(this, GeneralFunctions.rolesWithAccess(true, true, true));
         String usrEmail = this.getRequest().getClientInfo().getUser().getIdentifier();
         Users currentUser = userRepository.getUserInfo(usrEmail);
 
@@ -66,6 +70,7 @@ public class MeasurementResourceImpl extends ServerResource implements Measureme
      */
     @Override
     public String removeMeasurement(DeleteMeasurementDTO measurementDTO) throws NotFoundException, BadEntityException {
+        ResourceUtils.checkRole(this, GeneralFunctions.rolesWithAccess(true, false, false));
 
         if (measurementDTO==null) throw new BadEntityException("Null object as input");
         measurementsRepository.deleteById(measurementDTO.getMeasurementID());
@@ -80,6 +85,7 @@ public class MeasurementResourceImpl extends ServerResource implements Measureme
      */
     @Override
     public MeasurementDTO updateMeasurement(MeasurementDTO measurementDTO) throws NotFoundException, BadEntityException {
+        ResourceUtils.checkRole(this, GeneralFunctions.rolesWithAccess(true, false, false));
 
         if(measurementDTO == null) throw new BadEntityException("Null measurement Exception error");
         if(measurementDTO.getMeasurementID() == null) throw new BadEntityException("No measurement id to update");
@@ -100,6 +106,7 @@ public class MeasurementResourceImpl extends ServerResource implements Measureme
      */
     @Override
     public String addMeasurement(MeasurementDTO measurementDTO) throws NotFoundException, BadEntityException {
+        ResourceUtils.checkRole(this, GeneralFunctions.rolesWithAccess(true, false, false));
 
         String usrEmail = this.getRequest().getClientInfo().getUser().getIdentifier();
 
@@ -124,6 +131,7 @@ public class MeasurementResourceImpl extends ServerResource implements Measureme
      */
     @Override
     public List<MeasurementDTO> getAllMeasurementsBasedOn(MeasurementsSearchParamDTO paramDTO) throws NotFoundException, BadEntityException {
+        ResourceUtils.checkRole(this, GeneralFunctions.rolesWithAccess(true, true, true));
 
         List<Measurement> listWithMeasurements = measurementsRepository.getSpecificMeasurements(paramDTO);
         List<MeasurementDTO> listWithDTO = new ArrayList<>();
