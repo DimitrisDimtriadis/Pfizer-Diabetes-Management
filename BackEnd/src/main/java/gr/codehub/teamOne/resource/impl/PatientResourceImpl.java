@@ -1,10 +1,15 @@
 package gr.codehub.teamOne.resource.impl;
 
 import gr.codehub.teamOne.Utilities.GeneralFunctions;
+import gr.codehub.teamOne.exceptions.BadEntityException;
 import gr.codehub.teamOne.exceptions.NotFoundException;
+import gr.codehub.teamOne.model.Measurement;
 import gr.codehub.teamOne.model.Users;
+import gr.codehub.teamOne.repository.MeasurementRepository;
 import gr.codehub.teamOne.repository.UserRepository;
 import gr.codehub.teamOne.repository.util.JpaUtil;
+import gr.codehub.teamOne.representation.MeasurementDTO;
+import gr.codehub.teamOne.representation.MeasurementsSearchParamDTO;
 import gr.codehub.teamOne.representation.PatientDTO;
 import gr.codehub.teamOne.resource.PatientResource;
 import gr.codehub.teamOne.resource.util.ResourceUtils;
@@ -19,6 +24,7 @@ import java.util.List;
 public class PatientResourceImpl extends ServerResource implements PatientResource {
 
     private UserRepository userRepository;
+    private MeasurementRepository measurementRepository;
     private EntityManager em;
 
     @Override
@@ -27,6 +33,7 @@ public class PatientResourceImpl extends ServerResource implements PatientResour
         try {
             em = JpaUtil.getEntityManager();
             userRepository = new UserRepository(em);
+            measurementRepository = new MeasurementRepository(em);
 
         } catch (Exception e) {
             throw new ResourceException(e);
@@ -52,4 +59,18 @@ public class PatientResourceImpl extends ServerResource implements PatientResour
         patientList.forEach(patient -> patientDTOList.add(PatientDTO.getPatientDTO(patient)));
 
         return patientDTOList;    }
+
+    @Override
+    public List<MeasurementDTO> getMeasurement(MeasurementsSearchParamDTO paramDTO) throws NotFoundException, BadEntityException {
+
+        String usrEmail = this.getRequest().getClientInfo().getUser().getIdentifier();
+        Users currentUser = userRepository.getUserInfo(usrEmail);
+
+        paramDTO.setUserID(currentUser.getId());
+
+        List<Measurement> listWithMeasurements = measurementRepository.getSpecificMeasurements(paramDTO);
+        List<MeasurementDTO> listWithDTO = new ArrayList<>();
+        listWithMeasurements.forEach( ms -> listWithDTO.add(MeasurementDTO.getMeasurementDTO(ms)));
+        return listWithDTO;
+    }
 }

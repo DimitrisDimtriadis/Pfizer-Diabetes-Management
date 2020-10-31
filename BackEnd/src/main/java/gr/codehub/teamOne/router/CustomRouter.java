@@ -20,6 +20,7 @@ public class CustomRouter {
         router.attach("/doctors", DoctorsResourceImpl.class);
         router.attach("/profile", ProfileResourceImpl.class);
         router.attach("/measurements", MeasurementResourceImpl.class);
+        router.attach("/associations", PatientDoctorAssociationResourceImpl.class);
 
         return router;
     }

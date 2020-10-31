@@ -1,18 +1,16 @@
 package gr.codehub.teamOne.resource.impl;
 
-import gr.codehub.teamOne.Utilities.GeneralFunctions;
 import gr.codehub.teamOne.exceptions.BadEntityException;
 import gr.codehub.teamOne.exceptions.NotFoundException;
 import gr.codehub.teamOne.model.Measurement;
 import gr.codehub.teamOne.model.Users;
-import gr.codehub.teamOne.repository.MeasurementsRepository;
+import gr.codehub.teamOne.repository.MeasurementRepository;
 import gr.codehub.teamOne.repository.UserRepository;
 import gr.codehub.teamOne.repository.util.JpaUtil;
 import gr.codehub.teamOne.representation.DeleteMeasurementDTO;
 import gr.codehub.teamOne.representation.MeasurementDTO;
 import gr.codehub.teamOne.representation.MeasurementsSearchParamDTO;
 import gr.codehub.teamOne.resource.MeasurementResource;
-import gr.codehub.teamOne.resource.util.ResourceUtils;
 import org.restlet.resource.ResourceException;
 import org.restlet.resource.ServerResource;
 
@@ -22,7 +20,7 @@ import java.util.List;
 import java.util.Optional;
 
 public class MeasurementResourceImpl extends ServerResource implements MeasurementResource {
-    private MeasurementsRepository measurementsRepository;
+    private MeasurementRepository measurementRepository;
     private UserRepository userRepository;
     private EntityManager em;
 
@@ -30,7 +28,7 @@ public class MeasurementResourceImpl extends ServerResource implements Measureme
     protected void doInit() throws ResourceException {
         try{
             em = JpaUtil.getEntityManager();
-            measurementsRepository = new MeasurementsRepository(em);
+            measurementRepository = new MeasurementRepository(em);
             userRepository = new UserRepository(em);
         }catch(Exception e) {
             throw new ResourceException(e);
@@ -41,72 +39,32 @@ public class MeasurementResourceImpl extends ServerResource implements Measureme
     protected void doRelease() throws ResourceException {
         em.close();
     }
-    /**
-     * Method to get measurements for a specific user using email to identify the user.
-     * @param paramDTO Object of MeasurementsSearchParamDTO.
-     * @return Measurement Representation Object List with measurements for the user.
-     * @throws NotFoundException,BadEntityException
-     */
-    @Override
-    public List<MeasurementDTO> getMeasurementForUser(MeasurementsSearchParamDTO paramDTO) throws NotFoundException, BadEntityException {
 
-
-        ResourceUtils.checkRole(this, GeneralFunctions.rolesWithAccess(true, true, true));
-        String usrEmail = this.getRequest().getClientInfo().getUser().getIdentifier();
-        Users currentUser = userRepository.getUserInfo(usrEmail);
-
-        paramDTO.setUserID(currentUser.getId());
-
-        List<Measurement> listWithMeasurements = measurementsRepository.getSpecificMeasurements(paramDTO);
-        List<MeasurementDTO> listWithDTO = new ArrayList<>();
-        listWithMeasurements.forEach( ms -> listWithDTO.add(MeasurementDTO.getMeasurementDTO(ms)));
-        return listWithDTO;
-    }
-    /**
-     * Method that remove a measurement.
-     * @param measurementDTO Object of DeleteMeasurementDTO.
-     * @return A message that measurement has successfully deleted.
-     * @throws NotFoundException,BadEntityException
-     */
     @Override
     public String removeMeasurement(DeleteMeasurementDTO measurementDTO) throws NotFoundException, BadEntityException {
-        ResourceUtils.checkRole(this, GeneralFunctions.rolesWithAccess(true, false, false));
 
         if (measurementDTO==null) throw new BadEntityException("Null object as input");
-        measurementsRepository.deleteById(measurementDTO.getMeasurementID());
+        measurementRepository.deleteById(measurementDTO.getMeasurementID());
         return "Successfully deleted";
     }
 
-    /**
-     * Method that update a measurement.
-     * @param measurementDTO Object of Measurement Representation.
-     * @return A Measurement Representation Object with the new values .
-     * @throws NotFoundException,BadEntityException
-     */
     @Override
     public MeasurementDTO updateMeasurement(MeasurementDTO measurementDTO) throws NotFoundException, BadEntityException {
-        ResourceUtils.checkRole(this, GeneralFunctions.rolesWithAccess(true, false, false));
 
         if(measurementDTO == null) throw new BadEntityException("Null measurement Exception error");
         if(measurementDTO.getMeasurementID() == null) throw new BadEntityException("No measurement id to update");
 
-        Optional<Measurement> demandMeasurement = measurementsRepository.findById(measurementDTO.getMeasurementID());
+        Optional<Measurement> demandMeasurement = measurementRepository.findById(measurementDTO.getMeasurementID());
         if(!demandMeasurement.isPresent()) throw new NotFoundException("Not such measure");
 
         Measurement measurementToUpdate = MeasurementDTO.updateMeasurement(demandMeasurement.get(), measurementDTO);
-        measurementsRepository.save(measurementToUpdate);
+        measurementRepository.save(measurementToUpdate);
 
         return measurementDTO;
     }
-    /**
-     * Method that add a measurement and using email to identify the user .
-     * @param measurementDTO Object of Measurement Representation.
-     * @return A message that measurement saved successfully .
-     * @throws NotFoundException,BadEntityException
-     */
+
     @Override
     public String addMeasurement(MeasurementDTO measurementDTO) throws NotFoundException, BadEntityException {
-        ResourceUtils.checkRole(this, GeneralFunctions.rolesWithAccess(true, false, false));
 
         String usrEmail = this.getRequest().getClientInfo().getUser().getIdentifier();
 
@@ -120,22 +78,17 @@ public class MeasurementResourceImpl extends ServerResource implements Measureme
 
         Measurement measurementToSave = MeasurementDTO.getMeasurement(measurementDTO);
         measurementToSave.setUser(demandedUser.get());
-        measurementsRepository.save(measurementToSave);
+        measurementRepository.save(measurementToSave);
         return "Measurement saved successfully !";
     }
-    /**
-     * Method that get all measurements based on user id and time constraints(start date and end date) .
-     * @param paramDTO Object of Measurement Search Representation.
-     * @return  A Measurement Object list.
-     * @throws NotFoundException,BadEntityException
-     */
+
     @Override
     public List<MeasurementDTO> getAllMeasurementsBasedOn(MeasurementsSearchParamDTO paramDTO) throws NotFoundException, BadEntityException {
-        ResourceUtils.checkRole(this, GeneralFunctions.rolesWithAccess(true, true, true));
 
-        List<Measurement> listWithMeasurements = measurementsRepository.getSpecificMeasurements(paramDTO);
+        List<Measurement> listWithMeasurements = measurementRepository.getSpecificMeasurements(paramDTO);
         List<MeasurementDTO> listWithDTO = new ArrayList<>();
         listWithMeasurements.forEach( ms -> listWithDTO.add(MeasurementDTO.getMeasurementDTO(ms)));
+
         return listWithDTO;
     }
 }
