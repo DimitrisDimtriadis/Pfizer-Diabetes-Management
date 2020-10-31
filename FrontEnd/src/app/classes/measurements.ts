@@ -4,4 +4,5 @@ export class Measurements{
     carbIntake: number;
     measurementDate: Date;
     measurementID:number;
+  
 }
