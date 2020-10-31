@@ -6,7 +6,7 @@ import gr.codehub.teamOne.repository.lib.Repository;
 import javax.persistence.EntityManager;
 import java.util.List;
 
-public class PatientDoctorAssociationRepository extends Repository<gr.codehub.teamOne.model.PatientDoctorAssociation, Long> {
+public class PatientDoctorAssociationRepository extends Repository<PatientDoctorAssociation, Long> {
 
     private EntityManager entityManager;
 
