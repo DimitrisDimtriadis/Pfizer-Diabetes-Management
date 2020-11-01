@@ -3,14 +3,13 @@ package gr.codehub.teamOne.resource.impl;
 import gr.codehub.teamOne.Utilities.GeneralFunctions;
 import gr.codehub.teamOne.exceptions.BadEntityException;
 import gr.codehub.teamOne.exceptions.NotFoundException;
-import gr.codehub.teamOne.exceptions.WrongUserRoleException;
 import gr.codehub.teamOne.model.PatientDoctorAssociation;
 import gr.codehub.teamOne.model.Users;
 import gr.codehub.teamOne.repository.PatientDoctorAssociationRepository;
 import gr.codehub.teamOne.repository.UserRepository;
 import gr.codehub.teamOne.repository.util.JpaUtil;
 import gr.codehub.teamOne.representation.LoginCredentialDTO;
-import gr.codehub.teamOne.representation.PatientDoctorAssociationDTO;
+import gr.codehub.teamOne.representation.LoginInfoDTO;
 import gr.codehub.teamOne.representation.UsersDTO;
 import gr.codehub.teamOne.resource.interfaces.LoginRegisterResource;
 import gr.codehub.teamOne.security.AccessRole;
@@ -70,7 +69,7 @@ public class LoginRegisterResourceImpl extends ServerResource implements LoginRe
      * @throws BadEntityException When input is null
      */
     @Override
-    public AccessRole loginUser(LoginCredentialDTO loginCredentialDTO) throws NotFoundException, BadEntityException {
+    public LoginInfoDTO loginUser(LoginCredentialDTO loginCredentialDTO) throws NotFoundException, BadEntityException {
 
         if (loginCredentialDTO == null) throw new BadEntityException("Null userException error");
 
@@ -82,7 +81,11 @@ public class LoginRegisterResourceImpl extends ServerResource implements LoginRe
         Users userToLogin = listWithUsers.get(0);
         userToLogin.setLastLogin(new Date());
         userRepository.save(userToLogin);
-        return userToLogin.getAccountType();
+
+        LoginInfoDTO loginInfoDTO = new LoginInfoDTO();
+        loginInfoDTO.setRole(userToLogin.getAccountType());
+        loginInfoDTO.setUnreadConsultations(0);
+        return loginInfoDTO;
     }
 
     /**
