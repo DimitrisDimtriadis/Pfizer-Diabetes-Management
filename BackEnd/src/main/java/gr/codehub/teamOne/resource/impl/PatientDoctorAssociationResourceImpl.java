@@ -9,7 +9,9 @@ import gr.codehub.teamOne.model.Users;
 import gr.codehub.teamOne.repository.PatientDoctorAssociationRepository;
 import gr.codehub.teamOne.repository.UserRepository;
 import gr.codehub.teamOne.repository.util.JpaUtil;
+import gr.codehub.teamOne.representation.PatientDTO;
 import gr.codehub.teamOne.representation.PatientDoctorAssociationDTO;
+import gr.codehub.teamOne.representation.UsersDTO;
 import gr.codehub.teamOne.resource.interfaces.PatientDoctorAssociationResource;
 import gr.codehub.teamOne.security.AccessRole;
 import org.restlet.resource.ResourceException;
@@ -47,32 +49,56 @@ public class PatientDoctorAssociationResourceImpl extends ServerResource impleme
     }
 
     /**
-     * Base on categoryType (url attribute) user gives, it return a list
-     * null = All associations
+     * Base on categoryType (url attribute) user gives, it return a list with patient/doctors that is active
+     *
+     * null = patients with Doctor that call url
      * 1 = patients without Doctor
      * 2 = patients with Doctors
+     * 3 = All patients that are also active
      *
      * @return List with association
      */
     @Override
-    public List<PatientDoctorAssociationDTO> getAllAssociations() throws BadEntityException {
+    public List<UsersDTO> getAllAssociations() throws BadEntityException, NotFoundException {
 
-        List<PatientDoctorAssociationDTO> tempListAssociationsDTO = new ArrayList<>();
+        List<UsersDTO> tempListUsersDTO = new ArrayList<>();
+        List<Users> tempListUsers;
         List<PatientDoctorAssociation> associationsList;
 
         if(categoryType == null){
-            associationsList = GeneralFunctions.removeInactiveAssociations(associationRepository.findAll());
+            String usrEmail = this.getRequest().getClientInfo().getUser().getIdentifier();
+            Optional<Users> doctor = userRepository.findByEmail(usrEmail);
+            if(!doctor.isPresent()) throw new NotFoundException("Current doctor that called url, Not Found !");
+
+            associationsList = GeneralFunctions.removeInactiveAssociations(associationRepository.getAssociationWitSpecificDoctor(doctor.get().getId()));
+            tempListUsers = getOnDemandPatients(associationsList);
         } else if(categoryType == 2){
             associationsList = GeneralFunctions.removeInactiveAssociations(associationRepository.getPatientWithoutDoctor(true));
+            tempListUsers = getOnDemandPatients(associationsList);
         } else if(categoryType == 1){
             associationsList = GeneralFunctions.removeInactiveAssociations(associationRepository.getPatientWithoutDoctor(false));
+            tempListUsers = getOnDemandPatients(associationsList);
+        } else if(categoryType == 3){
+            associationsList = GeneralFunctions.removeInactiveAssociations(associationRepository.findAll());
+            tempListUsers = getOnDemandPatients(associationsList);
         } else {
             throw new BadEntityException("Wrong categoryType url attribute");
         }
 
-        associationsList.forEach(mObj -> tempListAssociationsDTO.add(PatientDoctorAssociationDTO.getAssociation(mObj)));
+        tempListUsers.forEach(mObj -> tempListUsersDTO.add(UsersDTO.getUsersDTO(mObj)));
+        return tempListUsersDTO;
+    }
 
-        return tempListAssociationsDTO;
+    private List<Users> getOnDemandPatients(List<PatientDoctorAssociation> associationsList){
+
+        List<Users> tempListUsers = new ArrayList<>();
+        if(associationsList.size() > 0){
+            associationsList.forEach( obj -> {
+                Optional<Users> tempUser = userRepository.findById(obj.getPatient().getId());
+                tempListUsers.add(tempUser.get());
+            });
+        }
+        return tempListUsers;
     }
 
     @Override

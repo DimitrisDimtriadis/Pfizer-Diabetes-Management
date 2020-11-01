@@ -5,6 +5,7 @@ import gr.codehub.teamOne.exceptions.BadEntityException;
 import gr.codehub.teamOne.exceptions.NotFoundException;
 import gr.codehub.teamOne.model.PatientDoctorAssociation;
 import gr.codehub.teamOne.model.Users;
+import gr.codehub.teamOne.repository.ConsultationRepository;
 import gr.codehub.teamOne.repository.PatientDoctorAssociationRepository;
 import gr.codehub.teamOne.repository.UserRepository;
 import gr.codehub.teamOne.repository.util.JpaUtil;
@@ -25,6 +26,7 @@ public class LoginRegisterResourceImpl extends ServerResource implements LoginRe
 
     private UserRepository userRepository;
     private PatientDoctorAssociationRepository associationRepository;
+    private ConsultationRepository consultationRepository;
     private EntityManager em;
 
     @Override
@@ -43,6 +45,7 @@ public class LoginRegisterResourceImpl extends ServerResource implements LoginRe
     protected void doRelease() throws ResourceException {
         em.close();
     }
+
     /**
      * Method to get all the users from base
      *
@@ -65,7 +68,7 @@ public class LoginRegisterResourceImpl extends ServerResource implements LoginRe
      *
      * @param loginCredentialDTO Object with login credentials for login
      * @return AccessRole to notify frontEnd about type of account
-     * @throws NotFoundException When there is no user with this credentials
+     * @throws NotFoundException  When there is no user with this credentials
      * @throws BadEntityException When input is null
      */
     @Override
@@ -84,7 +87,9 @@ public class LoginRegisterResourceImpl extends ServerResource implements LoginRe
 
         LoginInfoDTO loginInfoDTO = new LoginInfoDTO();
         loginInfoDTO.setRole(userToLogin.getAccountType());
-        loginInfoDTO.setUnreadConsultations(0);
+        //TODO: you work here !!!
+
+        loginInfoDTO.setUnreadConsultations(consultationRepository.calculateUnreadConsultations(userToLogin));
         return loginInfoDTO;
     }
 
@@ -108,13 +113,18 @@ public class LoginRegisterResourceImpl extends ServerResource implements LoginRe
 
         //TODO: Check if users is inActive! make it active and do update
         //To add entry on association
-        if(users.getAccountType() == AccessRole.ROLE_PATIENT){
+        if (users.getAccountType() == AccessRole.ROLE_PATIENT) {
             createNewEntryOnAssociationForPatient(users);
         }
         return UsersDTO.getUsersDTO(users);
     }
 
-    private void createNewEntryOnAssociationForPatient(Users newPatient) throws BadEntityException {
+    /**
+     * Function that create a new empty association with the patient that we create and null on doctor id to assign later
+     *
+     * @param newPatient To get patientID for the new association
+     */
+    private void createNewEntryOnAssociationForPatient(Users newPatient) {
 
         PatientDoctorAssociation mAssociation = new PatientDoctorAssociation();
 
