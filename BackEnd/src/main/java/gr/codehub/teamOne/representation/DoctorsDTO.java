@@ -17,6 +17,12 @@ public class DoctorsDTO {
     private String address;
     private AccessRole accountType;
 
+    /**
+     *Mapper: Convert a Doctor Representation Object to Users Object.
+     *
+     * @param doctorsDTO Patient Representation object.
+     * @return doctor Users object.
+     */
     public static Users getDoctor(DoctorsDTO doctorsDTO){
 
         Users doctor=new Users();
@@ -32,7 +38,12 @@ public class DoctorsDTO {
 
         return doctor;
     }
-
+    /**
+     *Mapper: Convert a User Object (doctor) to Doctors Representation Object .
+     *
+     * @param doctor Users object.
+     * @return doctorsDTO Doctors Representation Object.
+     */
     public static DoctorsDTO getDoctorDTO(Users doctor) {
 
         DoctorsDTO doctorsDTO =new DoctorsDTO();

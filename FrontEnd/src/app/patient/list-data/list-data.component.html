@@ -21,7 +21,7 @@
 </ul>
 
  
-  <div class="container">
+  <div  class="container">
     <h2 class="title text-center" style="padding:30px 0 30px;">Medical Data</h2>
     <div class="container" style="align-items: center; ">
 
@@ -46,7 +46,7 @@
         </div>
       </form>
     </div>
-    <table class="table table-hover">
+    <table id="myTable" class="table table-hover  table-responsive-md  text-center">
       <thead>
         <tr>
           <th scope="col">#</th>
@@ -55,19 +55,66 @@
           <th scope="col">Date</th>
           <th scope="col">Update</th>
           <th scope="col">Delete</th>
-
+        </tr>
       </thead>
       <tbody *ngFor="let medi of mediData; let i = index">
         <tr>
-          <th scope="row">{{i+1}}</th>
-          <td>{{medi.carbIntake}}</td>
-          <td>{{medi.bloodGlucoseLevel}}</td>
-          <td>{{medi.measurementDate | date:'medium' }}</td>
-          <td><button class="btn" type="submit" (click)="updateData()"><i class="fa fa-edit fa-lg" aria-hidden="true"></i></button></td>
-          <td><button class="btn" type="submit" (click)="deleteData()"><i class="fa fa-trash-o fa-lg" aria-hidden="true"></i></button></td>
+          <th class="scope">{{i+1}} </th>
+          <td >{{medi.carbIntake}}</td>
+          <td >{{medi.bloodGlucoseLevel}}</td>
+          <td >{{medi.measurementDate | date:'medium' }}</td>
+          <td><button class="btn" data-toggle="modal" data-target="#update" type="submit" (click)="getData(medi.measurementID)"><i class="fa fa-edit fa-lg" aria-hidden="true"></i></button></td>
+          <td><button class="btn" type="submit" (click)="deleteData(medi.measurementID)"><i class="fa fa-trash-o fa-lg" aria-hidden="true"></i></button></td>
         </tr>
     </tbody>
     </table>
+     <!-- Modal -->
+<div class="modal fade " id="update" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Modal title</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+       
+        <div class="container" style="align-items: center; ">
+
+          <form>
+            <div class="form-group row">
+      
+        
+              <label for="example-date-input" class=" col-form-label">Edit date</label>
+              <div class="form-group col-sm-3 col-sm-push-4">
+                <input class="form-control" type="date" id="editD" value="{{myGetDate}}"  >
+              </div>
+        
+              <div class="form-group col-sm-3 col-sm-push-4">
+                <label>Carbs (grams)</label>
+                <input type="number" class="form-control" id="carbModal" value="{{mediDataObj?.carbIntake}}" >
+              </div>
+              
+              <div class="form-group col-sm-3 col-sm-push-4">
+                  <label>Glucose ( mg/dL) </label>
+                  <input type="number"class="form-control" id="gluModal" value="{{mediDataObj?.bloodGlucoseLevel}}" >
+              </div>
+              
+            </div>
+          </form>
+        </div>
+
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary" (click)="updateData(mediDataObj?.measurementID)">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
   </div>
 
+ 
   

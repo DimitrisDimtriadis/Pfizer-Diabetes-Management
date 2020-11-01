@@ -1,13 +1,17 @@
 package gr.codehub.teamOne.resource.impl;
 
+import gr.codehub.teamOne.Utilities.GeneralFunctions;
 import gr.codehub.teamOne.exceptions.BadEntityException;
+import gr.codehub.teamOne.exceptions.NotFoundException;
+import gr.codehub.teamOne.exceptions.WrongUserRoleException;
 import gr.codehub.teamOne.model.PatientDoctorAssociation;
 import gr.codehub.teamOne.model.Users;
 import gr.codehub.teamOne.repository.PatientDoctorAssociationRepository;
 import gr.codehub.teamOne.repository.UserRepository;
 import gr.codehub.teamOne.repository.util.JpaUtil;
 import gr.codehub.teamOne.representation.PatientDoctorAssociationDTO;
-import gr.codehub.teamOne.resource.PatientDoctorAssociationResource;
+import gr.codehub.teamOne.resource.interfaces.PatientDoctorAssociationResource;
+import gr.codehub.teamOne.security.AccessRole;
 import org.restlet.resource.ResourceException;
 import org.restlet.resource.ServerResource;
 
@@ -21,6 +25,7 @@ public class PatientDoctorAssociationResourceImpl extends ServerResource impleme
     private UserRepository userRepository;
     private PatientDoctorAssociationRepository associationRepository;
     private EntityManager em;
+    private Long categoryType;
 
     @Override
     protected void doInit() throws ResourceException {
@@ -28,6 +33,9 @@ public class PatientDoctorAssociationResourceImpl extends ServerResource impleme
             em = JpaUtil.getEntityManager();
             userRepository = new UserRepository(em);
             associationRepository = new PatientDoctorAssociationRepository(em);
+
+            String tempCategory = getQueryValue("categoryType");
+            categoryType = (tempCategory != null) ? Long.parseLong(getQueryValue("categoryType")) : null;
         }catch(Exception e){
             throw new ResourceException(e);
         }
@@ -38,32 +46,56 @@ public class PatientDoctorAssociationResourceImpl extends ServerResource impleme
         em.close();
     }
 
+    /**
+     * Base on categoryType (url attribute) user gives, it return a list
+     * null = All associations
+     * 1 = patients without Doctor
+     * 2 = patients with Doctors
+     *
+     * @return List with association
+     */
     @Override
-    public List<PatientDoctorAssociationDTO> getAllAssociations() {
+    public List<PatientDoctorAssociationDTO> getAllAssociations() throws BadEntityException {
 
-        List<PatientDoctorAssociation> asd = associationRepository.findAll();
-        List<PatientDoctorAssociationDTO> templist = new ArrayList<>();
-        asd.forEach(mObj -> templist.add(PatientDoctorAssociationDTO.getAssociation(mObj)));
+        List<PatientDoctorAssociationDTO> tempListAssociationsDTO = new ArrayList<>();
+        List<PatientDoctorAssociation> associationsList;
 
-        return templist;
+        if(categoryType == null){
+            associationsList = GeneralFunctions.removeInactiveAssociations(associationRepository.findAll());
+        } else if(categoryType == 2){
+            associationsList = GeneralFunctions.removeInactiveAssociations(associationRepository.getPatientWithoutDoctor(true));
+        } else if(categoryType == 1){
+            associationsList = GeneralFunctions.removeInactiveAssociations(associationRepository.getPatientWithoutDoctor(false));
+        } else {
+            throw new BadEntityException("Wrong categoryType url attribute");
+        }
+
+        associationsList.forEach(mObj -> tempListAssociationsDTO.add(PatientDoctorAssociationDTO.getAssociation(mObj)));
+
+        return tempListAssociationsDTO;
     }
 
     @Override
-    public PatientDoctorAssociationDTO addNewAssociation(PatientDoctorAssociationDTO newAssociationDTO) throws BadEntityException {
+    public PatientDoctorAssociationDTO addNewAssociation(PatientDoctorAssociationDTO newAssociationDTO) throws BadEntityException, WrongUserRoleException, NotFoundException {
 
-        //TODO: add check for roles
         if (newAssociationDTO == null) throw new BadEntityException("Null userException error");
 
-        PatientDoctorAssociation mAssociation = PatientDoctorAssociationDTO.getAssociation(newAssociationDTO);
+        //Take saved association(if exist)
+        PatientDoctorAssociation mAssociation = associationRepository.getAssociationIfExist(newAssociationDTO.getPatient());
 
-        Optional<Users> patient = userRepository.findById(newAssociationDTO.getPatientID());
+        if(mAssociation == null) throw new NotFoundException("There was no association with this patient");
+
+        Optional<Users> patient = userRepository.findById(newAssociationDTO.getPatient());
         if(!patient.isPresent()) throw new BadEntityException("There is no patient with that id");
+
+        if(patient.get().getAccountType() != AccessRole.ROLE_PATIENT) throw new WrongUserRoleException("The user you add as patient, has wrong role");
         mAssociation.setPatient(patient.get());
 
-        if(newAssociationDTO.getDoctorID() != null ){
+        if(newAssociationDTO.getDoctor() != null ){
 
-            Optional<Users> doctor = userRepository.findById(newAssociationDTO.getDoctorID());
+            Optional<Users> doctor = userRepository.findById(newAssociationDTO.getDoctor());
             if(!doctor.isPresent()) throw new BadEntityException("There is no doctor with that id");
+            if(doctor.get().getAccountType() != AccessRole.ROLE_DOCTOR) throw new WrongUserRoleException("The user you add as doctor, has wrong role");
             mAssociation.setDoctor(doctor.get());
         }
 

@@ -22,6 +22,7 @@ public class SacchonApp extends Application {
     public static final Logger LOGGER = Engine.getLogger(SacchonApp.class);
 
     public static void main(String[] args) throws Exception {
+
         startHibernate();
         startRestService();
     }
@@ -47,6 +48,7 @@ public class SacchonApp extends Application {
     }
 
     private static void startHibernate() {
+
         LOGGER.info("Starting with hibernate");
 
         EntityManager em = JpaUtil.getEntityManager();
@@ -54,6 +56,7 @@ public class SacchonApp extends Application {
     }
 
     public SacchonApp() {
+
         setName("Sacchon web Api");
         setDescription("Full web API for Sacchon project");
 
@@ -83,19 +86,12 @@ public class SacchonApp extends Application {
     }
 }
 
-//TODO: ALL patient without doctor
-//TODO: Patients with doctor
 //TODO: Gia enan astheni oles tis metrisis kai enan meso oro (kathimerina kai miniaia carb and glosure)
 //TODO: Reservations -> Gnomateusi giatrou
 //TODO: Visibilite gia to delete
-//TODO: Doc to see measurement of all his patients and on specific
 //TODO: Doc poious den exei kanei consult
-//TODO: Doc to na stelnei consult
 //TODO: Kane elenxo poio asthenis den exoun consult meta apo 30 meres
 //TODO: O asthenis na ginetai availble otan o doc feugei
 //TODO: An o astheneis exei gnomateusei na eidopoieitai
-//TODO: Admin kataxorisis asthenei
+//TODO: Admin kataxorisis doc
 //TODO: Admin gnomateuseis doc
-//TODO: List without assignment
-//TODO: List without entries
-//TODO: Check if doc is offline for long time ===>  change login procedure

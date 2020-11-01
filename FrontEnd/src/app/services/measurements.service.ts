@@ -4,6 +4,7 @@ import { Measurements } from '../classes/measurements';
 import { Observable } from 'rxjs';
 import { PostData } from '../classes/postData';
 import { StartEndDateClass } from '../classes/startEndDateClass';
+import { MeasurIDClass } from '../classes/MeasurIDClass';
 
 
 const headerOption = {
@@ -19,16 +20,18 @@ export class MeasurementsService {
   readonly url="http://localhost:9000/sacchon/measurements";
   readonly urlPatient="http://localhost:9000/sacchon/patient ";
 
+  readonly urlM1="http://localhost:9000/sacchon/measurements?measurementID=";
+
   addMeasurements: Measurements = {
     bloodGlucoseLevel: 0,
     carbIntake: 0,
-    measurementDate: new Date,
+    measurementDate: '',
     measurementID:0,
   }
   currentMeasurements: Measurements = {
     bloodGlucoseLevel: 0,
     carbIntake: 0,
-    measurementDate: new Date,
+    measurementDate: '',
     measurementID:0,
   }
 
@@ -42,6 +45,11 @@ export class MeasurementsService {
     
     userID:0
   }
+
+
+  mID:MeasurIDClass={
+     measurementID:0
+  }
   
   constructor(private http: HttpClient) { }
 
@@ -51,11 +59,15 @@ export class MeasurementsService {
   getMeasurementsData(seDate:StartEndDateClass):Observable<any>{
     return this.http.post<StartEndDateClass>(this.urlPatient,seDate,headerOption);
   }
+
+  get1M(data: number): Observable<Measurements> {
+    return this.http.get<Measurements>(this.urlM1+data, headerOption);
+  }
   
   updateMediData(data: Measurements): Observable<Measurements>{
     return this.http.put<Measurements>(this.url,data,headerOption);
   }
-  removeMedi(measurementID){
-    return this.http.delete(this.url + "/" + measurementID, headerOption);
+  removeMedi(data: number): Observable<Measurements>{
+    return this.http.delete<Measurements>(this.urlM1 + data, headerOption);
   }
 }

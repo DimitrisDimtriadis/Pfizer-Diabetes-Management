@@ -16,6 +16,8 @@ export class UserService {
   readonly url="http://localhost:9000/sacchon/users";
 
   readonly urlGetUserdata="http://localhost:9000/sacchon/profile";
+
+  readonly urlI="http://localhost:9000/sacchon/users/interacts";
   
   currentUser: UserClass = {
     
@@ -74,6 +76,14 @@ export class UserService {
     .set('Authorization',`Basic ${btoa(sessionStorage.getItem("credentials"))}`)
   }
     return this.http.put<UserClass>(this.urlGetUserdata,user,header);
+  }
+
+
+  deleteUser(id:number):Observable<UserClass>{
+    let header= { headers:new HttpHeaders().set('Content-Type', 'application/json')
+    .set('Authorization',`Basic ${btoa(sessionStorage.getItem("credentials"))}`)
+  }
+  return this.http.delete<UserClass>(this.urlI + "/" + id,header);
   }
  
 

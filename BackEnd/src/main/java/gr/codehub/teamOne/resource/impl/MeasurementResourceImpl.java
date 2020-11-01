@@ -7,10 +7,9 @@ import gr.codehub.teamOne.model.Users;
 import gr.codehub.teamOne.repository.MeasurementRepository;
 import gr.codehub.teamOne.repository.UserRepository;
 import gr.codehub.teamOne.repository.util.JpaUtil;
-import gr.codehub.teamOne.representation.DeleteMeasurementDTO;
 import gr.codehub.teamOne.representation.MeasurementDTO;
 import gr.codehub.teamOne.representation.MeasurementsSearchParamDTO;
-import gr.codehub.teamOne.resource.MeasurementResource;
+import gr.codehub.teamOne.resource.interfaces.MeasurementResource;
 import org.restlet.resource.ResourceException;
 import org.restlet.resource.ServerResource;
 
@@ -23,6 +22,7 @@ public class MeasurementResourceImpl extends ServerResource implements Measureme
     private MeasurementRepository measurementRepository;
     private UserRepository userRepository;
     private EntityManager em;
+    private Long measurementID;
 
     @Override
     protected void doInit() throws ResourceException {
@@ -30,6 +30,8 @@ public class MeasurementResourceImpl extends ServerResource implements Measureme
             em = JpaUtil.getEntityManager();
             measurementRepository = new MeasurementRepository(em);
             userRepository = new UserRepository(em);
+            String tempMeasurementID = getQueryValue("measurementID");
+            measurementID = (tempMeasurementID != null) ? Long.parseLong(getQueryValue("measurementID")) : null;
         }catch(Exception e) {
             throw new ResourceException(e);
         }
@@ -41,10 +43,21 @@ public class MeasurementResourceImpl extends ServerResource implements Measureme
     }
 
     @Override
-    public String removeMeasurement(DeleteMeasurementDTO measurementDTO) throws NotFoundException, BadEntityException {
+    public MeasurementDTO getSpecificMeasurement() throws BadEntityException, NotFoundException {
 
-        if (measurementDTO==null) throw new BadEntityException("Null object as input");
-        measurementRepository.deleteById(measurementDTO.getMeasurementID());
+        if(measurementID == null) throw new BadEntityException("You gave a wrong measurement ID");
+
+        Optional<Measurement> tempMeasurement = measurementRepository.findById(measurementID);
+        if(!tempMeasurement.isPresent()) throw new NotFoundException("No measurement found with this id");
+
+        return MeasurementDTO.getMeasurementDTO(tempMeasurement.get());
+    }
+
+    @Override
+    public String deleteMeasurement() throws NotFoundException, BadEntityException {
+
+        if (measurementID==null) throw new BadEntityException("Null object as input");
+        measurementRepository.deleteById(measurementID);
         return "Successfully deleted";
     }
 
@@ -72,14 +85,14 @@ public class MeasurementResourceImpl extends ServerResource implements Measureme
 
         Optional<Users> demandedUser = userRepository.findByEmail(usrEmail);
 
-        if(!demandedUser.isPresent()) throw new NotFoundException("Not such user");
+        if(!demandedUser.isPresent() || !demandedUser.get().isActive()) throw new NotFoundException("Not such user or the account is inactive");
 
         measurementDTO.setUser(demandedUser.get().getId());
 
         Measurement measurementToSave = MeasurementDTO.getMeasurement(measurementDTO);
         measurementToSave.setUser(demandedUser.get());
         measurementRepository.save(measurementToSave);
-        return "Measurement saved successfully !";
+        return "Measurement saved";
     }
 
     @Override

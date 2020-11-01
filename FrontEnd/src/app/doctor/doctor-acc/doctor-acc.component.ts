@@ -106,12 +106,13 @@ export class DoctorAccComponent implements OnInit {
    sessionStorage.setItem("credentials",this.Uservice.currentLogin.userEmail + ":" + this.Uservice.currentLogin.userPassword);
    window.location.reload();
 
-    
-
 
   }
 
 
+  deleteDoctor(){
+    
+  }
  
 
 }

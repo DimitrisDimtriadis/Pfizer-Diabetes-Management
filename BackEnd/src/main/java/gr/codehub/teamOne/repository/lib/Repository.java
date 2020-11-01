@@ -1,5 +1,6 @@
 package gr.codehub.teamOne.repository.lib;
 
+import gr.codehub.teamOne.exceptions.NotFoundException;
 import gr.codehub.teamOne.model.Users;
 import gr.codehub.teamOne.representation.LoginCredentialDTO;
 
@@ -84,12 +85,16 @@ public abstract class Repository<T, K> implements IRepository<T, K> {
     public abstract Class<T> getEntityClass();
     public abstract String getEntityClassName();
 
+    /**
+     * Method to search user in base, based on email.
+     * @param usrEmail String unique email
+     * @return user with this email.
+     */
     private Users findUserWithCredential(String usrEmail) {
         return (Users) entityManager.createQuery("from Users u where email = :email ")
                 .setParameter("email", usrEmail)
                 .getResultList()
                 .get(0);
     }
-     //TODO: update profile id-register date- last login && delete
-    //TODO: ASTheneis xoris giatro
+
 }

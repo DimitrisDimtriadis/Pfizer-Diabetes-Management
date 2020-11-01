@@ -17,6 +17,11 @@ public enum AccessRole {
         return roleName;
     }
 
+    /**
+     * Method that takes a role as String and try to find the equal AccessRole
+     * @param roleParameter The user role as string
+     * @return The equal AccessRole
+     */
     public static AccessRole getRoleValue(String roleParameter) {
         for (AccessRole accessRole : AccessRole.values()) {
             if (roleParameter.equals(accessRole.getRoleName())) {
@@ -27,8 +32,7 @@ public enum AccessRole {
     }
 
     /**
-     * Function that takes index of role as String and try to find the equal AccessRole
-     *
+     * Method that takes index of role as String and try to find the equal AccessRole
      * @param index The user role as string
      * @return The equal AccessRole
      */

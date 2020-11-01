@@ -15,6 +15,8 @@ public class UsersDTO {
     private String email;
     private String password;
     private AccessRole accountType;
+
+    //Social Security number(amka).
     private Integer amka;
     private String mobile_phone_number;
     private String phone_number;
@@ -22,6 +24,14 @@ public class UsersDTO {
     private Gender gender;
     private Date registration_date;
 
+
+
+    /**
+     *Mapper: Convert a Users Representation Object to Users Object.
+     *
+     * @param usersDTO User Representation object.
+     * @return users Users object.
+     */
     public static Users getUsers(UsersDTO usersDTO){
 
         Users users = new Users();
@@ -39,7 +49,12 @@ public class UsersDTO {
 
         return users;
     }
-
+    /**
+     *Mapper: Convert a User Object to User Representation Object .
+     *
+     * @param users Users object.
+     * @return  Users Representation Object.
+     */
     public static UsersDTO getUsersDTO(Users users){
 
         UsersDTO usersDTO = new UsersDTO();

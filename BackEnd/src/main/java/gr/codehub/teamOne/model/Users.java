@@ -31,6 +31,7 @@ public class Users {
     private String address;
     private AccessRole accountType;
 
+    //Social Security number(amka).
     @Column(unique = true, nullable = false)
     private Integer amka;
 
@@ -38,5 +39,5 @@ public class Users {
     private Date registration_date;
     private Date lastLogin;
 
-    private Boolean visibility;
+    private boolean active;
 }

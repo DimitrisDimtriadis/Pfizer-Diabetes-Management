@@ -8,23 +8,25 @@ import java.util.Date;
 @Data
 public class PatientDoctorAssociationDTO {
 
-    private long patientID;
-    private Long doctorID;
-    private Date lastConsulate;
+    private long patient;
+    private Long doctor;
+    private Boolean isActive;
 
     public static PatientDoctorAssociation getAssociation(PatientDoctorAssociationDTO mAssociationDTO){
 
         PatientDoctorAssociation mAssociation = new PatientDoctorAssociation();
-        mAssociation.setLastConsulate(mAssociationDTO.getLastConsulate());
         return mAssociation;
     }
 
     public static PatientDoctorAssociationDTO getAssociation(PatientDoctorAssociation mAssociation){
 
         PatientDoctorAssociationDTO mAssociationDTO = new PatientDoctorAssociationDTO();
-        mAssociationDTO.setPatientID(mAssociation.getPatient().getId());
-        mAssociationDTO.setDoctorID(mAssociation.getDoctor().getId());
-        mAssociationDTO.setLastConsulate(mAssociation.getLastConsulate());
+        mAssociationDTO.setPatient(mAssociation.getPatient().getId());
+
+
+        if (mAssociation.getDoctor() != null){
+            mAssociationDTO.setDoctor(mAssociation.getDoctor().getId());
+        }
         return mAssociationDTO;
     }
 }

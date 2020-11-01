@@ -1,5 +1,7 @@
 package gr.codehub.teamOne.repository;
 
+import gr.codehub.teamOne.Utilities.GeneralFunctions;
+import gr.codehub.teamOne.exceptions.NotFoundException;
 import gr.codehub.teamOne.model.Users;
 import gr.codehub.teamOne.repository.lib.Repository;
 import gr.codehub.teamOne.representation.LoginCredentialDTO;
@@ -30,7 +32,7 @@ public class UserRepository extends Repository<Users, Long> {
     }
 
     /**
-     * Function to check if user exist on base before saving
+     * Method that  check if user exist on base before saving, based on email and Social Security number(amka).
      *
      * @param usersDTO Object of user that want to save on base
      * @return if exist other entry return true
@@ -44,7 +46,12 @@ public class UserRepository extends Repository<Users, Long> {
 
         return userList.size() > 0;
     }
-
+    /**
+     * Method that check if user exist on base using email and password.
+     *
+     * @param  loginCredentialDTO contains the email and password
+     * @return user with this email and password.
+     */
     public List findUserWithCredential(LoginCredentialDTO loginCredentialDTO) {
         return entityManager.createQuery("from Users u where u.email = :email and u.password = :password")
                 .setParameter("email", loginCredentialDTO.getUserEmail())
@@ -52,20 +59,37 @@ public class UserRepository extends Repository<Users, Long> {
                 .getResultList();
     }
 
-    public Users getUserInfo(String usrEmail) {
+    /**
+     * Search users with specific email.
+     *
+     * @param usrEmail  Contains the email  to search user.
+     * @return User that found.
+     */
+    public Users getUserInfo(String usrEmail) throws NotFoundException {
+
         List tempListWithInfo = entityManager.createQuery("from Users u where u.email = :email")
                 .setParameter("email", usrEmail)
                 .getResultList();
 
-        if (tempListWithInfo.size() > 0) {
-            return (Users) tempListWithInfo.get(0);
-        }
-        return null;
-    }
+        //To remove inactive users
+        List<Users> tempList = GeneralFunctions.removeInactiveUsers(tempListWithInfo);
 
+        if (tempList.size() > 0) {
+            return (Users) tempListWithInfo.get(0);
+        } else if(tempListWithInfo.size() > 0){
+            throw new NotFoundException("The account is inactive");
+        }
+        throw new NotFoundException("Not found any account with this email");
+    }
+    /**
+     * Search users with specific role.
+     *
+     * @param accessRole  Contains the role  to search user.
+     * @return Users that found.
+     */
     public List getAllUsersBasedOnRole(AccessRole accessRole) {
 
-        return entityManager.createQuery("from Users u where u.accountType = :accessRole")
+        return entityManager.createQuery("from Users u where u.accountType = :accessRole and active != true")
                 .setParameter("accessRole", accessRole)
                 .getResultList();
     }
@@ -73,7 +97,7 @@ public class UserRepository extends Repository<Users, Long> {
     /**
      * Search user with specific amka. If input contains role, checks also if role is given
      *
-     * @param usersSearchDTO Containts amka to search user. If containes also role, searching on this criteria
+     * @param usersSearchDTO Contains Social Security number(amka)to search user. In additional If contains and role, search on this criteria
      * @return User that found
      */
     public Users getUserBasedOnAmka(UsersSearchDTO usersSearchDTO) {
@@ -90,5 +114,13 @@ public class UserRepository extends Repository<Users, Long> {
             }
         }
         return null;
+    }
+
+    public List getExpiredDoctors(){
+
+        return entityManager.createQuery("from Users where accountType = :accountType and lastLogin != NULL and lastLogin < current_Date() - :daysToExp and active = true")
+                .setParameter("accountType", AccessRole.ROLE_DOCTOR)
+                .setParameter("daysToExp", GeneralFunctions.DaysToConsiderUserExpired)
+                .getResultList();
     }
 }

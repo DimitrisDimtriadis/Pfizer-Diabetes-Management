@@ -22,6 +22,12 @@ public class PatientDTO {
     private Date registration_date;
     private AccessRole accountType;
 
+    /**
+     *Mapper: Convert a Patient Representation Object to Users Object.
+     *
+     * @param patientDTO Patient Representation object.
+     * @return patient Users object.
+     */
     public static Users getPatient(PatientDTO patientDTO) {
 
         Users patient = new Users();
@@ -39,7 +45,12 @@ public class PatientDTO {
 
         return patient;
     }
-
+    /**
+     *Mapper: Convert a User Object (patient) to Patient Representation Object .
+     *
+     * @param patient Users object.
+     * @return  Patient Representation Object.
+     */
     public static PatientDTO getPatientDTO(Users patient) {
 
         PatientDTO patientDTO = new PatientDTO();

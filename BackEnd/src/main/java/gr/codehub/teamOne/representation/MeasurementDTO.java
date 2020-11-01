@@ -46,6 +46,12 @@ public class MeasurementDTO {
         return measurementDTO;
     }
 
+    /**
+     * Update  object baseMeasurement from updatesForMeasurements
+     *
+     * @param baseMeasurement (from base) and @param updatesForMeasurements(with the new values)
+     * @return Object baseMeasurement with the  new changing values .
+     */
     static public Measurement updateMeasurement(Measurement baseMeasurement, MeasurementDTO updatesForMeasurements) {
 
         if(updatesForMeasurements.getBloodGlucoseLevel() != null){
