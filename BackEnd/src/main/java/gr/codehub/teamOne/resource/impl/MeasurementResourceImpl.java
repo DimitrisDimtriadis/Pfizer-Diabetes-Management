@@ -7,10 +7,10 @@ import gr.codehub.teamOne.model.Users;
 import gr.codehub.teamOne.repository.MeasurementRepository;
 import gr.codehub.teamOne.repository.UserRepository;
 import gr.codehub.teamOne.repository.util.JpaUtil;
-import gr.codehub.teamOne.representation.DeleteMeasurementDTO;
+import gr.codehub.teamOne.representation.MeasurementDeleteDTO;
 import gr.codehub.teamOne.representation.MeasurementDTO;
 import gr.codehub.teamOne.representation.MeasurementsSearchParamDTO;
-import gr.codehub.teamOne.resource.MeasurementResource;
+import gr.codehub.teamOne.resource.interfaces.MeasurementResource;
 import org.restlet.resource.ResourceException;
 import org.restlet.resource.ServerResource;
 
@@ -41,7 +41,7 @@ public class MeasurementResourceImpl extends ServerResource implements Measureme
     }
 
     @Override
-    public String removeMeasurement(DeleteMeasurementDTO measurementDTO) throws NotFoundException, BadEntityException {
+    public String deleteMeasurement(MeasurementDeleteDTO measurementDTO) throws NotFoundException, BadEntityException {
 
         if (measurementDTO==null) throw new BadEntityException("Null object as input");
         measurementRepository.deleteById(measurementDTO.getMeasurementID());
@@ -72,14 +72,14 @@ public class MeasurementResourceImpl extends ServerResource implements Measureme
 
         Optional<Users> demandedUser = userRepository.findByEmail(usrEmail);
 
-        if(!demandedUser.isPresent()) throw new NotFoundException("Not such user");
+        if(!demandedUser.isPresent() || !demandedUser.get().isActive()) throw new NotFoundException("Not such user or the account is inactive");
 
         measurementDTO.setUser(demandedUser.get().getId());
 
         Measurement measurementToSave = MeasurementDTO.getMeasurement(measurementDTO);
         measurementToSave.setUser(demandedUser.get());
         measurementRepository.save(measurementToSave);
-        return "Measurement saved successfully !";
+        return "Measurement saved";
     }
 
     @Override

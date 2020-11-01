@@ -11,7 +11,7 @@ import gr.codehub.teamOne.repository.util.JpaUtil;
 import gr.codehub.teamOne.representation.MeasurementDTO;
 import gr.codehub.teamOne.representation.MeasurementsSearchParamDTO;
 import gr.codehub.teamOne.representation.PatientDTO;
-import gr.codehub.teamOne.resource.PatientResource;
+import gr.codehub.teamOne.resource.interfaces.PatientResource;
 import gr.codehub.teamOne.resource.util.ResourceUtils;
 import gr.codehub.teamOne.security.AccessRole;
 import org.restlet.resource.ResourceException;

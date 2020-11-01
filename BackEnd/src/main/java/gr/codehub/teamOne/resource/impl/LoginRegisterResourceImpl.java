@@ -3,13 +3,16 @@ package gr.codehub.teamOne.resource.impl;
 import gr.codehub.teamOne.Utilities.GeneralFunctions;
 import gr.codehub.teamOne.exceptions.BadEntityException;
 import gr.codehub.teamOne.exceptions.NotFoundException;
+import gr.codehub.teamOne.exceptions.WrongUserRoleException;
+import gr.codehub.teamOne.model.PatientDoctorAssociation;
 import gr.codehub.teamOne.model.Users;
+import gr.codehub.teamOne.repository.PatientDoctorAssociationRepository;
 import gr.codehub.teamOne.repository.UserRepository;
 import gr.codehub.teamOne.repository.util.JpaUtil;
 import gr.codehub.teamOne.representation.LoginCredentialDTO;
+import gr.codehub.teamOne.representation.PatientDoctorAssociationDTO;
 import gr.codehub.teamOne.representation.UsersDTO;
-import gr.codehub.teamOne.resource.LoginRegisterResource;
-import gr.codehub.teamOne.resource.util.ResourceUtils;
+import gr.codehub.teamOne.resource.interfaces.LoginRegisterResource;
 import gr.codehub.teamOne.security.AccessRole;
 import org.restlet.resource.ResourceException;
 import org.restlet.resource.ServerResource;
@@ -22,6 +25,7 @@ import java.util.List;
 public class LoginRegisterResourceImpl extends ServerResource implements LoginRegisterResource {
 
     private UserRepository userRepository;
+    private PatientDoctorAssociationRepository associationRepository;
     private EntityManager em;
 
     @Override
@@ -30,6 +34,7 @@ public class LoginRegisterResourceImpl extends ServerResource implements LoginRe
         try {
             em = JpaUtil.getEntityManager();
             userRepository = new UserRepository(em);
+            associationRepository = new PatientDoctorAssociationRepository(em);
         } catch (Exception e) {
             throw new ResourceException(e);
         }
@@ -46,11 +51,11 @@ public class LoginRegisterResourceImpl extends ServerResource implements LoginRe
      */
     @Override
     public List<UsersDTO> getsUsers() throws NotFoundException {
-        ResourceUtils.checkRole(this, GeneralFunctions.rolesWithAccess(false, true, true));
 
-        List<Users> usersList = userRepository.findAll();
+        List<Users> usersList = GeneralFunctions.removeInactiveUsers(userRepository.findAll());
 
         List<UsersDTO> usersDTOList = new ArrayList<>();
+
         usersList.forEach(users -> usersDTOList.add(UsersDTO.getUsersDTO(users)));
 
         return usersDTOList;
@@ -65,12 +70,12 @@ public class LoginRegisterResourceImpl extends ServerResource implements LoginRe
      * @throws BadEntityException When input is null
      */
     @Override
-    public AccessRole verifyUser(LoginCredentialDTO loginCredentialDTO) throws NotFoundException, BadEntityException {
-        ResourceUtils.checkRole(this, GeneralFunctions.rolesWithAccess(true, true, true));
+    public AccessRole loginUser(LoginCredentialDTO loginCredentialDTO) throws NotFoundException, BadEntityException {
 
         if (loginCredentialDTO == null) throw new BadEntityException("Null userException error");
 
         List<Users> listWithUsers = userRepository.findUserWithCredential(loginCredentialDTO);
+        listWithUsers = GeneralFunctions.removeInactiveUsers(listWithUsers);
         if (listWithUsers.size() == 0) throw new NotFoundException("User account not found !");
 
         //Update the lastLogin to keep last entry of user
@@ -88,21 +93,31 @@ public class LoginRegisterResourceImpl extends ServerResource implements LoginRe
      * @throws BadEntityException For wrong object as input
      */
     @Override
-    public UsersDTO addUser(UsersDTO usersDTO) throws BadEntityException {
+    public UsersDTO registerUser(UsersDTO usersDTO) throws BadEntityException {
 
-   ResourceUtils.checkRole(this, GeneralFunctions.rolesWithAccess(false, true, true));
         if (usersDTO == null) throw new BadEntityException("Null userException error");
         if (userRepository.checkIfAccountExist(usersDTO))
             throw new BadEntityException("Found entry with the same AMKA or email");
 
         Users users = UsersDTO.getUsers(usersDTO);
-        users.setVisibility(true);
+        users.setActive(true);
         userRepository.save(users);
+
+        //TODO: Check if users is inActive! make it active and do update
+        //To add entry on association
+        if(users.getAccountType() == AccessRole.ROLE_PATIENT){
+            createNewEntryOnAssociationForPatient(users);
+        }
         return UsersDTO.getUsersDTO(users);
     }
 
-    @Override
-    public void removeUser() throws NotFoundException {
+    private void createNewEntryOnAssociationForPatient(Users newPatient) throws BadEntityException {
 
+        PatientDoctorAssociation mAssociation = new PatientDoctorAssociation();
+
+        mAssociation.setPatient(newPatient);
+        mAssociation.setActive(true);
+
+        associationRepository.save(mAssociation);
     }
 }
