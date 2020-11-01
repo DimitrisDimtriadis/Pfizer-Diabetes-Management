@@ -1,6 +1,7 @@
 package gr.codehub.teamOne.repository;
 
 import gr.codehub.teamOne.model.PatientDoctorAssociation;
+import gr.codehub.teamOne.model.Users;
 import gr.codehub.teamOne.repository.lib.Repository;
 
 import javax.persistence.EntityManager;
@@ -40,6 +41,25 @@ public class PatientDoctorAssociationRepository extends Repository<PatientDoctor
     public List getPatientWithoutDoctor(boolean withDoctor) {
 
         return entityManager.createQuery("from PatientDoctorAssociation where doctor_id " + (withDoctor ?"!= NULL" : "= NULL"))
+                .getResultList();
+    }
+
+    public PatientDoctorAssociation disableAssociationForPatient(Long patientID){
+
+        List tempListWithAssociations = entityManager.createQuery("from PatientDoctorAssociation where patient_id = :patientID")
+                .setParameter("patientID", patientID)
+                .getResultList();
+
+        if (tempListWithAssociations.size() > 0){
+            return (PatientDoctorAssociation) tempListWithAssociations.get(0);
+        }
+        return null;
+    }
+
+    public List getAssociationWitSpecificDoctor(Long doctorID){
+
+        return entityManager.createQuery("from PatientDoctorAssociation where doctor_id = :doctorID")
+                .setParameter("doctorID", doctorID)
                 .getResultList();
     }
 }

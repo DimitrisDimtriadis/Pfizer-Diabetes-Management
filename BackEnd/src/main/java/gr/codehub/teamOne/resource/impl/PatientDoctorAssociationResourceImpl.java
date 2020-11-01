@@ -1,5 +1,6 @@
 package gr.codehub.teamOne.resource.impl;
 
+import gr.codehub.teamOne.Utilities.GeneralFunctions;
 import gr.codehub.teamOne.exceptions.BadEntityException;
 import gr.codehub.teamOne.exceptions.WrongUserRoleException;
 import gr.codehub.teamOne.model.PatientDoctorAssociation;
@@ -8,7 +9,7 @@ import gr.codehub.teamOne.repository.PatientDoctorAssociationRepository;
 import gr.codehub.teamOne.repository.UserRepository;
 import gr.codehub.teamOne.repository.util.JpaUtil;
 import gr.codehub.teamOne.representation.PatientDoctorAssociationDTO;
-import gr.codehub.teamOne.resource.PatientDoctorAssociationResource;
+import gr.codehub.teamOne.resource.interfaces.PatientDoctorAssociationResource;
 import gr.codehub.teamOne.security.AccessRole;
 import org.restlet.resource.ResourceException;
 import org.restlet.resource.ServerResource;
@@ -59,11 +60,11 @@ public class PatientDoctorAssociationResourceImpl extends ServerResource impleme
         List<PatientDoctorAssociation> associationsList;
 
         if(categoryType == null){
-            associationsList = associationRepository.findAll();
+            associationsList = GeneralFunctions.removeInactiveAssociations(associationRepository.findAll());
         } else if(categoryType == 2){
-            associationsList = associationRepository.getPatientWithoutDoctor(true);
+            associationsList = GeneralFunctions.removeInactiveAssociations(associationRepository.getPatientWithoutDoctor(true));
         } else if(categoryType == 1){
-            associationsList = associationRepository.getPatientWithoutDoctor(false);
+            associationsList = GeneralFunctions.removeInactiveAssociations(associationRepository.getPatientWithoutDoctor(false));
         } else {
             throw new BadEntityException("Wrong categoryType url attribute");
         }

@@ -4,7 +4,7 @@ import gr.codehub.teamOne.model.Users;
 import gr.codehub.teamOne.repository.UserRepository;
 import gr.codehub.teamOne.repository.util.JpaUtil;
 import gr.codehub.teamOne.representation.ExpiredSessionDTO;
-import gr.codehub.teamOne.resource.ExpiredSessionResource;
+import gr.codehub.teamOne.resource.interfaces.ExpiredSessionResource;
 import org.restlet.resource.ResourceException;
 import org.restlet.resource.ServerResource;
 

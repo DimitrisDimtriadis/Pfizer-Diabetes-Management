@@ -1,6 +1,7 @@
 package gr.codehub.teamOne.resource.impl;
 
 import gr.codehub.teamOne.exceptions.BadEntityException;
+import gr.codehub.teamOne.exceptions.NotFoundException;
 import gr.codehub.teamOne.model.Consultation;
 import gr.codehub.teamOne.model.Users;
 import gr.codehub.teamOne.repository.ConsultationRepository;
@@ -8,7 +9,7 @@ import gr.codehub.teamOne.repository.UserRepository;
 import gr.codehub.teamOne.repository.util.JpaUtil;
 import gr.codehub.teamOne.representation.ConsultationDTO;
 import gr.codehub.teamOne.representation.ConsultationDeleteDTO;
-import gr.codehub.teamOne.resource.ConsultationResource;
+import gr.codehub.teamOne.resource.interfaces.ConsultationResource;
 import org.restlet.resource.ResourceException;
 import org.restlet.resource.ServerResource;
 
@@ -52,22 +53,30 @@ public class ConsultationResourceImpl extends ServerResource implements Consulta
      * x(id) = All consultations for x user
      *
      * @return List with consultations
-     * @throws BadEntityException User give wrong patientID
+     * @throws NotFoundException User give wrong patientID
      */
     @Override
-    public List<ConsultationDTO> getConsultation() throws BadEntityException {
+    public List<ConsultationDTO> getConsultation() throws NotFoundException {
 
         List<ConsultationDTO> tempListConsultationDTO = new ArrayList<>();
         List<Consultation> consultationList;
 
         if (categoryType == null) {
+
             String usrEmail = this.getRequest().getClientInfo().getUser().getIdentifier();
+
             Optional<Users> tempUsr = userRepository.findByEmail(usrEmail);
-            if (!tempUsr.isPresent()) throw new BadEntityException("There is no user with this email");
+            if (!tempUsr.isPresent() || !tempUsr.get().isActive()) throw new NotFoundException("Not such user or the account is inactive");
+
             consultationList = consultationRepository.getConsultationForUser(tempUsr.get().getId());
+
         } else if (categoryType == -1) {
             consultationList = consultationRepository.findAll();
         } else {
+
+            Optional<Users> tempUser = userRepository.findById(categoryType);
+            if(!tempUser.isPresent() || !tempUser.get().isActive()) throw new NotFoundException("Not such user or the account is inactive");
+
             consultationList = consultationRepository.getConsultationForUser(categoryType);
         }
         consultationList.forEach(mObj -> tempListConsultationDTO.add(ConsultationDTO.getConsultationDTO(mObj)));
@@ -78,9 +87,10 @@ public class ConsultationResourceImpl extends ServerResource implements Consulta
     public String addConsultation(ConsultationDTO consultationDTO) throws BadEntityException {
 
         Consultation consultation = ConsultationDTO.getConsultation(consultationDTO);
+
         Optional<Users> users = userRepository.findById(consultationDTO.getPatientID());
 
-        if (!users.isPresent()) throw new BadEntityException("No patient with this id");
+        if (!users.isPresent() || !users.get().isActive()) throw new BadEntityException("No patient with this id or account is inactive");
 
         consultation.setPatient(users.get());
         consultationRepository.save(consultation);
@@ -97,7 +107,7 @@ public class ConsultationResourceImpl extends ServerResource implements Consulta
         consultation.get().setId(consultationDTO.getConsultationID());
 
         Optional<Users> users = userRepository.findById(consultationDTO.getPatientID());
-        if (!users.isPresent()) throw new BadEntityException("No patient with this id");
+        if (!users.isPresent() || !users.get().isActive()) throw new BadEntityException("No patient with this id or account is inactive");
 
         consultation.get().setPatient(users.get());
         Consultation model = ConsultationDTO.updateModel(consultation.get(), consultationDTO);

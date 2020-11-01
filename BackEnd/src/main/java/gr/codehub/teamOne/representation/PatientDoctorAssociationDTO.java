@@ -10,6 +10,7 @@ public class PatientDoctorAssociationDTO {
 
     private long patient;
     private Long doctor;
+    private Boolean isActive;
 
     public static PatientDoctorAssociation getAssociation(PatientDoctorAssociationDTO mAssociationDTO){
 
@@ -21,6 +22,7 @@ public class PatientDoctorAssociationDTO {
 
         PatientDoctorAssociationDTO mAssociationDTO = new PatientDoctorAssociationDTO();
         mAssociationDTO.setPatient(mAssociation.getPatient().getId());
+
 
         if (mAssociation.getDoctor() != null){
             mAssociationDTO.setDoctor(mAssociation.getDoctor().getId());

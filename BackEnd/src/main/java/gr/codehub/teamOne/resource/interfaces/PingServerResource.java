@@ -1,4 +1,4 @@
-package gr.codehub.teamOne.resource;
+package gr.codehub.teamOne.resource.interfaces;
 
 import gr.codehub.teamOne.exceptions.NotFoundException;
 import org.restlet.resource.Get;

@@ -2,7 +2,7 @@ package gr.codehub.teamOne.resource.impl;
 
 import gr.codehub.teamOne.exceptions.NotFoundException;
 import gr.codehub.teamOne.repository.util.JpaUtil;
-import gr.codehub.teamOne.resource.PingServerResource;
+import gr.codehub.teamOne.resource.interfaces.PingServerResource;
 import org.restlet.resource.ResourceException;
 import org.restlet.resource.ServerResource;
 
@@ -11,7 +11,7 @@ import javax.persistence.EntityManager;
 public class PingServerResourceImpl extends ServerResource implements PingServerResource {
 
     private EntityManager em;
-    public static final String PING = "Sacchon Web API v0.9.19 running";
+    public static final String PING = "Sacchon Web API v0.9.2 running";
 
     @Override
     protected void doInit() throws ResourceException {

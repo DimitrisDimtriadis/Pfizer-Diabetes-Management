@@ -1,4 +1,4 @@
-package gr.codehub.teamOne.resource;
+package gr.codehub.teamOne.resource.interfaces;
 
 import gr.codehub.teamOne.representation.ExpiredSessionDTO;
 import org.restlet.resource.Get;

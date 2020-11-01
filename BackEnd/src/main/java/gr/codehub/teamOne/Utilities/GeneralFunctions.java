@@ -1,5 +1,7 @@
 package gr.codehub.teamOne.Utilities;
 
+import gr.codehub.teamOne.model.PatientDoctorAssociation;
+import gr.codehub.teamOne.model.Users;
 import gr.codehub.teamOne.security.AccessRole;
 
 import java.util.ArrayList;
@@ -29,5 +31,39 @@ public class GeneralFunctions {
             tempListWithRoles.add(AccessRole.ROLE_ADMIN.getRoleName());
         }
         return tempListWithRoles;
+    }
+
+    public static List<Users> removeInactiveUsers(List<Users> listWithAllUsers){
+
+        if (listWithAllUsers != null){
+
+            List<Users> listWithoutInactiveUsers = new ArrayList<>();
+
+            listWithAllUsers.forEach( usr -> {
+                if(usr.isActive()){
+                    listWithoutInactiveUsers.add(usr);
+                }
+            });
+
+            return listWithoutInactiveUsers;
+        }
+        return null;
+    }
+
+    public static List<PatientDoctorAssociation> removeInactiveAssociations(List<PatientDoctorAssociation> listWithAllAssociations){
+
+        if (listWithAllAssociations != null){
+
+            List<PatientDoctorAssociation> listWithoutInactiveAssociations = new ArrayList<>();
+
+            listWithAllAssociations.forEach( associate -> {
+                if(associate.isActive()){
+                    listWithoutInactiveAssociations.add(associate);
+                }
+            });
+
+            return listWithoutInactiveAssociations;
+        }
+        return null;
     }
 }

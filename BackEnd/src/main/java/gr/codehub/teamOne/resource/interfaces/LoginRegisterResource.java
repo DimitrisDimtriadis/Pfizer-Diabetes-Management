@@ -1,4 +1,4 @@
-package gr.codehub.teamOne.resource;
+package gr.codehub.teamOne.resource.interfaces;
 
 import gr.codehub.teamOne.exceptions.BadEntityException;
 import gr.codehub.teamOne.exceptions.NotFoundException;
@@ -18,11 +18,8 @@ public interface LoginRegisterResource {
     List<UsersDTO> getsUsers() throws NotFoundException;
 
     @Post("json")
-    AccessRole verifyUser(LoginCredentialDTO loginCredentialDTO) throws NotFoundException, BadEntityException;
+    AccessRole loginUser(LoginCredentialDTO loginCredentialDTO) throws NotFoundException, BadEntityException;
 
     @Put("json")
-    UsersDTO addUser(UsersDTO usersDTO) throws NotFoundException, BadEntityException;
-
-    @Delete
-    void removeUser() throws NotFoundException;
+    UsersDTO registerUser(UsersDTO usersDTO) throws NotFoundException, BadEntityException;
 }

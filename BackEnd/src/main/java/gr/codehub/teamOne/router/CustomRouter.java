@@ -22,7 +22,7 @@ public class CustomRouter {
         router.attach("/measurements", MeasurementResourceImpl.class);
         router.attach("/associations", PatientDoctorAssociationResourceImpl.class);
         router.attach("/consultation", ConsultationResourceImpl.class);
-        router.attach("/users/amka", UsersResourceImpl.class);
+        router.attach("/users/interacts", UsersResourceImpl.class);
         router.attach("/expired", ExpiredSessionResourceImpl.class);
 
         return router;

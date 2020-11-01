@@ -1,4 +1,4 @@
-package gr.codehub.teamOne.resource;
+package gr.codehub.teamOne.resource.interfaces;
 
 import gr.codehub.teamOne.exceptions.BadEntityException;
 import gr.codehub.teamOne.exceptions.WrongUserRoleException;

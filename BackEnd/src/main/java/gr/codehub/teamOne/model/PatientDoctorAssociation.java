@@ -24,4 +24,6 @@ public class PatientDoctorAssociation {
 
     @ManyToOne
     private Users doctor;
+
+    private boolean isActive;
 }
