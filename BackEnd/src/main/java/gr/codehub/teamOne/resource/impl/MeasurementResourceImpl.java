@@ -43,6 +43,17 @@ public class MeasurementResourceImpl extends ServerResource implements Measureme
     }
 
     @Override
+    public MeasurementDTO getSpecificMeasurement() throws BadEntityException, NotFoundException {
+
+        if(measurementID == null) throw new BadEntityException("You gave a wrong measurement ID");
+
+        Optional<Measurement> tempMeasurement = measurementRepository.findById(measurementID);
+        if(!tempMeasurement.isPresent()) throw new NotFoundException("No measurement found with this id");
+
+        return MeasurementDTO.getMeasurementDTO(tempMeasurement.get());
+    }
+
+    @Override
     public String deleteMeasurement() throws NotFoundException, BadEntityException {
 
         if (measurementID==null) throw new BadEntityException("Null object as input");

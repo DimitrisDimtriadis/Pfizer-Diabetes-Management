@@ -10,6 +10,9 @@ import java.util.List;
 
 public interface MeasurementResource {
 
+    @Get("json")
+    MeasurementDTO getSpecificMeasurement() throws BadEntityException, NotFoundException;
+
     @Delete
     String deleteMeasurement() throws NotFoundException, BadEntityException;
 
