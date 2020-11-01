@@ -111,7 +111,10 @@ export class DoctorAccComponent implements OnInit {
 
 
   deleteDoctor(){
-    
+    this.Uservice.deleteUser().subscribe();
+    alert("delete user success");
+    this._router.navigate(['/login']);
+
   }
  
 

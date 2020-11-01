@@ -43,7 +43,9 @@ export class LoginComponent implements OnInit {
       
       this.userS.loginUser(this.userS.currentLogin).subscribe(
         (response)=>{
-          console.log(response); this.loginRole=String(response);    
+          console.log(response); this.loginRole=String(response.role);
+          sessionStorage.setItem("unreadConsultations",response.unreadConsultations);
+          console.log("unreadConsultations="+ sessionStorage.getItem("unreadConsultations"));
           
       sessionStorage.setItem("credentials",this.userS.currentLogin.userEmail + ":" + this.userS.currentLogin.userPassword);
       sessionStorage.setItem("LoginRole",this.loginRole);

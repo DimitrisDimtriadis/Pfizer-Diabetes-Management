@@ -14,7 +14,7 @@ public class ConsultationDTO {
     private String consultationMsg;
     private Boolean isRead;
 
-    public static Consultation getConsultation(ConsultationDTO consultationDTO){
+    public static Consultation getConsultation(ConsultationDTO consultationDTO) {
 
         Consultation consultation = new Consultation();
         consultation.setRegisterDate(new Date());
@@ -24,7 +24,7 @@ public class ConsultationDTO {
         return consultation;
     }
 
-    public static ConsultationDTO getConsultationDTO(Consultation consultation){
+    public static ConsultationDTO getConsultationDTO(Consultation consultation) {
 
         ConsultationDTO consultationDTO = new ConsultationDTO();
         consultationDTO.setConsultationID(consultation.getId());
@@ -36,17 +36,15 @@ public class ConsultationDTO {
         return consultationDTO;
     }
 
-    public static Consultation updateModel(Consultation baseConsultation, ConsultationDTO updatedConsultation){
+    public static Consultation updateModel(Consultation baseConsultation, ConsultationDTO updatedConsultation) {
 
-        if(updatedConsultation.getRegisterDate() != null){
+        if (updatedConsultation.getRegisterDate() != null) {
             baseConsultation.setRegisterDate(updatedConsultation.getRegisterDate());
         }
-        if(updatedConsultation.getConsultationMsg() != null){
+        if (updatedConsultation.getConsultationMsg() != null) {
             baseConsultation.setConsultationMsg(updatedConsultation.getConsultationMsg());
         }
-        if(updatedConsultation.getIsRead() != null){
-            baseConsultation.setRead(updatedConsultation.getIsRead());
-        }
+        baseConsultation.setRead(false);
         return baseConsultation;
     }
 }

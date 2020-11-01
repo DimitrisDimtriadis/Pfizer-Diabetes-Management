@@ -1,6 +1,7 @@
 package gr.codehub.teamOne.repository;
 
 import gr.codehub.teamOne.model.Consultation;
+import gr.codehub.teamOne.model.Users;
 import gr.codehub.teamOne.repository.lib.Repository;
 
 import javax.persistence.EntityManager;
@@ -29,6 +30,12 @@ public class ConsultationRepository extends Repository<Consultation, Long> {
         return entityManager.createQuery("from Consultation where patient_id = : patientID")
                 .setParameter("patientID", userID)
                 .getResultList();
+    }
 
+    public int calculateUnreadConsultations(Users patient){
+        return entityManager.createQuery("from Consultation where patient_id = : patientID and isRead = false")
+                .setParameter("patientID", patient.getId())
+                .getResultList()
+                .size();
     }
 }

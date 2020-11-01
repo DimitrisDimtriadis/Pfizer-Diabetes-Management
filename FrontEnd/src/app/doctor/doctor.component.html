@@ -6,17 +6,17 @@
   <thead class="thead-light">
     <tr>
       <th scope="col">#</th>
-      <th scope="col">First</th>
-      <th scope="col">Last</th>
+      <th scope="col">First&LastName</th>
+      <th scope="col">Email</th>
       <th scope="col">View patient measurements</th>
       <th scope="col">Consult patient</th>
     </tr>
   </thead>
-  <tbody>
+  <tbody *ngFor="let assocP of DocAssocPatientList; let i = index">
     <tr>
-      <th scope="row">1</th>
-      <td>Mark</td>
-      <td>Otto</td>
+      <th scope="row">{{i+1}}</th>
+      <td>{{assocP.first_name}}{{''+assocP.last_name}}</td>
+      <td>{{assocP.email}}</td>
       <td>
         <a class="navbar-brand" href="/doctorViewP" > 
           <img src="/assets/images/seeData.png"  style="width:40px; padding-left: 10px;" >

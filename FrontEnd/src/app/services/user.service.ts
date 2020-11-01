@@ -3,6 +3,8 @@ import  { Observable } from 'rxjs';
 import {HttpClient,HttpParams,HttpHeaders} from '@angular/common/http';
 import {UserClass} from '../classes/UserClass';
 import {LoginClass} from '../classes/LoginClass';
+import { PatientRealClass } from '../classes/patientRealClass';
+import { AssocClass } from '../classes/assocClass';
 
 //const headerOption = {
  // headers1: new HttpHeaders({ 'Content-Type': 'application/json' , 'Authorization': 'Basic ' + btoa(sessionStorage.getItem("credentials"))
@@ -18,6 +20,10 @@ export class UserService {
   readonly urlGetUserdata="http://localhost:9000/sacchon/profile";
 
   readonly urlI="http://localhost:9000/sacchon/users/interacts";
+
+  readonly urlAssoc="http://localhost:9000/sacchon/associations";
+
+  readonly assoc1="?categoryType=1"
   
   currentUser: UserClass = {
     
@@ -43,7 +49,27 @@ export class UserService {
     
   }
 
+  currentPatient:PatientRealClass={
+    id:0,
+    first_name:'',
+    last_name: '',
+    email: '',
+    password: '',
+    accountType: 0,
+    amka: 0,
+    mobile_phone_number: 0,
+    address: '',
+    gender: 0,
+    phone_number:0
 
+
+  }
+
+
+  currentAssoc:AssocClass={
+    doctor:0,
+    patient:0
+  }
 
 
   constructor(private http: HttpClient) { }
@@ -79,12 +105,39 @@ export class UserService {
   }
 
 
-  deleteUser(id:number):Observable<UserClass>{
+  deleteUser():Observable<UserClass>{
     let header= { headers:new HttpHeaders().set('Content-Type', 'application/json')
     .set('Authorization',`Basic ${btoa(sessionStorage.getItem("credentials"))}`)
   }
-  return this.http.delete<UserClass>(this.urlI + "/" + id,header);
+  return this.http.delete<UserClass>(this.urlI,header);
   }
+
+
+//associations------------------------------------------------------------------
+
+getFreePatients():Observable<any>{
+  let header= { headers:new HttpHeaders().set('Content-Type', 'application/json')
+  .set('Authorization',`Basic ${btoa(sessionStorage.getItem("credentials"))}`)
+}
+  return this.http.get(this.urlAssoc+this.assoc1,header);
+}
+
+
+getDocAssocPatients():Observable<any>{
+  let header= { headers:new HttpHeaders().set('Content-Type', 'application/json')
+  .set('Authorization',`Basic ${btoa(sessionStorage.getItem("credentials"))}`)
+}
+  return this.http.get(this.urlAssoc,header);
+}
+
+
+addFreePatient(patA:AssocClass):Observable<any>{
+  let header= { headers:new HttpHeaders().set('Content-Type', 'application/json')
+    .set('Authorization',`Basic ${btoa(sessionStorage.getItem("credentials"))}`)
+  }
+    return this.http.put<AssocClass>(this.urlAssoc,patA,header);
+}
+
  
 
 }
