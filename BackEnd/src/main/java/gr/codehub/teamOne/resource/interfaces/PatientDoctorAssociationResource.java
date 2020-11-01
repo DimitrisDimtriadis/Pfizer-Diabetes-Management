@@ -15,6 +15,9 @@ public interface PatientDoctorAssociationResource {
     @Get("json")
     List<PatientDoctorAssociationDTO> getAllAssociations() throws BadEntityException;
 
+    @Post("json")
+    String addNewAssociation(PatientDoctorAssociationDTO newAssociationDTO) throws BadEntityException, WrongUserRoleException, NotFoundException;
+
     @Put("json")
-    PatientDoctorAssociationDTO addNewAssociation(PatientDoctorAssociationDTO newAssociationDTO) throws BadEntityException, WrongUserRoleException, NotFoundException;
+    String updateAssociation(PatientDoctorAssociationDTO newAssociationDTO) throws BadEntityException, WrongUserRoleException, NotFoundException;
 }

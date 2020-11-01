@@ -76,7 +76,33 @@ public class PatientDoctorAssociationResourceImpl extends ServerResource impleme
     }
 
     @Override
-    public PatientDoctorAssociationDTO addNewAssociation(PatientDoctorAssociationDTO newAssociationDTO) throws BadEntityException, WrongUserRoleException, NotFoundException {
+    public String addNewAssociation(PatientDoctorAssociationDTO newAssociationDTO) throws BadEntityException, WrongUserRoleException, NotFoundException {
+
+        if (newAssociationDTO == null) throw new BadEntityException("Null userException error");
+
+        //Take saved association(if exist)
+        PatientDoctorAssociation mAssociation = PatientDoctorAssociationDTO.getAssociation(newAssociationDTO);
+
+        Optional<Users> patient = userRepository.findById(newAssociationDTO.getPatient());
+        if(!patient.isPresent()) throw new BadEntityException("There is no patient with that id");
+
+        if(patient.get().getAccountType() != AccessRole.ROLE_PATIENT) throw new WrongUserRoleException("The user you add as patient, has wrong role");
+        mAssociation.setPatient(patient.get());
+
+        if(newAssociationDTO.getDoctor() != null ){
+
+            Optional<Users> doctor = userRepository.findById(newAssociationDTO.getDoctor());
+            if(!doctor.isPresent()) throw new BadEntityException("There is no doctor with that id");
+            if(doctor.get().getAccountType() != AccessRole.ROLE_DOCTOR) throw new WrongUserRoleException("The user you add as doctor, has wrong role");
+            mAssociation.setDoctor(doctor.get());
+        }
+
+        associationRepository.save(mAssociation);
+        return "New association added";
+    }
+
+    @Override
+    public String updateAssociation(PatientDoctorAssociationDTO newAssociationDTO) throws BadEntityException, WrongUserRoleException, NotFoundException {
 
         if (newAssociationDTO == null) throw new BadEntityException("Null userException error");
 
@@ -98,8 +124,7 @@ public class PatientDoctorAssociationResourceImpl extends ServerResource impleme
             if(doctor.get().getAccountType() != AccessRole.ROLE_DOCTOR) throw new WrongUserRoleException("The user you add as doctor, has wrong role");
             mAssociation.setDoctor(doctor.get());
         }
-
         associationRepository.save(mAssociation);
-        return PatientDoctorAssociationDTO.getAssociation(mAssociation);
+        return "Association updated";
     }
 }

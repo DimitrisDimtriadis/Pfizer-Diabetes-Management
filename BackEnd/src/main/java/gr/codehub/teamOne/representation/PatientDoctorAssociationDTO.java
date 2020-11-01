@@ -15,6 +15,9 @@ public class PatientDoctorAssociationDTO {
     public static PatientDoctorAssociation getAssociation(PatientDoctorAssociationDTO mAssociationDTO){
 
         PatientDoctorAssociation mAssociation = new PatientDoctorAssociation();
+        mAssociation.setDoctor(mAssociation.getDoctor());
+        mAssociation.setPatient(mAssociation.getPatient());
+        mAssociation.setActive(true);
         return mAssociation;
     }
 
