@@ -13,7 +13,7 @@ public class ExpiredSessionDTO {
     private Date lastLogin;
 
 
-    public static ExpiredSessionDTO getExpiredDoctors(Users users){
+    public static ExpiredSessionDTO getExpiredAccounts(Users users){
 
         ExpiredSessionDTO expiredSessionDTO = new ExpiredSessionDTO();
         expiredSessionDTO.setDoctorID(users.getId());
