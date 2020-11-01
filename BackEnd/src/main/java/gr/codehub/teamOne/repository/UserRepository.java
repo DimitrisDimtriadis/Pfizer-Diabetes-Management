@@ -107,4 +107,17 @@ public class UserRepository extends Repository<Users, Long> {
         }
         return null;
     }
+
+    public Users getExpiredDoc(AccessRole accessRole){
+        List<Users> expiredDTOS=entityManager.createQuery("from Users where u.accountType=:doctor")
+                .setParameter("doctor",accessRole)
+                .getResultList();
+        if (expiredDTOS.size()>0){
+            return  expiredDTOS.get(0);
+        }
+        return null;
+    }
+
+
+
 }
