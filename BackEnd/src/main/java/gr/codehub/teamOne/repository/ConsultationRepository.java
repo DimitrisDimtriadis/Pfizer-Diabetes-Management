@@ -31,4 +31,8 @@ public class ConsultationRepository extends Repository<Consultation, Long> {
                 .getResultList();
 
     }
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> 2ac8e3d15dbed2052cfd72b0df639bc505bbc555
