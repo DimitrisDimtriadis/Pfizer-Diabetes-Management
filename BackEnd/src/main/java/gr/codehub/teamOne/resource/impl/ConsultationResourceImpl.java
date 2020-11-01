@@ -8,7 +8,6 @@ import gr.codehub.teamOne.repository.ConsultationRepository;
 import gr.codehub.teamOne.repository.UserRepository;
 import gr.codehub.teamOne.repository.util.JpaUtil;
 import gr.codehub.teamOne.representation.ConsultationDTO;
-import gr.codehub.teamOne.representation.ConsultationDeleteDTO;
 import gr.codehub.teamOne.resource.interfaces.ConsultationResource;
 import org.restlet.resource.ResourceException;
 import org.restlet.resource.ServerResource;
@@ -24,6 +23,7 @@ public class ConsultationResourceImpl extends ServerResource implements Consulta
     private ConsultationRepository consultationRepository;
     private UserRepository userRepository;
     private Long categoryType;
+    private Long consultationID;
 
     @Override
     protected void doInit() throws ResourceException {
@@ -34,7 +34,9 @@ public class ConsultationResourceImpl extends ServerResource implements Consulta
             consultationRepository = new ConsultationRepository(em);
             userRepository = new UserRepository(em);
             String tempCategory = getQueryValue("categoryType");
+            String tempConsultationID = getQueryValue("consultationID");
             categoryType = (tempCategory != null) ? Long.parseLong(getQueryValue("categoryType")) : null;
+            consultationID = (tempConsultationID != null) ? Long.parseLong(getQueryValue("consultationID")) : null;
 
         } catch (Exception e) {
             throw new ResourceException(e);
@@ -117,10 +119,10 @@ public class ConsultationResourceImpl extends ServerResource implements Consulta
     }
 
     @Override
-    public String deleteConsultation(ConsultationDeleteDTO consultationDeleteDTO) throws BadEntityException {
+    public String deleteConsultation() throws BadEntityException {
 
-        if (consultationDeleteDTO == null) throw new BadEntityException("Null object as input");
-        consultationRepository.deleteById(consultationDeleteDTO.getConsultationID());
+        if (consultationID == null) throw new BadEntityException("Null object as input");
+        consultationRepository.deleteById(consultationID);
         return "Consultation deleted";
     }
 }

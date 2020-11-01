@@ -7,7 +7,6 @@ import gr.codehub.teamOne.model.Users;
 import gr.codehub.teamOne.repository.MeasurementRepository;
 import gr.codehub.teamOne.repository.UserRepository;
 import gr.codehub.teamOne.repository.util.JpaUtil;
-import gr.codehub.teamOne.representation.MeasurementDeleteDTO;
 import gr.codehub.teamOne.representation.MeasurementDTO;
 import gr.codehub.teamOne.representation.MeasurementsSearchParamDTO;
 import gr.codehub.teamOne.resource.interfaces.MeasurementResource;
@@ -23,6 +22,7 @@ public class MeasurementResourceImpl extends ServerResource implements Measureme
     private MeasurementRepository measurementRepository;
     private UserRepository userRepository;
     private EntityManager em;
+    private Long measurementID;
 
     @Override
     protected void doInit() throws ResourceException {
@@ -30,6 +30,8 @@ public class MeasurementResourceImpl extends ServerResource implements Measureme
             em = JpaUtil.getEntityManager();
             measurementRepository = new MeasurementRepository(em);
             userRepository = new UserRepository(em);
+            String tempMeasurementID = getQueryValue("measurementID");
+            measurementID = (tempMeasurementID != null) ? Long.parseLong(getQueryValue("measurementID")) : null;
         }catch(Exception e) {
             throw new ResourceException(e);
         }
@@ -41,10 +43,10 @@ public class MeasurementResourceImpl extends ServerResource implements Measureme
     }
 
     @Override
-    public String deleteMeasurement(MeasurementDeleteDTO measurementDTO) throws NotFoundException, BadEntityException {
+    public String deleteMeasurement() throws NotFoundException, BadEntityException {
 
-        if (measurementDTO==null) throw new BadEntityException("Null object as input");
-        measurementRepository.deleteById(measurementDTO.getMeasurementID());
+        if (measurementID==null) throw new BadEntityException("Null object as input");
+        measurementRepository.deleteById(measurementID);
         return "Successfully deleted";
     }
 

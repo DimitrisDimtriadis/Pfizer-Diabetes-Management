@@ -2,6 +2,7 @@ package gr.codehub.teamOne.resource.impl;
 
 import gr.codehub.teamOne.Utilities.GeneralFunctions;
 import gr.codehub.teamOne.exceptions.BadEntityException;
+import gr.codehub.teamOne.exceptions.NotFoundException;
 import gr.codehub.teamOne.exceptions.WrongUserRoleException;
 import gr.codehub.teamOne.model.PatientDoctorAssociation;
 import gr.codehub.teamOne.model.Users;
@@ -75,17 +76,14 @@ public class PatientDoctorAssociationResourceImpl extends ServerResource impleme
     }
 
     @Override
-    public PatientDoctorAssociationDTO addNewAssociation(PatientDoctorAssociationDTO newAssociationDTO) throws BadEntityException, WrongUserRoleException {
+    public PatientDoctorAssociationDTO addNewAssociation(PatientDoctorAssociationDTO newAssociationDTO) throws BadEntityException, WrongUserRoleException, NotFoundException {
 
         if (newAssociationDTO == null) throw new BadEntityException("Null userException error");
 
         //Take saved association(if exist)
         PatientDoctorAssociation mAssociation = associationRepository.getAssociationIfExist(newAssociationDTO.getPatient());
 
-        //If there is no entry, Create a new one
-        if(mAssociation == null){
-            mAssociation = PatientDoctorAssociationDTO.getAssociation(newAssociationDTO);
-        }
+        if(mAssociation == null) throw new NotFoundException("There was no association with this patient");
 
         Optional<Users> patient = userRepository.findById(newAssociationDTO.getPatient());
         if(!patient.isPresent()) throw new BadEntityException("There is no patient with that id");

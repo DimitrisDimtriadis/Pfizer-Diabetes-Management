@@ -45,7 +45,7 @@ public class DoctorsResourceImpl extends ServerResource implements DoctorsResour
     @Override
     public List<DoctorsDTO> getsDoctors() throws NotFoundException {
 
-        ResourceUtils.checkRole(this, GeneralFunctions.rolesWithAccess(false, false, true));
+        ResourceUtils.checkRole(this, GeneralFunctions.rolesWithAccess(false, true, true));
         List<Users> doctorList = GeneralFunctions.removeInactiveUsers(userRepository.getAllUsersBasedOnRole(AccessRole.ROLE_DOCTOR));
 
         List<DoctorsDTO> doctorsDTOList = new ArrayList<>();
