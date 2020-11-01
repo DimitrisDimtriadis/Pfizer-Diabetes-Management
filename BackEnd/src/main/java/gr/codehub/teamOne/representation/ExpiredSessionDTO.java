@@ -9,6 +9,7 @@ import java.util.Date;
 public class ExpiredSessionDTO {
 
     private long doctorID;
+    private Integer amka;
     private Date lastLogin;
 
 
@@ -17,6 +18,7 @@ public class ExpiredSessionDTO {
         ExpiredSessionDTO expiredSessionDTO = new ExpiredSessionDTO();
         expiredSessionDTO.setDoctorID(users.getId());
         expiredSessionDTO.setLastLogin(users.getLastLogin());
+        expiredSessionDTO.setAmka(users.getAmka());
 
         return expiredSessionDTO;
     }
