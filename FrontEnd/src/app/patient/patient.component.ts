@@ -15,15 +15,8 @@ export class PatientComponent implements OnInit {
     userObj:UserClass;
 
   ngOnInit(): void {
-    this.Uservice.getUserData().subscribe(
-      data=>{
-        this.userObj=data;
-          }
-    );
+    
   }
 
-  logout(){
-    sessionStorage.setItem('LoginRole',"");
-    this._router.navigate(['login']);
-  }
+ 
 }

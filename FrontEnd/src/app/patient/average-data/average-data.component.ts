@@ -19,8 +19,5 @@ export class AverageDataComponent implements OnInit {
 
   });
 }
-logout(){
-  sessionStorage.setItem('LoginRole',"");
-  this.router.navigate(['login']);
-}
+
 }

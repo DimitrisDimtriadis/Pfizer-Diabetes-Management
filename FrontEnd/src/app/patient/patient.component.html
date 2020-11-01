@@ -1,25 +1,5 @@
-<ul>
-  <li class="nav-item">
-    <a class="nav-link" href="/insertdata"  >Insert Data</a>
-  </li>
-  <li class="nav-item">
-    <a class="nav-link" href="/listdata">List Of Data</a>
-  </li>
-  <li class="nav-item">
-    <a class="nav-link" href="/updatedata">Update Data</a>
-  <!-- </li> -->
-  <li class="nav-item">
-    <a class="nav-link" href="/averagedata">Average Data</a>
-  </li>
-  <li class="nav-item">
-    <a class="nav-link" href="/chartsdata">Charts of Data</a>
-  </li>
-  <li class="nav-item">
-    <a class="nav-link" href="/updateaccount">Update Account</a>
-  </li>
-  <li style="float:right"><a class="active" (click)="logout()">Logout</a></li>
-</ul>
 
+<app-patient-nav></app-patient-nav>
 <div id="w"class="container"> Welcome {{userObj?.last_name}} {{userObj?.first_name}}
 
 <h5>As patient, you be able to use the system to store diabetes data 

@@ -5,15 +5,16 @@ import { AppRoutingModule } from './patient-routing.module';
 import { InsertDataComponent } from './insert-data/insert-data.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ListDataComponent } from './list-data/list-data.component';
-import { UpdateDataComponent } from './update-data/update-data.component';
+
 import { AverageDataComponent } from './average-data/average-data.component';
 import { ChartsDataComponent } from './charts-data/charts-data.component';
 import { UpdateComponent } from './update/update.component';
+import { PatientNavComponent } from './patient-nav/patient-nav.component';
 
 
 
 @NgModule({
-  declarations: [PatientComponent, InsertDataComponent, ListDataComponent, UpdateDataComponent, AverageDataComponent, ChartsDataComponent, UpdateComponent],
+  declarations: [PatientComponent, InsertDataComponent, ListDataComponent, AverageDataComponent, ChartsDataComponent, UpdateComponent, PatientNavComponent],
   imports: [
     CommonModule,
     AppRoutingModule,

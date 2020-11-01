@@ -4,26 +4,24 @@ import { UserClass } from 'src/app/classes/UserClass';
 import { UserService } from 'src/app/services/user.service';
 
 @Component({
-  selector: 'app-admin-nav',
-  templateUrl: './admin-nav.component.html',
-  styleUrls: ['./admin-nav.component.scss']
+  selector: 'app-patient-nav',
+  templateUrl: './patient-nav.component.html',
+  styleUrls: ['./patient-nav.component.scss']
 })
-export class AdminNavComponent implements OnInit {
+export class PatientNavComponent implements OnInit {
 
-  constructor(public Uservice:UserService,private _router: Router) { }
+  constructor(public Uservice:UserService,private router: Router) { }
+    userObj:UserClass;
 
-  userObj:UserClass;
   ngOnInit(): void {
     this.Uservice.getUserData().subscribe(
       data=>{
         this.userObj=data;
-       
           }
     );
-
   }
   logout(){
-    sessionStorage.clear();
-    this._router.navigate(['login']);
+    sessionStorage.setItem('LoginRole',"");
+    this.router.navigate(['login']);
   }
 }

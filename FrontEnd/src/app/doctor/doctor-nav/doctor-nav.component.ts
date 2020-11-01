@@ -11,21 +11,26 @@ export class DoctorNavComponent implements OnInit {
 
   constructor(public Uservice:UserService,private _router: Router) { }
   userObj1:UserClass;
-  userAmka:string;
+  
   
   ngOnInit() {
     this.Uservice.getUserData().subscribe(
       data=>{
         this.userObj1=data;
+       sessionStorage.setItem("amka",String(this.userObj1?.amka));
+        sessionStorage.setItem("email",this.userObj1?.email);
           }
+          
     );
-    this.userAmka=String(this.userObj1?.amka);
-    sessionStorage.setItem("amka",this.userAmka);
-
+    
+    
+   console.log(parseInt(sessionStorage.getItem("amka")));
+    console.log(sessionStorage.getItem("email"));
+    //console.log(btoa("aaaaaaaaa"));
   }
 
   logout(){
-    sessionStorage.setItem('LoginRole',"");
+    sessionStorage.clear();
     this._router.navigate(['login']);
   }
 

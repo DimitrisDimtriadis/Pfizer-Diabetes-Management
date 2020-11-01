@@ -1,14 +1,14 @@
 <app-admin-nav></app-admin-nav>
 
             <div class="container">
-              <h5 class="display-5" style="padding: 1% ;text-align: Center;">Doctor activity
+              <h5 class="display-5" style="padding: 1% ;text-align: Center;">Patient activity
                 <button type="submit"  class="btn btn-dark" (click)="Search()" >Search</button></h5>
               <table id="search" class="table table-hover table-responsive-sm " >
                 <thead class="thead-dark">
                   
                   <tr>
                     <th scope="col">#</th>
-                    <th scope="col">ID Doctor</th>
+                    <th scope="col">ID Patient</th>
                     <th scope="col">Last Login Date</th>
                     <th scope="col">Amka</th>        
                   </tr>
@@ -19,6 +19,7 @@
                     <td >{{medi.doctorID}}</td>
                     <td >{{medi.lastLogin| date:'medium'}}</td>
                     <td >{{medi.amka}}</td>
+                  </tr>
                 </tbody>
               </table>
               </div>

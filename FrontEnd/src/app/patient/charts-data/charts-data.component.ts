@@ -12,8 +12,5 @@ export class ChartsDataComponent implements OnInit {
 
   ngOnInit(): void {
   }
-  logout(){
-    sessionStorage.setItem('LoginRole',"");
-    this.router.navigate(['login']);
-  }
+
 }

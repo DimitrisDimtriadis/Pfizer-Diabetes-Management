@@ -21,7 +21,7 @@ export class DoctorService {
     body: ''
   }
 
-  constructor(private http: HttpClient,) { }
+  constructor(private http: HttpClient) { }
 
   getAllDoctors() {
     return this.http.get<DoctorClass[]>(this.url, headerOption).subscribe(

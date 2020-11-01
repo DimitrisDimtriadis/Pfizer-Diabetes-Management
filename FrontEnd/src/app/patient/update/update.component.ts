@@ -45,12 +45,6 @@ export class UpdateComponent implements OnInit {
       );
     }
      
-  
-
-  logout(){
-    sessionStorage.setItem('LoginRole',"");
-    this.router.navigate(['login']);
-  }
   // convenience getter for easy access to form fields
   get f() { return this.userForm.controls; }
 
@@ -99,7 +93,11 @@ export class UpdateComponent implements OnInit {
       
   }
 
-
+deletePatient(){
+  this.Uservice.deleteUser().subscribe();
+  alert("Delete User Success");
+  this.router.navigate(['/login'])
+}
 
   numberOnly(event): boolean {
     const charCode = (event.which) ? event.which : event.keyCode;
