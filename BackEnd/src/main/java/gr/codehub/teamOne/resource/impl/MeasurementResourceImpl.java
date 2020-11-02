@@ -109,6 +109,7 @@ public class MeasurementResourceImpl extends ServerResource implements Measureme
             if(patient == null) throw new BadEntityException("Wrong patient AMKA");
             paramDTO.setUserID(patient.getId());
         }
+
         List<Measurement> listWithMeasurements = measurementRepository.getSpecificMeasurements(paramDTO);
         List<MeasurementDTO> listWithDTO = new ArrayList<>();
         listWithMeasurements.forEach( ms -> listWithDTO.add(MeasurementDTO.getMeasurementDTO(ms)));
