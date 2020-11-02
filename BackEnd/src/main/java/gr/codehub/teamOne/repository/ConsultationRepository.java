@@ -25,14 +25,10 @@ public class ConsultationRepository extends Repository<Consultation, Long> {
         return Consultation.class.getName();
     }
 
-    public List getConsultationForUser(long userID){
+    public List getConsultationForUser(long userID) {
         return entityManager.createQuery("from Consultation where patient_id = : patientID")
                 .setParameter("patientID", userID)
                 .getResultList();
 
     }
-<<<<<<< HEAD
 }
-=======
-}
->>>>>>> 2ac8e3d15dbed2052cfd72b0df639bc505bbc555

@@ -54,6 +54,11 @@ public class UsersResourceImpl extends ServerResource implements UsersResource {
         if (person == null) throw new NotFoundException("There is no user with this amka");
         return UsersDTO.getUsersDTO(person);
     }
+    public UsersDTO findUserById (UsersSearchDTO usersSearchDTO) throws NotFoundException{
+        Users people=userRepository.getUsersBasedOnId(usersSearchDTO);
+        if(people==null) throw new NotFoundException("There is no user with this id");
+        return UsersDTO.getUsersDTO(people);
+    }
 
     @Override
     public String removeUser() throws NotFoundException, WrongUserRoleException {

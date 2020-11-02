@@ -6,5 +6,6 @@ import lombok.Data;
 @Data
 public class UsersSearchDTO {
     private Integer amka;
+    private Long userId;
     private AccessRole role;
 }

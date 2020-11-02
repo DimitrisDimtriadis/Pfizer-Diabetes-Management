@@ -59,6 +59,7 @@ public class UserRepository extends Repository<Users, Long> {
                 .getResultList();
     }
 
+
     /**
      * Search users with specific email.
      *
@@ -111,6 +112,18 @@ public class UserRepository extends Repository<Users, Long> {
             Users tempUsr = (Users) listWithAmka.get(0);
             if(usersSearchDTO.getRole() == null || usersSearchDTO.getRole() == tempUsr.getAccountType()) {
                 return (Users) listWithAmka.get(0);
+            }
+        }
+        return null;
+    }
+    public Users getUsersBasedOnId(UsersSearchDTO usersSearchDTO){
+        List listOfUsers= entityManager.createQuery("from Users where id=:userId")
+                .setParameter("userId",usersSearchDTO.getUserId())
+                .getResultList();
+        if(listOfUsers.size()>0){
+            Users tempUsers=(Users) listOfUsers.get(0);
+            if(usersSearchDTO.getRole() == null || usersSearchDTO.getRole() == tempUsers.getAccountType()){
+                return  (Users) listOfUsers.get(0);
             }
         }
         return null;

@@ -15,6 +15,7 @@ public class UsersDTO {
     private String email;
     private String password;
     private AccessRole accountType;
+    private Long userId;
 
     //Social Security number(amka).
     private Integer amka;
@@ -35,6 +36,7 @@ public class UsersDTO {
     public static Users getUsers(UsersDTO usersDTO){
 
         Users users = new Users();
+        usersDTO.setUserId(usersDTO.getUserId());
         users.setFirst_name(usersDTO.getFirst_name());
         users.setLast_name(usersDTO.getLast_name());
         users.setEmail(usersDTO.getEmail());
@@ -59,6 +61,7 @@ public class UsersDTO {
 
         UsersDTO usersDTO = new UsersDTO();
         usersDTO.setAccountType(users.getAccountType());
+        usersDTO.setUserId(users.getId());
         usersDTO.setFirst_name(users.getFirst_name());
         usersDTO.setLast_name(users.getLast_name());
         usersDTO.setEmail(users.getEmail());
