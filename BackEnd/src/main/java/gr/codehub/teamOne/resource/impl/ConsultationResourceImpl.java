@@ -14,6 +14,7 @@ import org.restlet.resource.ServerResource;
 
 import javax.persistence.EntityManager;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -63,7 +64,7 @@ public class ConsultationResourceImpl extends ServerResource implements Consulta
         List<ConsultationDTO> tempListConsultationDTO = new ArrayList<>();
         List<Consultation> consultationList;
 
-        if (categoryType == null) {
+        if (categoryType == null && consultationID == null) {
 
             String usrEmail = this.getRequest().getClientInfo().getUser().getIdentifier();
 
@@ -72,8 +73,12 @@ public class ConsultationResourceImpl extends ServerResource implements Consulta
 
             consultationList = consultationRepository.getConsultationForUser(tempUsr.get().getId());
 
-        } else if (categoryType == -1) {
+        } else if (categoryType != null && consultationID == null && categoryType == -1) {
             consultationList = consultationRepository.findAll();
+        } else if(consultationID != null){
+            Optional<Consultation> tempConsultation = consultationRepository.findById(consultationID);
+            if(!tempConsultation.isPresent()) throw new NotFoundException("There was no consultation with this is");
+            consultationList = Collections.singletonList(tempConsultation.get());
         } else {
 
             Optional<Users> tempUser = userRepository.findById(categoryType);
