@@ -6,7 +6,7 @@ import gr.codehub.teamOne.model.Users;
 import gr.codehub.teamOne.repository.UserRepository;
 import gr.codehub.teamOne.repository.util.JpaUtil;
 import gr.codehub.teamOne.representation.DoctorsDTO;
-import gr.codehub.teamOne.resource.DoctorsResource;
+import gr.codehub.teamOne.resource.interfaces.DoctorsResource;
 import gr.codehub.teamOne.resource.util.ResourceUtils;
 import gr.codehub.teamOne.security.AccessRole;
 import org.restlet.resource.ResourceException;
@@ -45,8 +45,8 @@ public class DoctorsResourceImpl extends ServerResource implements DoctorsResour
     @Override
     public List<DoctorsDTO> getsDoctors() throws NotFoundException {
 
-        ResourceUtils.checkRole(this, GeneralFunctions.rolesWithAccess(false, false, true));
-        List<Users> doctorList = userRepository.getAllUsersBasedOnRole(AccessRole.ROLE_DOCTOR);
+        ResourceUtils.checkRole(this, GeneralFunctions.rolesWithAccess(false, true, true));
+        List<Users> doctorList = GeneralFunctions.removeInactiveUsers(userRepository.getAllUsersBasedOnRole(AccessRole.ROLE_DOCTOR));
 
         List<DoctorsDTO> doctorsDTOList = new ArrayList<>();
         doctorList.forEach(doctors -> doctorsDTOList.add(DoctorsDTO.getDoctorDTO(doctors)));

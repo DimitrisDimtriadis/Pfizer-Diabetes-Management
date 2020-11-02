@@ -47,6 +47,7 @@ public class CustomCorsFilter {
                 methodHashSet.add(Method.POST);
                 methodHashSet.add(Method.PUT);
                 methodHashSet.add(Method.DELETE);
+                methodHashSet.add(Method.PATCH);
 
                 response.setAccessControlAllowMethods(methodHashSet);
                 response.getAttributes().put(HeaderConstants.ATTRIBUTE_HEADERS, responseHeaders);

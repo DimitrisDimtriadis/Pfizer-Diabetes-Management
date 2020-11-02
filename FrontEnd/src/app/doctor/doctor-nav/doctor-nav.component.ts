@@ -19,14 +19,17 @@ export class DoctorNavComponent implements OnInit {
         this.userObj1=data;
        sessionStorage.setItem("amka",String(this.userObj1?.amka));
         sessionStorage.setItem("email",this.userObj1?.email);
+        sessionStorage.setItem("id",data.id);
+        
           }
           
     );
     
     
-   console.log(parseInt(sessionStorage.getItem("amka")));
-    console.log(sessionStorage.getItem("email"));
+   console.log(parseInt(sessionStorage.getItem("amka"))+" amka");
+    console.log(sessionStorage.getItem("email")+" email");
     //console.log(btoa("aaaaaaaaa"));
+    console.log(parseInt(sessionStorage.getItem("id"))+" id");
   }
 
   logout(){

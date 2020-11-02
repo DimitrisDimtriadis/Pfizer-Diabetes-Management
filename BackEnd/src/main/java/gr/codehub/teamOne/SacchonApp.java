@@ -90,12 +90,8 @@ public class SacchonApp extends Application {
 //TODO: Reservations -> Gnomateusi giatrou
 //TODO: Visibilite gia to delete
 //TODO: Doc poious den exei kanei consult
-//TODO: Doc to na stelnei consult
 //TODO: Kane elenxo poio asthenis den exoun consult meta apo 30 meres
 //TODO: O asthenis na ginetai availble otan o doc feugei
 //TODO: An o astheneis exei gnomateusei na eidopoieitai
-//TODO: Admin kataxorisis asthenei
+//TODO: Admin kataxorisis doc
 //TODO: Admin gnomateuseis doc
-//TODO: List without assignment
-//TODO: List without entries
-//TODO: Check if doc is offline for long time ===>  change login procedure

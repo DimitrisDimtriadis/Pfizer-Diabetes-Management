@@ -10,6 +10,7 @@ import java.util.Date;
 @Data
 public class UsersDTO {
 
+    private Long id;
     private String first_name;
     private String last_name;
     private String email;
@@ -58,6 +59,7 @@ public class UsersDTO {
     public static UsersDTO getUsersDTO(Users users){
 
         UsersDTO usersDTO = new UsersDTO();
+        usersDTO.setId(users.getId());
         usersDTO.setAccountType(users.getAccountType());
         usersDTO.setFirst_name(users.getFirst_name());
         usersDTO.setLast_name(users.getLast_name());

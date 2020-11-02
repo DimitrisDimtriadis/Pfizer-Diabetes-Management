@@ -39,5 +39,5 @@ public class Users {
     private Date registration_date;
     private Date lastLogin;
 
-    private Boolean visibility;
+    private boolean active;
 }

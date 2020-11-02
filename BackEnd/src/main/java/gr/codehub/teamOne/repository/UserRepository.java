@@ -1,5 +1,7 @@
 package gr.codehub.teamOne.repository;
 
+import gr.codehub.teamOne.Utilities.GeneralFunctions;
+import gr.codehub.teamOne.exceptions.NotFoundException;
 import gr.codehub.teamOne.model.Users;
 import gr.codehub.teamOne.repository.lib.Repository;
 import gr.codehub.teamOne.representation.LoginCredentialDTO;
@@ -63,15 +65,21 @@ public class UserRepository extends Repository<Users, Long> {
      * @param usrEmail  Contains the email  to search user.
      * @return User that found.
      */
-    public Users getUserInfo(String usrEmail) {
+    public Users getUserInfo(String usrEmail) throws NotFoundException {
+
         List tempListWithInfo = entityManager.createQuery("from Users u where u.email = :email")
                 .setParameter("email", usrEmail)
                 .getResultList();
 
-        if (tempListWithInfo.size() > 0) {
+        //To remove inactive users
+        List<Users> tempList = GeneralFunctions.removeInactiveUsers(tempListWithInfo);
+
+        if (tempList.size() > 0) {
             return (Users) tempListWithInfo.get(0);
+        } else if(tempListWithInfo.size() > 0){
+            throw new NotFoundException("The account is inactive");
         }
-        return null;
+        throw new NotFoundException("Not found any account with this email");
     }
     /**
      * Search users with specific role.
@@ -81,7 +89,7 @@ public class UserRepository extends Repository<Users, Long> {
      */
     public List getAllUsersBasedOnRole(AccessRole accessRole) {
 
-        return entityManager.createQuery("from Users u where u.accountType = :accessRole")
+        return entityManager.createQuery("from Users u where u.accountType = :accessRole and active != true")
                 .setParameter("accessRole", accessRole)
                 .getResultList();
     }
@@ -106,5 +114,13 @@ public class UserRepository extends Repository<Users, Long> {
             }
         }
         return null;
+    }
+
+    public List getExpiredDoctors(){
+
+        return entityManager.createQuery("from Users where accountType = :accountType and lastLogin != NULL and lastLogin < current_Date() - :daysToExp and active = true")
+                .setParameter("accountType", AccessRole.ROLE_DOCTOR)
+                .setParameter("daysToExp", GeneralFunctions.DaysToConsiderUserExpired)
+                .getResultList();
     }
 }

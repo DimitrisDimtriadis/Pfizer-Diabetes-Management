@@ -1,5 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { UserClass } from 'src/app/classes/UserClass';
+import { UserService } from 'src/app/services/user.service';
+import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { PatientRealClass } from 'src/app/classes/patientRealClass';
 
 @Component({
   selector: 'app-doctor-add-p',
@@ -8,9 +13,35 @@ import { Router } from '@angular/router';
 })
 export class DoctorAddPComponent implements OnInit {
 
-  constructor(private _router: Router) { }
+  freePatientList:PatientRealClass[];
+  
 
-  ngOnInit(): void {
+  constructor(private _router: Router, public Uservice:UserService) { }
+
+  ngOnInit(){
+
+    this.Uservice.getFreePatients().subscribe(
+      data=>{
+        this.freePatientList=data;
+          }
+    );
+
+
+
+
+
+  }
+
+
+
+  addPatient(id:number){
+        this.Uservice.currentAssoc.doctor=parseInt(sessionStorage.getItem("id"));
+        this.Uservice.currentAssoc.patient=id;
+        this.Uservice.addFreePatient(this.Uservice.currentAssoc).subscribe();
+      alert("add success");
+      window.location.reload();
+
+
   }
 
   

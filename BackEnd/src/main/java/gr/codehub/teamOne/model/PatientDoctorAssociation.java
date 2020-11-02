@@ -25,5 +25,5 @@ public class PatientDoctorAssociation {
     @ManyToOne
     private Users doctor;
 
-    private Date lastConsulate;
+    private boolean isActive;
 }
