@@ -24,6 +24,7 @@ public class CustomRouter {
         router.attach("/consultation", ConsultationResourceImpl.class);
         router.attach("/users/interacts", UsersResourceImpl.class);
         router.attach("/expired", ExpiredSessionResourceImpl.class);
+        router.attach("/data", DataResourceImpl.class);
 
         return router;
     }
