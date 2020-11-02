@@ -89,7 +89,7 @@ public class UserRepository extends Repository<Users, Long> {
      */
     public List getAllUsersBasedOnRole(AccessRole accessRole) {
 
-        return entityManager.createQuery("from Users u where u.accountType = :accessRole and active != true")
+        return entityManager.createQuery("from Users u where u.accountType = :accessRole and active = true")
                 .setParameter("accessRole", accessRole)
                 .getResultList();
     }
@@ -100,7 +100,7 @@ public class UserRepository extends Repository<Users, Long> {
      * @param usersSearchDTO Contains Social Security number(amka)to search user. In additional If contains and role, search on this criteria
      * @return User that found
      */
-    public Users getUserBasedOnAmka(UsersSearchDTO usersSearchDTO) {
+    public Users findByAmka(UsersSearchDTO usersSearchDTO) {
 
         List listWithAmka = entityManager.createQuery("from Users u where amka = :amka")
                 .setParameter("amka", usersSearchDTO.getAmka())

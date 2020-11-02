@@ -50,7 +50,7 @@ public class UsersResourceImpl extends ServerResource implements UsersResource {
     @Override
     public UsersDTO findUserByAmka(UsersSearchDTO usersSearchDTO) throws NotFoundException {
 
-        Users person = userRepository.getUserBasedOnAmka(usersSearchDTO);
+        Users person = userRepository.findByAmka(usersSearchDTO);
         if (person == null) throw new NotFoundException("There is no user with this amka");
         return UsersDTO.getUsersDTO(person);
     }
@@ -71,6 +71,7 @@ public class UsersResourceImpl extends ServerResource implements UsersResource {
 
             PatientDoctorAssociation demandedAssociation = patientDoctorAssociationRepository.disableAssociationForPatient(userToDelete.get().getId());
             if(demandedAssociation == null) throw new NotFoundException("Not found association with this patient");
+            demandedAssociation.setDoctor(null);
             demandedAssociation.setActive(false);
             patientDoctorAssociationRepository.save(demandedAssociation);
 
