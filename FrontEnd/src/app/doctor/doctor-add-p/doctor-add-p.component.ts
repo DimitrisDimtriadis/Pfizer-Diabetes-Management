@@ -6,6 +6,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { PatientRealClass } from 'src/app/classes/patientRealClass';
 
+
 @Component({
   selector: 'app-doctor-add-p',
   templateUrl: './doctor-add-p.component.html',
@@ -23,14 +24,19 @@ export class DoctorAddPComponent implements OnInit {
     this.Uservice.getFreePatients().subscribe(
       data=>{
         this.freePatientList=data;
+        
           }
+              
     );
+   
+    
+
+    }
 
 
 
 
-
-  }
+  
 
 
 

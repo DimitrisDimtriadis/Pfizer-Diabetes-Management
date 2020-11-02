@@ -5,6 +5,7 @@ import {UserClass} from '../classes/UserClass';
 import {LoginClass} from '../classes/LoginClass';
 import { PatientRealClass } from '../classes/patientRealClass';
 import { AssocClass } from '../classes/assocClass';
+import { IdClass } from '../classes/IdClass';
 
 //const headerOption = {
  // headers1: new HttpHeaders({ 'Content-Type': 'application/json' , 'Authorization': 'Basic ' + btoa(sessionStorage.getItem("credentials"))
@@ -24,6 +25,8 @@ export class UserService {
   readonly urlAssoc="http://localhost:9000/sacchon/associations";
 
   readonly assoc1="?categoryType=1"
+
+  readonly UrlCon="http://localhost:9000/sacchon/consulate";
   
   currentUser: UserClass = {
     
@@ -60,7 +63,8 @@ export class UserService {
     mobile_phone_number: 0,
     address: '',
     gender: 0,
-    phone_number:0
+    phone_number:0,
+    registration_date:''
 
 
   }
@@ -71,6 +75,9 @@ export class UserService {
     patient:0
   }
 
+currentId:IdClass={
+  userID:0
+}
 
   constructor(private http: HttpClient) { }
 
@@ -138,6 +145,17 @@ addFreePatient(patA:AssocClass):Observable<any>{
     return this.http.put<AssocClass>(this.urlAssoc,patA,header);
 }
 
+get1User(id:IdClass):Observable<PatientRealClass>{
+  let header= { headers:new HttpHeaders().set('Content-Type', 'application/json')
+  .set('Authorization',`Basic ${btoa(sessionStorage.getItem("credentials"))}`)
+}
+  return this.http.post<PatientRealClass>(this.urlI,id,header);
+}
+
+
+createCon(){
+  
+}
  
 
 }

@@ -5,6 +5,8 @@ import { CommonModule } from '@angular/common';
 import { MustMatch } from 'src/app/_helpers/must-match.validator';
 import { FormBuilder, FormControl, FormGroup ,Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { UserService } from 'src/app/services/user.service.js';
+import { PatientRealClass } from 'src/app/classes/patientRealClass.js';
 
 @Component({
   selector: 'app-doctor-view-p',
@@ -15,10 +17,17 @@ export class DoctorViewPComponent implements OnInit {
   chart=[];
   userForm:FormGroup;
   submitted = false;
+  myPatient:PatientRealClass;
 
-  constructor(private formBuilder: FormBuilder,private _router: Router) { }
+  constructor(private formBuilder: FormBuilder,private _router: Router,public Uservice:UserService) { }
 
   ngOnInit(): void {
+    this.Uservice.currentId.userID=parseInt(sessionStorage.getItem("id"));
+      this.Uservice.get1User(this.Uservice.currentId).subscribe(
+        data=>{
+          this.myPatient=data;
+            }
+      )
 
     this.userForm= this.formBuilder.group({
        
@@ -81,6 +90,15 @@ export class DoctorViewPComponent implements OnInit {
       return false;
     }
     return true;
+
+  }
+
+  doctorConsultP(id:number){
+    this.Uservice.currentId.userID=id;
+    console.log(id);
+    console.log(this.Uservice.currentId.userID);
+    sessionStorage.setItem("getID",String(id));
+    this._router.navigate(['/doctorConsultP']);
 
   }
 

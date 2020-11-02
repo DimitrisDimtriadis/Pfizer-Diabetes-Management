@@ -9,7 +9,9 @@ import gr.codehub.teamOne.repository.UserRepository;
 import gr.codehub.teamOne.repository.util.JpaUtil;
 import gr.codehub.teamOne.representation.MeasurementDTO;
 import gr.codehub.teamOne.representation.MeasurementsSearchParamDTO;
+import gr.codehub.teamOne.representation.UsersSearchDTO;
 import gr.codehub.teamOne.resource.interfaces.MeasurementResource;
+import gr.codehub.teamOne.security.AccessRole;
 import org.restlet.resource.ResourceException;
 import org.restlet.resource.ServerResource;
 
@@ -98,6 +100,15 @@ public class MeasurementResourceImpl extends ServerResource implements Measureme
     @Override
     public List<MeasurementDTO> getAllMeasurementsBasedOn(MeasurementsSearchParamDTO paramDTO) throws NotFoundException, BadEntityException {
 
+        Users patient;
+        if(paramDTO.getUserID() == null && paramDTO.getAmka() != null){
+            UsersSearchDTO usersSearchDTO = new UsersSearchDTO();
+            usersSearchDTO.setAmka(paramDTO.getAmka());
+            usersSearchDTO.setRole(AccessRole.ROLE_PATIENT);
+            patient = userRepository.findByAmka(usersSearchDTO);
+            if(patient == null) throw new BadEntityException("Wrong patient AMKA");
+            paramDTO.setUserID(patient.getId());
+        }
         List<Measurement> listWithMeasurements = measurementRepository.getSpecificMeasurements(paramDTO);
         List<MeasurementDTO> listWithDTO = new ArrayList<>();
         listWithMeasurements.forEach( ms -> listWithDTO.add(MeasurementDTO.getMeasurementDTO(ms)));

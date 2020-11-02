@@ -53,21 +53,21 @@
     <table class="table table-hover table-responsive-sm " >
       <thead class="thead-dark">
         <tr>
-          <th scope="col">First</th>
-          <th scope="col">Last</th>
-          <th scope="col">Date of Birth</th>
+          <th scope="col">First&LastName</th>
+          <th scope="col">Email</th>
+          <th scope="col">Registration Date</th>
           <th scope="col">Consult patient</th>
         </tr>
       </thead>
       <tbody>
         <tr>
-          <td>Mark</td>
-          <td>Otto</td>
+          <td>{{myPatient?.first_name}}&nbsp;{{myPatient?.last_name}}</td>
+          <td>{{myPatient?.email}}</td>
           <td>
-            7/10/1960
+            {{myPatient?.registration_date|date}}
           </td>
           <td>
-          <a class="navbar-brand" href="/doctorConsultP" > 
+          <a class="navbar-brand" style="cursor: pointer;" (click)="doctorConsultP(myPatient?.id)"   > 
             <img src="/assets/images/pen.jpg"  style="width:40px; padding-left: 10px;" >
           </a>
         </td>
