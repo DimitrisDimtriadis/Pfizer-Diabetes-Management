@@ -3,15 +3,16 @@ package gr.codehub.teamOne.resource.impl;
 import gr.codehub.teamOne.Utilities.GeneralFunctions;
 import gr.codehub.teamOne.exceptions.BadEntityException;
 import gr.codehub.teamOne.exceptions.NotFoundException;
-import gr.codehub.teamOne.exceptions.WrongUserRoleException;
 import gr.codehub.teamOne.model.PatientDoctorAssociation;
 import gr.codehub.teamOne.model.Users;
+import gr.codehub.teamOne.repository.ConsultationRepository;
 import gr.codehub.teamOne.repository.PatientDoctorAssociationRepository;
 import gr.codehub.teamOne.repository.UserRepository;
 import gr.codehub.teamOne.repository.util.JpaUtil;
 import gr.codehub.teamOne.representation.LoginCredentialDTO;
-import gr.codehub.teamOne.representation.PatientDoctorAssociationDTO;
+import gr.codehub.teamOne.representation.LoginInfoDTO;
 import gr.codehub.teamOne.representation.UsersDTO;
+import gr.codehub.teamOne.representation.UsersSearchDTO;
 import gr.codehub.teamOne.resource.interfaces.LoginRegisterResource;
 import gr.codehub.teamOne.security.AccessRole;
 import org.restlet.resource.ResourceException;
@@ -26,6 +27,7 @@ public class LoginRegisterResourceImpl extends ServerResource implements LoginRe
 
     private UserRepository userRepository;
     private PatientDoctorAssociationRepository associationRepository;
+    private ConsultationRepository consultationRepository;
     private EntityManager em;
 
     @Override
@@ -35,6 +37,7 @@ public class LoginRegisterResourceImpl extends ServerResource implements LoginRe
             em = JpaUtil.getEntityManager();
             userRepository = new UserRepository(em);
             associationRepository = new PatientDoctorAssociationRepository(em);
+            consultationRepository = new ConsultationRepository(em);
         } catch (Exception e) {
             throw new ResourceException(e);
         }
@@ -44,6 +47,7 @@ public class LoginRegisterResourceImpl extends ServerResource implements LoginRe
     protected void doRelease() throws ResourceException {
         em.close();
     }
+
     /**
      * Method to get all the users from base
      *
@@ -66,11 +70,11 @@ public class LoginRegisterResourceImpl extends ServerResource implements LoginRe
      *
      * @param loginCredentialDTO Object with login credentials for login
      * @return AccessRole to notify frontEnd about type of account
-     * @throws NotFoundException When there is no user with this credentials
+     * @throws NotFoundException  When there is no user with this credentials
      * @throws BadEntityException When input is null
      */
     @Override
-    public AccessRole loginUser(LoginCredentialDTO loginCredentialDTO) throws NotFoundException, BadEntityException {
+    public LoginInfoDTO loginUser(LoginCredentialDTO loginCredentialDTO) throws NotFoundException, BadEntityException {
 
         if (loginCredentialDTO == null) throw new BadEntityException("Null userException error");
 
@@ -82,7 +86,13 @@ public class LoginRegisterResourceImpl extends ServerResource implements LoginRe
         Users userToLogin = listWithUsers.get(0);
         userToLogin.setLastLogin(new Date());
         userRepository.save(userToLogin);
-        return userToLogin.getAccountType();
+
+        LoginInfoDTO loginInfoDTO = new LoginInfoDTO();
+        loginInfoDTO.setRole(userToLogin.getAccountType());
+
+        int numOfUnreadConsulations = consultationRepository.calculateUnreadConsultations(userToLogin);
+        loginInfoDTO.setUnreadConsultations(numOfUnreadConsulations);
+        return loginInfoDTO;
     }
 
     /**
@@ -95,27 +105,50 @@ public class LoginRegisterResourceImpl extends ServerResource implements LoginRe
     @Override
     public UsersDTO registerUser(UsersDTO usersDTO) throws BadEntityException {
 
+        boolean isInactiveAccount = false;
         if (usersDTO == null) throw new BadEntityException("Null userException error");
-        if (userRepository.checkIfAccountExist(usersDTO))
-            throw new BadEntityException("Found entry with the same AMKA or email");
 
-        Users users = UsersDTO.getUsers(usersDTO);
+        Users oldAccount = userRepository.findByAmka(UsersSearchDTO.getUsersSearchDTO(usersDTO));
+
+        Users users;
+
+        //Check if account exist and its inactive
+        if (oldAccount != null && !oldAccount.isActive()) {
+            users = UsersDTO.updateUserDTO(oldAccount, usersDTO);
+            isInactiveAccount = true;
+        } else {
+
+            if (userRepository.checkIfAccountExist(usersDTO))
+                throw new BadEntityException("Found entry with the same AMKA or email");
+            users = UsersDTO.getUsers(usersDTO);
+        }
         users.setActive(true);
         userRepository.save(users);
 
-        //TODO: Check if users is inActive! make it active and do update
         //To add entry on association
-        if(users.getAccountType() == AccessRole.ROLE_PATIENT){
-            createNewEntryOnAssociationForPatient(users);
+        if (users.getAccountType() == AccessRole.ROLE_PATIENT) {
+            createNewEntryOnAssociationForPatient(users, isInactiveAccount);
         }
         return UsersDTO.getUsersDTO(users);
     }
 
-    private void createNewEntryOnAssociationForPatient(Users newPatient) throws BadEntityException {
+    /**
+     * Function that create a new empty association with the patient that we create and null on doctor id to assign later
+     *
+     * @param newPatient To get patientID for the new association
+     */
+    private void createNewEntryOnAssociationForPatient(Users newPatient, boolean alreadyExist) {
 
-        PatientDoctorAssociation mAssociation = new PatientDoctorAssociation();
+        PatientDoctorAssociation mAssociation;
+
+        if (alreadyExist) {
+            mAssociation = associationRepository.getAssociationIfExist(newPatient.getId());
+        } else {
+            mAssociation = new PatientDoctorAssociation();
+        }
 
         mAssociation.setPatient(newPatient);
+        mAssociation.setDoctor(null);
         mAssociation.setActive(true);
 
         associationRepository.save(mAssociation);

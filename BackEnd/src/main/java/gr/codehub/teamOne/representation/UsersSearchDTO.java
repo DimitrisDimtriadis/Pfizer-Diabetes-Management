@@ -8,4 +8,12 @@ public class UsersSearchDTO {
     private Integer amka;
     private Long userId;
     private AccessRole role;
+
+    public static UsersSearchDTO getUsersSearchDTO(UsersDTO usersDTO){
+        UsersSearchDTO searchDTO = new UsersSearchDTO();
+        
+        searchDTO.setAmka(usersDTO.getAmka());
+        searchDTO.setRole(usersDTO.getAccountType());
+        return  searchDTO;
+    }
 }

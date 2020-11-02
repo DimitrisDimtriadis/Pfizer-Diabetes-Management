@@ -24,7 +24,11 @@ public class CustomRouter {
         router.attach("/consultation", ConsultationResourceImpl.class);
         router.attach("/users/interacts", UsersResourceImpl.class);
         router.attach("/expired", ExpiredSessionResourceImpl.class);
-        router.attach("/users/id", UsersResourceImpl.class);
+
+
+
+        router.attach("/data", DataResourceImpl.class);
+
 
         return router;
     }
@@ -35,6 +39,7 @@ public class CustomRouter {
 
         router.attach("/ping", PingServerResourceImpl.class);
         router.attach("/users", LoginRegisterResourceImpl.class);
+        router.attach("/users/id", UsersResourceImpl.class);
 
         return router;
     }

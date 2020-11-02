@@ -3,7 +3,6 @@ package gr.codehub.teamOne.resource.interfaces;
 import gr.codehub.teamOne.exceptions.BadEntityException;
 import gr.codehub.teamOne.exceptions.NotFoundException;
 import gr.codehub.teamOne.representation.ConsultationDTO;
-import gr.codehub.teamOne.representation.ConsultationDeleteDTO;
 import org.restlet.resource.Delete;
 import org.restlet.resource.Get;
 import org.restlet.resource.Post;
@@ -23,5 +22,5 @@ public interface ConsultationResource {
     String updateConsultation(ConsultationDTO consultationDTO) throws BadEntityException;
 
     @Delete("json")
-    String deleteConsultation(ConsultationDeleteDTO consultationDeleteDTO) throws BadEntityException;
+    String deleteConsultation() throws BadEntityException;
 }
