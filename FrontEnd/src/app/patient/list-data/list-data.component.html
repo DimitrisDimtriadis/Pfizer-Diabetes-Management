@@ -24,6 +24,11 @@
         </div>
       </form>
     </div>
+
+    <div *ngIf = "mediData">
+      <codehub-charts-data [carbValues]="carbIntake" [glucoseValues]="bloodGlucoseLevel" [dateValues] = "measurementDate" ></codehub-charts-data>
+    </div>
+    
     <table id="myTable" class="table table-hover  table-responsive-md  text-center">
       <thead>
         <tr>

@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { AverageMeasurements } from 'src/app/classes/averageMeasurements';
+import { UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: 'codehub-average-data',
@@ -9,15 +11,46 @@ import { Router } from '@angular/router';
 })
 export class AverageDataComponent implements OnInit {
   form: FormGroup;
+  mediData: AverageMeasurements[];
+  submitted = false;
 
-  constructor(private formBuilder: FormBuilder,private router: Router) { }
+  constructor(public data:UserService,
+    private formBuilder: FormBuilder,private router: Router) { }
 
   ngOnInit(): void {
     this.form=this.formBuilder.group({
-    fromDate:['', Validators.required],
-    untilDate: ['', Validators.required],
+      amka:[''],
+      fromDate: [''],
+      untilDate: [''],
 
   });
+}
+// convenience getter for easy access to form fields
+get f() { return this.form.controls; }
+
+Search() {
+  this.submitted = true;
+
+  // stop here if form is invalid
+  if (this.form.invalid) {
+      return;
+  }
+let st =(<HTMLInputElement> document.getElementById('from')).value;
+this.data.averageData.startAt = new Date(st).toISOString();
+
+let ed= (<HTMLInputElement>document.getElementById('until')).value;
+this.data.averageData.endAt = new Date(ed).toISOString();
+this.data.averageData.amka = this.form.get('amka').value;
+
+console.log(st);
+console.log(ed);
+  
+ this.data.averageDataPatient(this.data.averageData).subscribe(
+    data1=>{
+      this.mediData=data1;
+    }
+ )
+ alert("show measurements complete");
 }
 
 }

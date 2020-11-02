@@ -13,6 +13,7 @@ import { PatientNavComponent } from './patient-nav/patient-nav.component';
 
 
 
+
 @NgModule({
   declarations: [PatientComponent, InsertDataComponent, ListDataComponent, AverageDataComponent, ChartsDataComponent, UpdateComponent, PatientNavComponent],
   imports: [
@@ -20,6 +21,8 @@ import { PatientNavComponent } from './patient-nav/patient-nav.component';
     AppRoutingModule,
     ReactiveFormsModule,
     FormsModule,
+  
+    
   ],
   exports:[
     //InsertDataComponent

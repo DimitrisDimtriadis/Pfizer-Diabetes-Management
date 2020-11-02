@@ -4,9 +4,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Measurements } from 'src/app/classes/measurements';
 import { MeasurementsService } from 'src/app/services/measurements.service';
 import { DatePipe } from '@angular/common';
-import { PostData } from 'src/app/classes/postData';
-import 'jquery';
-import { MeasurIDClass } from 'src/app/classes/MeasurIDClass';
+
+
 
 @Component({
   selector: 'codehub-list-data',
@@ -22,19 +21,43 @@ export class ListDataComponent implements OnInit {
   submitted = false;
   myGetDate:string;
  
-
+  carbIntake: number[] = [];
+  bloodGlucoseLevel:number[] = [];
+  measurementDate: string[] = [];
 
   constructor(private formBuilder: FormBuilder,
     public data:MeasurementsService, private router: Router,
     private route: ActivatedRoute) { }
 
   ngOnInit(): void {
-
+    this.data.getMeasurementsData(this.data.currentStEndDate).subscribe(
+      medi => {this.mediData = medi, this.fillData(this.mediData)});
     this.form = this.formBuilder.group({
       fromDate: ['', Validators.required],
       untilDate: ['', Validators.required],
   });
   
+}
+fillData(medi){
+  if(medi === undefined || medi.length == 0){
+      this.carbIntake = [];
+      this.bloodGlucoseLevel = [];
+      this.measurementDate = [];  
+  }else{
+
+    const datePipe = new DatePipe('en-US');
+    medi.forEach((value) => {
+    this.carbIntake.push(value.carbIntake),
+    this.bloodGlucoseLevel.push(value.bloodGlucoseLevel),
+    this.measurementDate.push(datePipe.transform(value.measurementDate, 'EEEE, MMMM d'));
+    }
+    )
+  }  
+
+  this.carbIntake = [...this.carbIntake]
+  this.bloodGlucoseLevel = [...this.bloodGlucoseLevel]
+  this.measurementDate = [...this.measurementDate]
+
 }
 
   // convenience getter for easy access to form fields
