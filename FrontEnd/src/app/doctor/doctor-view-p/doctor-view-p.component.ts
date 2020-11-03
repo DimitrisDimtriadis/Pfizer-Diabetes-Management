@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import {Chart} from '../../../../node_modules/chart.js/dist/chart.js';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
@@ -21,11 +21,14 @@ import { element } from 'protractor';
 })
 export class DoctorViewPComponent implements OnInit {
   chart=[];
+  chart2=[];
   userForm:FormGroup;
   submitted = false;
   myPatient:PatientRealClass;
   mediData: Measurements[];
   avg:AvgMClass;
+  @Input() carbValues: number[];
+  @Input() glucoseValues: number[];
 
   constructor(private formBuilder: FormBuilder,private _router: Router,public Uservice:UserService,public mService:MeasurementsService) { }
 
@@ -82,20 +85,22 @@ export class DoctorViewPComponent implements OnInit {
     this.mService.getMeasurementsData(this.mService.currentSTD).subscribe(
        data1=>{
          this.mediData=data1;
+        
        }
          
        
     );
-
+       
     this.Uservice.currentAD.userID=id;
     this.Uservice.currentAD.startAt=new Date(st).toISOString();
     this.Uservice.currentAD.endAt=new Date(ed).toISOString();
     this.Uservice.getAvgDoctor(this.Uservice.currentAD).subscribe(
       data2=>{
         this.avg=data2;
-      }
-    )
-     
+        this.glucoseValues=data2.avgBloodGlucoseLevel;
+        this.carbValues=data2.avgCarbIntake;
+        
+  
        // var i;
         //for( i=0;i<this.mediData.length;i++)
         this.chart = new Chart('myChart', {
@@ -103,8 +108,8 @@ export class DoctorViewPComponent implements OnInit {
           data: {
               labels: [st,ed],  //['October','November','December'],
               datasets: [{
-                  label: 'Carbonates intake ',
-                  data: [this.mediData.forEach(function(entry){entry.carbIntake;},)],            //[12, 19, 3], {this.mediData[i].carbIntake,}
+                  label: 'Average glucose,Average carbonates ',
+                  data: [this.glucoseValues,this.carbValues],            //[12, 19, 3], {this.mediData[i].carbIntake,}
                   backgroundColor: [
                       'rgba(255, 99, 132, 0.2)',
                       'rgba(54, 162, 235, 0.2)',
@@ -124,13 +129,18 @@ export class DoctorViewPComponent implements OnInit {
               scales: {
                   yAxes: [{
                       ticks: {
+                        max: 800,
+                        stepSize: 20,
                           beginAtZero: true
                       }
                   }]
               }
           }
       });
-         
+
+    }
+    )
+         ////////////////////////////////////chart2
        
    
 
