@@ -1,5 +1,6 @@
 package gr.codehub.teamOne.resource.impl;
 
+import gr.codehub.teamOne.exceptions.NotFoundException;
 import gr.codehub.teamOne.repository.ConsultationRepository;
 import gr.codehub.teamOne.repository.PatientDoctorAssociationRepository;
 import gr.codehub.teamOne.repository.UserRepository;
@@ -38,9 +39,12 @@ public class WaitConsultationResourceImpl extends ServerResource implements Wait
     }
 
     @Override
-    public List<UsersDTO> getPatientsWaiting() {
+    public List<UsersDTO> getPatientsWaiting() throws NotFoundException {
 
         List<Long> patientsId = associationRepository.getIdsOfPatients();
+
+        if(patientsId == null || patientsId.size() == 0) throw new NotFoundException("Something went wrong with PatientDoctorAssociation table. There was no patient id");
+
         consultationRepository.getPatientThatWaitForNewConsultations(patientsId);
         return null;
     }

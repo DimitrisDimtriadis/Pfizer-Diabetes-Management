@@ -2,9 +2,10 @@ package gr.codehub.teamOne.representation;
 
 import lombok.Data;
 
-import java.util.List;
+import java.util.Date;
 
 @Data
 public class WaitPatConsultationDTO {
-    private List<Long> patientsIds;
+    private Long patientsIds;
+    private Date lastConsultationDate;
 }
