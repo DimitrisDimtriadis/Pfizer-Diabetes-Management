@@ -17,12 +17,13 @@ export class AdminNavComponent implements OnInit {
     this.Uservice.getUserData().subscribe(
       data=>{
         this.userObj=data;
+       
           }
     );
 
   }
   logout(){
-    sessionStorage.setItem('LoginRole',"");
+    sessionStorage.clear();
     this._router.navigate(['login']);
   }
 }

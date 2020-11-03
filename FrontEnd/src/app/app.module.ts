@@ -28,6 +28,7 @@ import { FrontEndGuardA } from './classes/frontEndGuardA';
 import { FrontEndGuardP } from './classes/frontEndGuardP';
 import { DoctorNavComponent } from './doctor/doctor-nav/doctor-nav.component';
 import { AdminNavComponent } from './admin/admin-nav/admin-nav.component';
+import { PatientNoActivityComponent } from './admin/patient-no-activity/patient-no-activity.component';
 
 @NgModule({
   declarations: [
@@ -47,7 +48,8 @@ import { AdminNavComponent } from './admin/admin-nav/admin-nav.component';
     LogoutComponent,
     FooterComponent,
     DoctorNavComponent,
-    AdminNavComponent,	  
+    AdminNavComponent,
+    PatientNoActivityComponent,	  
   ],
   imports: [
     BrowserAnimationsModule,
