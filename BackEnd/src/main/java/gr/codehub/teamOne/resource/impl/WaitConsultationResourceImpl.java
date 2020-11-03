@@ -6,7 +6,7 @@ import gr.codehub.teamOne.repository.PatientDoctorAssociationRepository;
 import gr.codehub.teamOne.repository.UserRepository;
 import gr.codehub.teamOne.repository.util.JpaUtil;
 import gr.codehub.teamOne.representation.UsersDTO;
-import gr.codehub.teamOne.representation.WaitPatConsultationDTO;
+import gr.codehub.teamOne.representation.WaitPatConsultationResponseDTO;
 import gr.codehub.teamOne.resource.interfaces.WaitConsultationResource;
 import org.restlet.resource.ResourceException;
 import org.restlet.resource.ServerResource;
@@ -39,13 +39,12 @@ public class WaitConsultationResourceImpl extends ServerResource implements Wait
     }
 
     @Override
-    public List<UsersDTO> getPatientsWaiting() throws NotFoundException {
+    public List<WaitPatConsultationResponseDTO> getPatientsWaiting() throws NotFoundException {
 
         List<Long> patientsId = associationRepository.getIdsOfPatients();
 
         if(patientsId == null || patientsId.size() == 0) throw new NotFoundException("Something went wrong with PatientDoctorAssociation table. There was no patient id");
 
-        consultationRepository.getPatientThatWaitForNewConsultations(patientsId);
-        return null;
+        return consultationRepository.getPatientThatWaitForNewConsultations(patientsId);
     }
 }

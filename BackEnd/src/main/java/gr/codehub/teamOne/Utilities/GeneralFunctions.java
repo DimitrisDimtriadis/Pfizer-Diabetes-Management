@@ -5,7 +5,9 @@ import gr.codehub.teamOne.model.Users;
 import gr.codehub.teamOne.security.AccessRole;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 public class GeneralFunctions {
 
@@ -65,5 +67,13 @@ public class GeneralFunctions {
             return listWithoutInactiveAssociations;
         }
         return null;
+    }
+
+    public static long compareDateWithNow(Date mDate){
+
+        Date d1 = new Date();
+        Date d2 = mDate;
+        long diffRaw = Math.abs(d1.getTime() - d2.getTime());
+        return TimeUnit.DAYS.convert(diffRaw, TimeUnit.MILLISECONDS);
     }
 }
