@@ -6,6 +6,7 @@ import { PostData } from '../classes/postData';
 import { StartEndDateClass } from '../classes/startEndDateClass';
 import { MeasurIDClass } from '../classes/MeasurIDClass';
 import { PatientConsultation } from '../classes/patientsConsultation';
+import { StartEndDateDocClass } from '../classes/startEndDateDocClass';
 
 
 const headerOption = {
@@ -56,6 +57,12 @@ export class MeasurementsService {
     registerDate: '',
     consultationMsg: ''
   }
+  currentSTD:StartEndDateDocClass={
+    userID:0,
+    startAt:'',
+    endAt:''
+    
+  }
   
   constructor(private http: HttpClient) { }
 
@@ -63,7 +70,7 @@ export class MeasurementsService {
     return this.http.post<Measurements>(this.url, data, headerOption);
   }
   getMeasurementsData(seDate:StartEndDateClass):Observable<any>{
-    return this.http.post<StartEndDateClass>(this.urlPatient,seDate,headerOption);
+    return this.http.post<any>(this.urlPatient,seDate,headerOption);
   }
 
   get1M(data: number): Observable<Measurements> {

@@ -9,18 +9,18 @@
         <tr>
           <th scope="col">#</th>
           <th scope="col">First&LastName</th>
-          <th scope="col">Email</th>
+          <th scope="col">Registration Date</th>
           <th scope="col">View patient measurements</th>
           <th scope="col">Add patient for consultation</th>
         </tr>
       </thead>
-      <tbody *ngFor="let freeP of freePatientList; let i = index">
+      <tbody *ngFor="let freeP of freePatientList; let i = index;">
         <tr>
           <th scope="row">{{i+1}}</th>
-          <td>{{freeP.first_name}}{{''+freeP.last_name}}</td>
-          <td>{{freeP.email}}</td>
+          <td>{{freeP.first_name}}&nbsp;{{''+freeP.last_name}}</td>
+          <td>{{freeP.registration_date|date}}</td>
           <td>
-            <a class="navbar-brand" href="/doctorViewP" > 
+            <a class="navbar-brand" style="cursor: pointer;" (click)="doctorViewP(freeP.id)" > 
               <img src="/assets/images/seeData.png"  style="width:40px; padding-left: 10px;" >
             </a>
           </td>

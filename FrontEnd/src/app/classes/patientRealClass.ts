@@ -10,6 +10,6 @@ export class PatientRealClass{
     address: string;
     gender: number;
     phone_number:number;
-    
+    registration_date:string;
 
 }

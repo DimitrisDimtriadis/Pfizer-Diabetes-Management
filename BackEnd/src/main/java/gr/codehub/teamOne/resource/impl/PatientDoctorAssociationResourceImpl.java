@@ -139,6 +139,7 @@ public class PatientDoctorAssociationResourceImpl extends ServerResource impleme
 
         Optional<Users> patient = userRepository.findById(newAssociationDTO.getPatient());
         if(!patient.isPresent()) throw new BadEntityException("There is no patient with that id");
+        if(!patient.get().isActive()) throw new BadEntityException("Patient id is inactive");
 
         if(patient.get().getAccountType() != AccessRole.ROLE_PATIENT) throw new WrongUserRoleException("The user you add as patient, has wrong role");
         mAssociation.setPatient(patient.get());
@@ -150,6 +151,7 @@ public class PatientDoctorAssociationResourceImpl extends ServerResource impleme
             if(doctor.get().getAccountType() != AccessRole.ROLE_DOCTOR) throw new WrongUserRoleException("The user you add as doctor, has wrong role");
             mAssociation.setDoctor(doctor.get());
         }
+        mAssociation.setActive(true); // To be sure that association Stay active
         associationRepository.save(mAssociation);
         return "Association updated";
     }

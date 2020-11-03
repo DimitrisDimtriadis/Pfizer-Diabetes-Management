@@ -89,7 +89,7 @@ public class UserRepository extends Repository<Users, Long> {
      */
     public List getAllUsersBasedOnRole(AccessRole accessRole) {
 
-        return entityManager.createQuery("from Users u where u.accountType = :accessRole and active != true")
+        return entityManager.createQuery("from Users u where u.accountType = :accessRole and active = true")
                 .setParameter("accessRole", accessRole)
                 .getResultList();
     }
@@ -100,7 +100,7 @@ public class UserRepository extends Repository<Users, Long> {
      * @param usersSearchDTO Contains Social Security number(amka)to search user. In additional If contains and role, search on this criteria
      * @return User that found
      */
-    public Users getUserBasedOnAmka(UsersSearchDTO usersSearchDTO) {
+    public Users findByAmka(UsersSearchDTO usersSearchDTO) {
 
         List listWithAmka = entityManager.createQuery("from Users u where amka = :amka")
                 .setParameter("amka", usersSearchDTO.getAmka())
@@ -116,10 +116,10 @@ public class UserRepository extends Repository<Users, Long> {
         return null;
     }
 
-    public List getExpiredDoctors(){
+    public List getExpiredDoctors(AccessRole mRole){
 
         return entityManager.createQuery("from Users where accountType = :accountType and lastLogin != NULL and lastLogin < current_Date() - :daysToExp and active = true")
-                .setParameter("accountType", AccessRole.ROLE_DOCTOR)
+                .setParameter("accountType", mRole)
                 .setParameter("daysToExp", GeneralFunctions.DaysToConsiderUserExpired)
                 .getResultList();
     }

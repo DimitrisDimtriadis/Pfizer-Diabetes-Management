@@ -33,9 +33,23 @@ public class ConsultationRepository extends Repository<Consultation, Long> {
     }
 
     public int calculateUnreadConsultations(Users patient){
-        return entityManager.createQuery("from Consultation where patient_id = : patientID and isRead = false")
+        List unReadConsultation = entityManager.createQuery("from Consultation where patient_id = : patientID and isRead = false")
                 .setParameter("patientID", patient.getId())
-                .getResultList()
-                .size();
+                .getResultList();
+        if(unReadConsultation == null){
+            return 0;
+        } else {
+            return unReadConsultation.size();
+        }
+    }
+
+    public List getPatientThatWaitForNewConsultations(){
+
+        List patientsIdWhichWaitConsultation = entityManager.createQuery("select c.patient.id from Consultation c")
+                .getResultList();
+//        List patientsIdWhichWaitConsultation = entityManager.createQuery("select max(registerDate) from Consultation c group by patient_id")
+//                .getResultList();
+
+        return null;
     }
 }

@@ -9,6 +9,7 @@ import gr.codehub.teamOne.repository.UserRepository;
 import gr.codehub.teamOne.repository.util.JpaUtil;
 import gr.codehub.teamOne.representation.UsersDTO;
 import gr.codehub.teamOne.representation.UsersSearchDTO;
+import gr.codehub.teamOne.representation.UsersSpecificSearchDTO;
 import gr.codehub.teamOne.resource.interfaces.UsersResource;
 import gr.codehub.teamOne.security.AccessRole;
 import org.restlet.resource.ResourceException;
@@ -48,9 +49,22 @@ public class UsersResourceImpl extends ServerResource implements UsersResource {
      * @throws NotFoundException When there is no user with this Social Security number(amka)
      */
     @Override
-    public UsersDTO findUserByAmka(UsersSearchDTO usersSearchDTO) throws NotFoundException {
+    public UsersDTO findUserByAmkaOrID(UsersSpecificSearchDTO usersSearchDTO) throws NotFoundException {
 
-        Users person = userRepository.getUserBasedOnAmka(usersSearchDTO);
+        Users person;
+
+        if(usersSearchDTO.getUserID() != null){
+            Optional<Users> tempPerson = userRepository.findById(usersSearchDTO.getUserID());
+            if(!tempPerson.isPresent()) throw new NotFoundException("No user with this userID");
+            person = tempPerson.get();
+        } else {
+            UsersSearchDTO mUserSearchDTO = new UsersSearchDTO();
+            mUserSearchDTO.setRole(usersSearchDTO.getRole());
+            mUserSearchDTO.setAmka(usersSearchDTO.getAmka());
+            person = userRepository.findByAmka(mUserSearchDTO);
+
+        }
+
         if (person == null) throw new NotFoundException("There is no user with this amka");
         return UsersDTO.getUsersDTO(person);
     }
@@ -71,6 +85,7 @@ public class UsersResourceImpl extends ServerResource implements UsersResource {
 
             PatientDoctorAssociation demandedAssociation = patientDoctorAssociationRepository.disableAssociationForPatient(userToDelete.get().getId());
             if(demandedAssociation == null) throw new NotFoundException("Not found association with this patient");
+            demandedAssociation.setDoctor(null);
             demandedAssociation.setActive(false);
             patientDoctorAssociationRepository.save(demandedAssociation);
 
