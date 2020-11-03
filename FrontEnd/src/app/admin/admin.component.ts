@@ -7,6 +7,7 @@ import { FormBuilder, FormControl, FormGroup ,Validators } from '@angular/forms'
 import { Router } from '@angular/router';
 import { SubPatient } from '../classes/subPatient';
 import { AdminService } from '../services/admin.service';
+import { SubDoctorReturn } from '../classes/subDoctorReturn';
 
 @Component({
   selector: 'app-admin',
@@ -14,7 +15,8 @@ import { AdminService } from '../services/admin.service';
   styleUrls: ['./admin.component.scss']
 })
 export class AdminComponent implements OnInit {
-     mediData: SubPatient[];
+    mediData: SubPatient[];
+    subdoc:SubDoctorReturn[];
     form:FormGroup;
     submitted = false;
   
@@ -25,6 +27,7 @@ export class AdminComponent implements OnInit {
     ngOnInit(): void {
       this.form= this.formBuilder.group({
       amka:[''],
+      amka1:['', [Validators.required]],
       fromDate: [''],
       untilDate: [''],
       });
@@ -53,6 +56,31 @@ export class AdminComponent implements OnInit {
      this.data.getSubPatient(this.data.subData).subscribe(
         data1=>{
           this.mediData=data1;
+        }
+     )
+     alert("show measurements complete");
+  }
+  
+  Search2(){
+    this.submitted = true;
+
+    // stop here if form is invalid
+    if (this.form.invalid) {
+        return;
+    }
+    let st1 =(<HTMLInputElement> document.getElementById('from1')).value;
+    this.data.subDoctor.startAt = new Date(st1).toISOString();
+
+    let ed1= (<HTMLInputElement>document.getElementById('until1')).value;
+    this.data.subDoctor.endAt = new Date(ed1).toISOString();
+    this.data.subDoctor.amka = this.form.get('amka1').value;
+
+    console.log(st1);
+    console.log(ed1);
+      
+     this.data.getSubDoctor(this.data.subDoctor).subscribe(
+        data1=>{
+          this.subdoc=data1;
         }
      )
      alert("show measurements complete");

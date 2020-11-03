@@ -33,7 +33,7 @@ export class UserService {
   readonly average="http://localhost:9000/sacchon/data";
   readonly urlAssoc="http://localhost:9000/sacchon/associations";
 
-  readonly assoc1="?categoryType=1"
+  readonly assoc1="?categoryType=2"
 
   readonly UrlCon="http://localhost:9000/sacchon/consultation";
 
