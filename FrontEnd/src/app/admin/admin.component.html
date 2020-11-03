@@ -1,92 +1,115 @@
 <app-admin-nav></app-admin-nav>
 
-<div id="bg" style="width:100%;">
-  <div class="container-fluid">
-              <div id="c" class="col-md-6 offset-md-3"> 
-                <h3 style="text-align: center;">Information submissions</h3>
-                <h5 style="margin: 5%; text-align: center;">Search for a patient or doctor activity</h5>
-                  
-                  <form [formGroup]="userForm" (ngSubmit)="onSubmit()">
-                      <div class="row">
-                     
+<div id="border" class="container">
+  <div class="container">
+    <h5 class="title text-center" style="padding-bottom:15px;">
+      Search submissions of a patient over a
+    time range
+    </h5>
+  </div>
   
-                     
-                        <div class="form-group col-md-6">    
-                          <label>Account Type*</label>    
-                          <select class="form-control"formControlName="typeAccount"
-                          [ngClass]="{ 'is-invalid': submitted && f.typeAccount.errors }">
-                          <div *ngIf="submitted && f.typeAccount.errors" class="invalid-feedback">
-                          </div>    
-                             <option>Doctor</option>    
-                             <option>Patient</option>    
-                          </select>    
-                      </div>  
-                      
-                
-  
-                      <div class="form-group col-md-6">
-                          <label>Email*</label>
-                          <input type="text" formControlName="email" class="form-control" 
-                          [ngClass]="{ 'is-invalid': submitted && f.email.errors }" />
-                          <div *ngIf="submitted && f.email.errors" class="invalid-feedback">
-                              <div *ngIf="f.email.errors.required">Email is required</div>
-                              <div *ngIf="f.email.errors.email">Email must be a valid email address</div>
-                          </div>
-                      </div>
-
-                      
-                      <div class="form-group col-md-6">
-                      <label>Date start</label>
-                      <input type="date" onfocus="(this.type='date')" class="form-control" formControlName="dStart"
-                      [ngClass]="{ 'is-invalid': submitted && f.dob.errors }"/>
-                      <div *ngIf="submitted && f.dob.errors" class="invalid-feedback">
-                      </div>
-                      </div> 
-               
-                 
-                      <div class="form-group col-md-6">
-                        <label>Date end</label>
-                        <input type="date" onfocus="(this.type='date')" class="form-control" formControlName="dEnd"
-                        [ngClass]="{ 'is-invalid': submitted && f.dob.errors }"/>
-                        <div *ngIf="submitted && f.dob.errors" class="invalid-feedback">
-                        </div>
-                        </div>
-              
-                  
-                      <div class="col-md-6 offset-md-4">
-                      <div class="form-group">
-                          <button type="submit" class="btn btn-primary" style="margin: 4%;font-size: 18px;">Search</button>
-                          
-                      </div>
-                  </div>
-                  </div>
-                  </form>
-              </div>
+  <div class="container" style="margin-top:50px;">
+      <form [formGroup]="form">
+          <div class="form-group row">
+            <label class="col-form-label">From:</label>
+          <div class="col-sm-3 col-sm-push-4">
+            <input class="form-control" type="date"  id="from" formControlName="fromDate">
           </div>
-      </div>
-      
-      <div style="width: 60%; text-align: center; margin-left:5%;">
-        <h5 class="display-5" style="padding: 1% ;text-align: left;">Profile activity</h5>
-        <table class="table table-hover table-responsive-sm " >
-          <thead class="thead-dark">
-            <tr>
-              <th scope="col">Role</th>
-              <th scope="col">Email</th>
-              <th scope="col">Date of activity</th>
-              <th scope="col">Activity</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>Doctor</td>
-              <td>myemail@.com</td>
-              <td>
-                20/10/2020
-              </td>
-              <td>
-              Consultation
-            </td>
-            </tr>
-          </tbody>
-        </table>
-        </div>
+          
+          <label for="example-date-input" class=" col-form-label">Until:</label>
+          <div class="col-sm-3 col-sm-push-4">
+            <input class="form-control" type="date" id="until" formControlName="untilDate" >
+          </div>
+
+            <label for="example-date-input" class="col-form-label">Amka:</label>
+            <div class="col-sm-2 col-sm-push-4">
+              <input class="form-control" type="text"  id="amka" formControlName="amka"/>   
+            </div>
+            <div class="col-sm-2">
+              <button type="submit" class="btn btn-dark" (click)="Search()" >Search</button>
+              <a href="/patient" type="button" >Back</a>
+            </div>
+          </div>      
+      </form>
+  </div> 
+
+
+<table id="myTable" class="table table-hover  table-responsive-md  text-center">
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Carb Intake</th>
+      <th scope="col">Blood Glucose Level</th>
+      <th scope="col">Date</th>
+    </tr>
+  </thead>
+  <tbody *ngFor="let medi of mediData; let i = index">
+    <tr>
+      <th class="scope">{{i+1}} </th>
+      <td >{{medi.carbIntake}}</td>
+      <td >{{medi.bloodGlucoseLevel}}</td>
+      <td >{{medi.measurementDate | date:'medium' }}</td>
+    </tr>
+</tbody>
+</table>
+</div>
+
+<div id="border" class="container">
+  <div class="container">
+    <h5 class="title text-center" style="padding-bottom:15px;">
+      Search submissions of a doctor over a
+    time range
+    </h5>
+  </div>
+  
+  <div class="container" style="margin-top:50px;">
+      <form [formGroup]="form">
+          <div class="form-group row">
+            <label class="col-form-label">From:</label>
+          <div class="col-sm-3 col-sm-push-4">
+            <input class="form-control" type="date"  id="from1" formControlName="fromDate">
+          </div>
+          
+          <label for="example-date-input" class=" col-form-label">Until:</label>
+          <div class="col-sm-3 col-sm-push-4">
+            <input class="form-control" type="date" id="until1" formControlName="untilDate" >
+          </div>
+
+            <label for="example-date-input" class="col-form-label">Amka:</label>
+            <div class="col-sm-2 col-sm-push-4">
+              <input class="form-control" type="text"  id="amka1" formControlName="amka1"
+              [ngClass]="{ 'is-invalid': submitted && f.amka1.errors }" />
+              <div *ngIf="submitted && f.amka1.errors" class="invalid-feedback">
+                  <div *ngIf="f.amka1.errors.required">AMKA is required</div>
+              </div>
+            </div>
+            <div class="col-sm-2">
+              <button type="submit" class="btn btn-dark" (click)="Search2()" >Search</button>
+              <a href="/patient" type="button" >Back</a>
+            </div>
+          </div>      
+      </form>
+  </div> 
+
+
+<table id="myTable" class="table table-hover  table-responsive-md  text-center">
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Patient Fisrt Name</th>
+      <th scope="col">Patient Last Name</th>
+      <th scope="col">Consultation msg</th>
+      <th scope="col">Date</th>
+    </tr>
+  </thead>
+  <tbody *ngFor="let sub of subdoc; let i = index">
+    <tr>
+      <th class="scope">{{i+1}} </th>
+      <td >{{sub.first_name}}</td>
+      <td >{{sub.last_name}}</td>
+      <td >{{sub.consultationMsg}}</td>
+      <td >{{sub.registeredDate}}</td>
+    </tr>
+</tbody>
+</table>
+</div>

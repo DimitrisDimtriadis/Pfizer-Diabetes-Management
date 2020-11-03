@@ -2,6 +2,7 @@ export class Measurements{
     
     bloodGlucoseLevel: number;
     carbIntake: number;
-    measurementDate: Date;
+    measurementDate: string;
     measurementID:number;
+  
 }

@@ -18,12 +18,16 @@ export class PatientComponent implements OnInit {
     this.Uservice.getUserData().subscribe(
       data=>{
         this.userObj=data;
+       sessionStorage.setItem("amka",String(this.userObj?.amka));
+        sessionStorage.setItem("email",this.userObj?.email);
+        sessionStorage.setItem("id",data.id);
+        
           }
+          
     );
+    
   }
+ 
 
-  logout(){
-    sessionStorage.setItem('LoginRole',"");
-    this._router.navigate(['login']);
-  }
+ 
 }
