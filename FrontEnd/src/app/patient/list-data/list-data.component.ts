@@ -80,7 +80,7 @@ export class ListDataComponent implements OnInit {
           this.mediData=data1;
         }
      )
-     alert("show measurements complete");
+     //alert("show measurements complete");
 
 
  }

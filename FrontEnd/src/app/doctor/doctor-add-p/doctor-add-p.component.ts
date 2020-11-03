@@ -34,7 +34,14 @@ export class DoctorAddPComponent implements OnInit {
     }
 
 
+    doctorViewP(id:number){
+      this.Uservice.currentId.userID=id;
+      console.log(id);
+      console.log(this.Uservice.currentId.userID);
+      sessionStorage.setItem("getID",String(id));
+      this._router.navigate(['/doctorViewP']);
 
+    }
 
   
 

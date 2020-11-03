@@ -6,6 +6,13 @@ import {LoginClass} from '../classes/LoginClass';
 import { PatientRealClass } from '../classes/patientRealClass';
 import { AssocClass } from '../classes/assocClass';
 import { IdClass } from '../classes/IdClass';
+import { ConsulateCreateClass } from '../classes/consulateCreateClass';
+import { GetConsultationsClass } from '../classes/getConsultationsClass';
+import { EditConClass } from '../classes/editConClass';
+import { AverageMeasurements } from '../classes/averageMeasurements';
+import { AverageDoctorClass } from '../classes/averageDoctorClass';
+import { StartEndDateDocClass } from '../classes/startEndDateDocClass';
+import { AvgMClass } from '../classes/avgMClass';
 
 //const headerOption = {
  // headers1: new HttpHeaders({ 'Content-Type': 'application/json' , 'Authorization': 'Basic ' + btoa(sessionStorage.getItem("credentials"))
@@ -26,7 +33,9 @@ export class UserService {
 
   readonly assoc1="?categoryType=1"
 
-  readonly UrlCon="http://localhost:9000/sacchon/consulate";
+  readonly UrlCon="http://localhost:9000/sacchon/consultation";
+
+  readonly UrlAvg="http://localhost:9000/sacchon/data";
   
   currentUser: UserClass = {
     
@@ -78,6 +87,34 @@ export class UserService {
 currentId:IdClass={
   userID:0
 }
+
+
+currentCon:ConsulateCreateClass={
+  patientID:0,
+  consultationMsg:''
+  
+}
+
+editCurrentCon:EditConClass={
+  patientID:0,
+    consultationID:0,
+    consultationMsg: '',
+    registerDate: ''
+}
+
+currentAD:AverageDoctorClass={
+  userID:0,
+  startAt:'',
+  endAt:''
+  
+}
+currentAvg:AvgMClass={
+  numberOfResults: 0,
+  avgBloodGlucoseLevel: 0,
+  avgCarbIntake: 0
+    
+}
+
 
   constructor(private http: HttpClient) { }
 
@@ -153,9 +190,50 @@ get1User(id:IdClass):Observable<PatientRealClass>{
 }
 
 
-createCon(){
-  
+createCon(con:ConsulateCreateClass){
+  let header= { headers:new HttpHeaders().set('Content-Type', 'application/json')
+  .set('Authorization',`Basic ${btoa(sessionStorage.getItem("credentials"))}`)
 }
- 
+    return this.http.post<ConsulateCreateClass>(this.UrlCon,con,header);
+}
+
+getCon(id:number):Observable<any>{
+  let header= { headers:new HttpHeaders().set('Content-Type', 'application/json')
+  .set('Authorization',`Basic ${btoa(sessionStorage.getItem("credentials"))}`)
+}
+    return this.http.get<any>(this.UrlCon+"?categoryType="+id,header);
+}
+
+
+get1Con(id:number):Observable<any>{
+  let header= { headers:new HttpHeaders().set('Content-Type', 'application/json')
+  .set('Authorization',`Basic ${btoa(sessionStorage.getItem("credentials"))}`)
+}
+    return this.http.get<any>(this.UrlCon+"?consultationID="+id,header);
+}
+    
+editCon(editC:EditConClass):Observable<EditConClass>{
+let header= { headers:new HttpHeaders().set('Content-Type', 'application/json')
+  .set('Authorization',`Basic ${btoa(sessionStorage.getItem("credentials"))}`)
+} 
+  return this.http.put<EditConClass>(this.UrlCon,editC,header);
+}
+
+
+deleteCon(cid:number):Observable<any>{
+  let header= { headers:new HttpHeaders().set('Content-Type', 'application/json')
+    .set('Authorization',`Basic ${btoa(sessionStorage.getItem("credentials"))}`)
+  } 
+    return this.http.delete<any>(this.UrlCon+"?consultationID="+cid,header);
+  }
+
+
+  getAvgDoctor(avgD:AverageDoctorClass):Observable<any>{
+    let header= { headers:new HttpHeaders().set('Content-Type', 'application/json')
+    .set('Authorization',`Basic ${btoa(sessionStorage.getItem("credentials"))}`)
+  }
+      return this.http.post<any>(this.UrlAvg,avgD,header);
+  }
+
 
 }

@@ -42,4 +42,14 @@ public class ConsultationRepository extends Repository<Consultation, Long> {
             return unReadConsultation.size();
         }
     }
+
+    public List getPatientThatWaitForNewConsultations(){
+
+        List patientsIdWhichWaitConsultation = entityManager.createQuery("select c.patient.id from Consultation c")
+                .getResultList();
+//        List patientsIdWhichWaitConsultation = entityManager.createQuery("select max(registerDate) from Consultation c group by patient_id")
+//                .getResultList();
+
+        return null;
+    }
 }

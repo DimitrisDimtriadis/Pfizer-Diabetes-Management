@@ -20,6 +20,7 @@ import org.restlet.resource.ServerResource;
 import javax.persistence.EntityManager;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 public class PatientResourceImpl extends ServerResource implements PatientResource {
 
@@ -63,8 +64,15 @@ public class PatientResourceImpl extends ServerResource implements PatientResour
     @Override
     public List<MeasurementDTO> getMeasurement(MeasurementsSearchParamDTO paramDTO) throws NotFoundException, BadEntityException {
 
-        String usrEmail = this.getRequest().getClientInfo().getUser().getIdentifier();
-        Users currentUser = userRepository.getUserInfo(usrEmail);
+        Users currentUser;
+        if(paramDTO.getUserID() == null){
+            String usrEmail = this.getRequest().getClientInfo().getUser().getIdentifier();
+            currentUser = userRepository.getUserInfo(usrEmail);
+        } else {
+            Optional<Users> tempUser = userRepository.findById(paramDTO.getUserID());
+            if(!tempUser.isPresent()) throw new NotFoundException("There is no patient with this id");
+            currentUser = tempUser.get();
+        }
 
         paramDTO.setUserID(currentUser.getId());
 

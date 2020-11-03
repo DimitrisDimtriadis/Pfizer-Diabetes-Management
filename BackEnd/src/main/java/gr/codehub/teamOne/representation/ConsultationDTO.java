@@ -30,7 +30,7 @@ public class ConsultationDTO {
         consultationDTO.setConsultationID(consultation.getId());
         consultationDTO.setPatientID(consultation.getPatient().getId());
         consultationDTO.setRegisterDate(consultation.getRegisterDate());
-        consultationDTO.setConsultationMsg(consultationDTO.getConsultationMsg());
+        consultationDTO.setConsultationMsg(consultation.getConsultationMsg());
         consultationDTO.setIsRead(consultation.isRead());
 
         return consultationDTO;
