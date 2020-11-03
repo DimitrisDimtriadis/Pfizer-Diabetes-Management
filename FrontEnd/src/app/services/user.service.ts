@@ -52,12 +52,15 @@ export class UserService {
     endAt:''
   }
 
-  //LISTA
+
   averageDataMeasurements: AverageMeasurements={
-    //patientID: 0,
-    numbersOfData: 0,
+  
+    numberOfResults: 0,
     avgBloodGlucoseLevel: 0,
-    avgCarbIntakeAVG: 0
+    avgCarbIntake: 0
+  }
+
+
   currentPatient:PatientRealClass={
     id:0,
     first_name:'',
@@ -79,7 +82,6 @@ export class UserService {
     patient:0
   }
 
-  }
 
   constructor(private http: HttpClient) { }
 
@@ -114,13 +116,13 @@ export class UserService {
   }
 
 
+  
   deleteUser():Observable<UserClass>{
     let header= { headers:new HttpHeaders().set('Content-Type', 'application/json')
     .set('Authorization',`Basic ${btoa(sessionStorage.getItem("credentials"))}`)
   }
-  return this.http.delete<UserClass>(this.urlI,header);
+  return this.http.delete<UserClass>(this.urlI ,header);
   }
-
 
 //associations------------------------------------------------------------------
 
@@ -147,26 +149,10 @@ addFreePatient(patA:AssocClass):Observable<any>{
     return this.http.put<AssocClass>(this.urlAssoc,patA,header);
 }
 
- 
-
-  editUserData(user:UserClass):Observable<UserClass>{
-    let header= { headers:new HttpHeaders().set('Content-Type', 'application/json')
-    .set('Authorization',`Basic ${btoa(sessionStorage.getItem("credentials"))}`)
-  }
-    return this.http.put<UserClass>(this.urlGetUserdata,user,header);
-  }
-
-
-  deleteUser():Observable<UserClass>{
-    let header= { headers:new HttpHeaders().set('Content-Type', 'application/json')
-    .set('Authorization',`Basic ${btoa(sessionStorage.getItem("credentials"))}`)
-  }
-  return this.http.delete<UserClass>(this.urlI ,header);
-  }
-
   averageDataPatient(data: AverageDataPatient):Observable<any>{
     let header= { headers:new HttpHeaders().set('Content-Type', 'application/json')
+    .set('Authorization',`Basic ${btoa(sessionStorage.getItem("credentials"))}`)
   }
-  return this.http.post<AverageDataPatient>(this.average,data, header);
+  return this.http.post<AverageDataPatient>(this.average, data, header);
 }
 }

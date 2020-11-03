@@ -10,12 +10,13 @@ import { AverageDataComponent } from './average-data/average-data.component';
 import { ChartsDataComponent } from './charts-data/charts-data.component';
 import { UpdateComponent } from './update/update.component';
 import { PatientNavComponent } from './patient-nav/patient-nav.component';
+import { PatientConsultationComponent } from './patient-consultation/patient-consultation.component';
 
 
 
 
 @NgModule({
-  declarations: [PatientComponent, InsertDataComponent, ListDataComponent, AverageDataComponent, ChartsDataComponent, UpdateComponent, PatientNavComponent],
+  declarations: [PatientComponent, InsertDataComponent, ListDataComponent, AverageDataComponent, ChartsDataComponent, UpdateComponent, PatientNavComponent, PatientConsultationComponent],
   imports: [
     CommonModule,
     AppRoutingModule,

@@ -11,7 +11,7 @@ import { UserService } from 'src/app/services/user.service';
 })
 export class AverageDataComponent implements OnInit {
   form: FormGroup;
-  mediData: AverageMeasurements[];
+  mediData: AverageMeasurements;
   submitted = false;
 
   constructor(public data:UserService,
@@ -19,7 +19,7 @@ export class AverageDataComponent implements OnInit {
 
   ngOnInit(): void {
     this.form=this.formBuilder.group({
-      amka:[''],
+      amka:['', [Validators.required, Validators.minLength(9),Validators.maxLength(9)]],
       fromDate: [''],
       untilDate: [''],
 
@@ -40,14 +40,14 @@ this.data.averageData.startAt = new Date(st).toISOString();
 
 let ed= (<HTMLInputElement>document.getElementById('until')).value;
 this.data.averageData.endAt = new Date(ed).toISOString();
-this.data.averageData.amka = this.form.get('amka').value;
+let amka=this.data.averageData.amka = this.form.get('amka').value;
 
 console.log(st);
 console.log(ed);
-  
+console.log(amka);
  this.data.averageDataPatient(this.data.averageData).subscribe(
-    data1=>{
-      this.mediData=data1;
+    data2=>{
+      this.mediData=data2;
     }
  )
  alert("show measurements complete");

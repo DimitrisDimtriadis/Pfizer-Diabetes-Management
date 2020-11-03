@@ -15,8 +15,19 @@ export class PatientComponent implements OnInit {
     userObj:UserClass;
 
   ngOnInit(): void {
+    this.Uservice.getUserData().subscribe(
+      data=>{
+        this.userObj=data;
+       sessionStorage.setItem("amka",String(this.userObj?.amka));
+        sessionStorage.setItem("email",this.userObj?.email);
+        sessionStorage.setItem("id",data.id);
+        
+          }
+          
+    );
     
   }
+  onClickUpdate(){}
 
  
 }

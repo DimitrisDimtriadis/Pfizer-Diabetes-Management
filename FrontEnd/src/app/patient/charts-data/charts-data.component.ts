@@ -12,7 +12,7 @@ export class ChartsDataComponent implements OnInit {
   @Input() carbValues: number[];
   @Input() glucoseValues: number[];
   @Input() dateValues: Date[];
-  myChart: Chart;
+  chart: Chart;
   constructor(){}
 
   ngOnInit(): void {
@@ -24,14 +24,14 @@ export class ChartsDataComponent implements OnInit {
 
   ngOnChanges() {
     console.log(this.carbValues);
-    if(this.myChart != undefined)
-      this.myChart.destroy();
+    if(this.chart != undefined)
+      this.chart.destroy();
     this.setChart();
   }
 
 
 setChart(){
-    this.myChart = new Chart("Medidata-chart", {
+    this.chart = new Chart("data-chart", {
       type: 'line',
       data: {
           labels: this.dateValues,
@@ -57,9 +57,7 @@ setChart(){
                 'blue' 
               ], fill:false,
               borderWidth: 3
-          
           }
-        
         ]
       },
       options: {
@@ -79,7 +77,6 @@ setChart(){
           }
       }
   });
-
 
 
   }
