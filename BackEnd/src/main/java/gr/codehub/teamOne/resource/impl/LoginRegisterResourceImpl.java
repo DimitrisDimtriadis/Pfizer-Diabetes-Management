@@ -3,6 +3,7 @@ package gr.codehub.teamOne.resource.impl;
 import gr.codehub.teamOne.Utilities.GeneralFunctions;
 import gr.codehub.teamOne.exceptions.BadEntityException;
 import gr.codehub.teamOne.exceptions.NotFoundException;
+import gr.codehub.teamOne.model.Consultation;
 import gr.codehub.teamOne.model.PatientDoctorAssociation;
 import gr.codehub.teamOne.model.Users;
 import gr.codehub.teamOne.repository.ConsultationRepository;
@@ -90,8 +91,19 @@ public class LoginRegisterResourceImpl extends ServerResource implements LoginRe
         LoginInfoDTO loginInfoDTO = new LoginInfoDTO();
         loginInfoDTO.setRole(userToLogin.getAccountType());
 
-        int numOfUnreadConsulations = consultationRepository.calculateUnreadConsultations(userToLogin);
-        loginInfoDTO.setUnreadConsultations(numOfUnreadConsulations);
+        int numOfUnreadConsultations = 0;
+        List<Consultation> rowsWithUnreadConsultation = consultationRepository.calculateUnreadConsultations(userToLogin);
+
+        if(rowsWithUnreadConsultation != null){
+            numOfUnreadConsultations = rowsWithUnreadConsultation.size();
+        }
+        if(numOfUnreadConsultations > 0){
+            rowsWithUnreadConsultation.forEach( msg -> {
+                msg.setRead(true);
+                consultationRepository.save(msg);
+            });
+        }
+        loginInfoDTO.setUnreadConsultations(numOfUnreadConsultations);
         return loginInfoDTO;
     }
 

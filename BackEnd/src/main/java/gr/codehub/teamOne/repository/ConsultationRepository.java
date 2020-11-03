@@ -32,15 +32,10 @@ public class ConsultationRepository extends Repository<Consultation, Long> {
                 .getResultList();
     }
 
-    public int calculateUnreadConsultations(Users patient){
-        List unReadConsultation = entityManager.createQuery("from Consultation where patient_id = : patientID and isRead = false")
+    public List calculateUnreadConsultations(Users patient){
+        return entityManager.createQuery("from Consultation where patient_id = : patientID and isRead = false")
                 .setParameter("patientID", patient.getId())
                 .getResultList();
-        if(unReadConsultation == null){
-            return 0;
-        } else {
-            return unReadConsultation.size();
-        }
     }
 
     public List getPatientThatWaitForNewConsultations(){
