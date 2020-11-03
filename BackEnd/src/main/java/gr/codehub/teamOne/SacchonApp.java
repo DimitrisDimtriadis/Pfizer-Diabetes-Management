@@ -86,12 +86,9 @@ public class SacchonApp extends Application {
     }
 }
 
-//TODO: Gia enan astheni oles tis metrisis kai enan meso oro (kathimerina kai miniaia carb and glosure)
-//TODO: Reservations -> Gnomateusi giatrou
-//TODO: Visibilite gia to delete
-//TODO: Doc poious den exei kanei consult
-//TODO: Kane elenxo poio asthenis den exoun consult meta apo 30 meres
-//TODO: O asthenis na ginetai availble otan o doc feugei
-//TODO: An o astheneis exei gnomateusei na eidopoieitai
-//TODO: Admin kataxorisis doc
-//TODO: Admin gnomateuseis doc
+
+
+
+
+
+
