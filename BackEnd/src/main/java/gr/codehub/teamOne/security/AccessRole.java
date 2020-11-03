@@ -5,7 +5,8 @@ public enum AccessRole {
     ROLE_NA("n/a"),
     ROLE_ADMIN("admin"),
     ROLE_DOCTOR("doctor"),
-    ROLE_PATIENT("patient");
+    ROLE_PATIENT("patient"),
+    ROLE_PENDING("pending");
 
     private final String roleName;
 

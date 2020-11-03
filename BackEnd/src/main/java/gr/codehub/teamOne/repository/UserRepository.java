@@ -123,4 +123,9 @@ public class UserRepository extends Repository<Users, Long> {
                 .setParameter("daysToExp", GeneralFunctions.DaysToConsiderUserExpired)
                 .getResultList();
     }
+
+    public List getAllPendingDoctors(){
+        return entityManager.createQuery("from Users where accountType = 4")
+                .getResultList();
+    }
 }

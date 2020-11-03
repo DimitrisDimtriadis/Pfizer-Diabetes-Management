@@ -3,6 +3,7 @@ package gr.codehub.teamOne.resource.impl;
 import gr.codehub.teamOne.Utilities.GeneralFunctions;
 import gr.codehub.teamOne.exceptions.BadEntityException;
 import gr.codehub.teamOne.exceptions.NotFoundException;
+import gr.codehub.teamOne.exceptions.WrongUserRoleException;
 import gr.codehub.teamOne.model.Consultation;
 import gr.codehub.teamOne.model.PatientDoctorAssociation;
 import gr.codehub.teamOne.model.Users;
@@ -75,7 +76,7 @@ public class LoginRegisterResourceImpl extends ServerResource implements LoginRe
      * @throws BadEntityException When input is null
      */
     @Override
-    public LoginInfoDTO loginUser(LoginCredentialDTO loginCredentialDTO) throws NotFoundException, BadEntityException {
+    public LoginInfoDTO loginUser(LoginCredentialDTO loginCredentialDTO) throws NotFoundException, BadEntityException, WrongUserRoleException {
 
         if (loginCredentialDTO == null) throw new BadEntityException("Null userException error");
 
@@ -85,6 +86,9 @@ public class LoginRegisterResourceImpl extends ServerResource implements LoginRe
 
         //Update the lastLogin to keep last entry of user
         Users userToLogin = listWithUsers.get(0);
+
+        //To check if account is doctor under pending state
+        if(userToLogin.getAccountType() == AccessRole.ROLE_PENDING) throw new WrongUserRoleException("The account is doctor account under pending state");
         userToLogin.setLastLogin(new Date());
         userRepository.save(userToLogin);
 
@@ -135,6 +139,11 @@ public class LoginRegisterResourceImpl extends ServerResource implements LoginRe
             users = UsersDTO.getUsers(usersDTO);
         }
         users.setActive(true);
+
+        //Check if try to add to create doctor account and change it as pending role
+        if(users.getAccountType() == AccessRole.ROLE_DOCTOR){
+            users.setAccountType(AccessRole.ROLE_PENDING);
+        }
         userRepository.save(users);
 
         //To add entry on association

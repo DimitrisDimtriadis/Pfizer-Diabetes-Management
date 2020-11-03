@@ -38,14 +38,27 @@ public class ConsultationRepository extends Repository<Consultation, Long> {
                 .getResultList();
     }
 
-    public List getPatientThatWaitForNewConsultations(){
+    public List getPatientThatWaitForNewConsultations(List<Long> patientsID){
 
-//        List patientsIdWhichWaitConsultation = entityManager.createQuery("select c.patient.id from Consultation c")
-//                .getResultList();
+        //TODO: Work here !!!
+        if(patientsID.size()>0) {
 
-        List patientsIdWhichWaitConsultation = entityManager.createQuery("select patient.id, max(registerDate) from Consultation c group by patient.id")
-                .getResultList();
+            StringBuilder customIDs = new StringBuilder("");
 
+            for(int i = 0; i < patientsID.size(); i++){
+                if(i!=0 && i!=patientsID.size()){
+                    customIDs.append(", ");
+                }
+                customIDs.append(patientsID.get(i));
+            }
+
+            String mQuery = "select patient.id, max(registerDate) from Consultation c where patient.id in ("+ customIDs +") group by patient.id";
+            List patientsIdWhichWaitConsultation = entityManager.createQuery(mQuery)
+                    .getResultList();
+
+            return null;
+
+        }
         return null;
     }
 }
