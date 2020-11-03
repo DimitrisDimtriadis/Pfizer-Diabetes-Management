@@ -62,4 +62,8 @@ public class PatientDoctorAssociationRepository extends Repository<PatientDoctor
                 .setParameter("doctorID", doctorID)
                 .getResultList();
     }
+
+    public List getIdsOfPatients(){
+        return entityManager.create
+    }
 }

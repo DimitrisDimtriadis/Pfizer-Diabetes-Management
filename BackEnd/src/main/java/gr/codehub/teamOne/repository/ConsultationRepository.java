@@ -40,10 +40,11 @@ public class ConsultationRepository extends Repository<Consultation, Long> {
 
     public List getPatientThatWaitForNewConsultations(){
 
-        List patientsIdWhichWaitConsultation = entityManager.createQuery("select c.patient.id from Consultation c")
-                .getResultList();
-//        List patientsIdWhichWaitConsultation = entityManager.createQuery("select max(registerDate) from Consultation c group by patient_id")
+//        List patientsIdWhichWaitConsultation = entityManager.createQuery("select c.patient.id from Consultation c")
 //                .getResultList();
+
+        List patientsIdWhichWaitConsultation = entityManager.createQuery("select patient.id, max(registerDate) from Consultation c group by patient.id")
+                .getResultList();
 
         return null;
     }
