@@ -1,7 +1,7 @@
 export class AverageMeasurements{
-    //patientID: number;
-    numbersOfData: number;
+ 
+    numberOfResults: number;
     avgBloodGlucoseLevel: number;
-    avgCarbIntakeAVG: number;
+    avgCarbIntake: number;
     
 }

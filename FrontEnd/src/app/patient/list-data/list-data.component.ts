@@ -4,9 +4,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Measurements } from 'src/app/classes/measurements';
 import { MeasurementsService } from 'src/app/services/measurements.service';
 import { DatePipe } from '@angular/common';
-import { PostData } from 'src/app/classes/postData';
-import 'jquery';
-import { MeasurIDClass } from 'src/app/classes/MeasurIDClass';
+
+
 
 @Component({
   selector: 'codehub-list-data',
@@ -22,41 +21,45 @@ export class ListDataComponent implements OnInit {
   submitted = false;
   myGetDate:string;
  
-
+  carbIntake: number[] = [];
+  bloodGlucoseLevel:number[] = [];
+  measurementDate: string[] = [];
 
   constructor(private formBuilder: FormBuilder,
     public data:MeasurementsService, private router: Router,
     private route: ActivatedRoute) { }
 
   ngOnInit(): void {
-
-    
-  //  this.data.postData.userID= this.form.get('userID').value;
-   //this.data.getMeasurementsData().subscribe(medi => {
-   //  this.mediData = medi, this.fillData(this.mediData)});
-      
+    this.data.getMeasurementsData(this.data.currentStEndDate).subscribe(
+      medi => {this.mediData = medi, this.fillData(this.mediData)});
     this.form = this.formBuilder.group({
       fromDate: ['', Validators.required],
       untilDate: ['', Validators.required],
   });
   
-  
+}
+fillData(medi){
+  if(medi === undefined || medi.length == 0){
+      this.carbIntake = [];
+      this.bloodGlucoseLevel = [];
+      this.measurementDate = [];  
+  }else{
+
+    const datePipe = new DatePipe('en-US');
+    medi.forEach((value) => {
+    this.carbIntake.push(value.carbIntake),
+    this.bloodGlucoseLevel.push(value.bloodGlucoseLevel),
+    this.measurementDate.push(datePipe.transform(value.measurementDate, 'EEEE, MMMM d'));
+    }
+    )
+  }  
+
+  this.carbIntake = [...this.carbIntake]
+  this.bloodGlucoseLevel = [...this.bloodGlucoseLevel]
+  this.measurementDate = [...this.measurementDate]
 
 }
 
-
-
-  //  const datePipe = new DatePipe('en-US');
- //   medi.forEach((value) => {
- //   this.data.currentMeasurements.carbIntake.push(value.carbIntake),
-   // this.bloodGlucoseLevel.push(value.bloodGlucoseLevel),
-    //this.measurementDate.push(datePipe.transform(value.measurementDate, 'EEEE, MMMM d'));
-  
-
-  logout(){
-    sessionStorage.setItem('LoginRole',"");
-    this.router.navigate(['login']);
-  }
   // convenience getter for easy access to form fields
  get f() { return this.form.controls; }
 
@@ -80,13 +83,8 @@ export class ListDataComponent implements OnInit {
           this.mediData=data1;
         }
      )
-     //alert("show measurements complete");
-
-
+     alert("show measurements complete");
  }
-
-
- 
  
 getData(id:number){
   console.log(id);
@@ -109,11 +107,8 @@ console.log("Date as YYYY-MM-DD Format: " + year + "-" + month + "-" + date);
 var myDate=year + "-" + month + "-" + date;
     this.myGetDate=myDate;
   }
-
   );
-
 }
-
 
 updateData(id:number){
 
@@ -130,12 +125,10 @@ updateData(id:number){
     this.data.updateMediData(this.data.currentMeasurements).subscribe(
       (response) => console.log(response),
       (error) => console.log(error));
-
-      this.Search();
-    
-
+      window.location.reload();
+ 
+  
 }
-
 
  deleteData(id:number){
   console.log(id);
@@ -145,8 +138,4 @@ updateData(id:number){
   alert("delete success");
   this.Search();
  }
-
- 
-
-
 }

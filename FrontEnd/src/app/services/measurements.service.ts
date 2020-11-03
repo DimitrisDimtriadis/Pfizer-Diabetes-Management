@@ -5,6 +5,7 @@ import { Observable } from 'rxjs';
 import { PostData } from '../classes/postData';
 import { StartEndDateClass } from '../classes/startEndDateClass';
 import { MeasurIDClass } from '../classes/MeasurIDClass';
+import { PatientConsultation } from '../classes/patientsConsultation';
 import { StartEndDateDocClass } from '../classes/startEndDateDocClass';
 
 
@@ -23,6 +24,8 @@ export class MeasurementsService {
 
   readonly urlM1="http://localhost:9000/sacchon/measurements?measurementID=";
 
+  readonly patientConsultation="http://localhost:9000/sacchon/consultation";
+  
   addMeasurements: Measurements = {
     bloodGlucoseLevel: 0,
     carbIntake: 0,
@@ -40,18 +43,20 @@ export class MeasurementsService {
     startAt:'',
     endAt:''
   }
-
-
   postData:PostData={
     
     userID:0
   }
-
-
   mID:MeasurIDClass={
      measurementID:0
   }
 
+  consultationPatient: PatientConsultation={
+    consultationID: 0,
+    patientID:  0,
+    registerDate: '',
+    consultationMsg: ''
+  }
   currentSTD:StartEndDateDocClass={
     userID:0,
     startAt:'',
@@ -78,4 +83,10 @@ export class MeasurementsService {
   removeMedi(data: number): Observable<Measurements>{
     return this.http.delete<Measurements>(this.urlM1 + data, headerOption);
   }
+  getPatientConsultation():Observable<any>{
+  let header= { headers:new HttpHeaders().set('Content-Type', 'application/json')
+    .set('Authorization',`Basic ${btoa(sessionStorage.getItem("credentials"))}`)
+  }
+  return this.http.get(this.patientConsultation, header)
+}
 }
