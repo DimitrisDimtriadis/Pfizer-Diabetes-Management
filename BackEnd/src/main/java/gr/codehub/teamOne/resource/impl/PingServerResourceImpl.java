@@ -11,7 +11,7 @@ import javax.persistence.EntityManager;
 public class PingServerResourceImpl extends ServerResource implements PingServerResource {
 
     private EntityManager em;
-    public static final String PING = "Sacchon Web API v0.9.71 running";
+    public static final String PING = "Sacchon Web API v0.9.82 running";
 
     @Override
     protected void doInit() throws ResourceException {

@@ -7,7 +7,7 @@ import gr.codehub.teamOne.model.Users;
 import gr.codehub.teamOne.repository.ConsultationRepository;
 import gr.codehub.teamOne.repository.UserRepository;
 import gr.codehub.teamOne.repository.util.JpaUtil;
-import gr.codehub.teamOne.representation.ConsultationDTO;
+import gr.codehub.teamOne.representation.*;
 import gr.codehub.teamOne.resource.interfaces.ConsultationResource;
 import org.restlet.resource.ResourceException;
 import org.restlet.resource.ServerResource;
@@ -129,5 +129,16 @@ public class ConsultationResourceImpl extends ServerResource implements Consulta
         if (consultationID == null) throw new BadEntityException("Null object as input");
         consultationRepository.deleteById(consultationID);
         return "Consultation deleted";
+    }
+
+    @Override
+    public List<ConsultationDoctorResponseDTO> getConsultationForDoctor(ConsultationSpecificDoctorDTO specificDoctorDTO) {
+
+        List<ConsultationDoctorResponseDTO> demandedConsultationList = new ArrayList<>();
+        UsersSearchDTO usersDTO = new UsersSearchDTO();
+        usersDTO.setAmka(specificDoctorDTO.getAmka());
+        Users doc = userRepository.findByAmka(usersDTO);
+        specificDoctorDTO.setUserID(doc.getId());
+        return consultationRepository.getConsultationForSpecificDoctor(specificDoctorDTO);
     }
 }
