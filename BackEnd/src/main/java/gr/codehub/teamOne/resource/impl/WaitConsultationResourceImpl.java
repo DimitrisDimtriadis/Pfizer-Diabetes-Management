@@ -40,8 +40,8 @@ public class WaitConsultationResourceImpl extends ServerResource implements Wait
     @Override
     public List<UsersDTO> getPatientsWaiting() {
 
-        List<WaitPatConsultationDTO> patientsId = associationRepository.
-        consultationRepository.getPatientThatWaitForNewConsultations();
+//        List<WaitPatConsultationDTO> patientsId = associationRepository.
+//        consultationRepository.getPatientThatWaitForNewConsultations();
         return null;
     }
 }

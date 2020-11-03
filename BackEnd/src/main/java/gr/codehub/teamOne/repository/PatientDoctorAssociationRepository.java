@@ -64,6 +64,6 @@ public class PatientDoctorAssociationRepository extends Repository<PatientDoctor
     }
 
     public List getIdsOfPatients(){
-        return entityManager.create
+        return null;//entityManager.create
     }
 }
