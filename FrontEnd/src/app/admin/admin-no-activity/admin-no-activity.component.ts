@@ -4,11 +4,6 @@ import { CommonModule } from '@angular/common';
 import { MustMatch } from 'src/app/_helpers/must-match.validator';
 import { FormBuilder, FormControl, FormGroup ,Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { UserService } from 'src/app/services/user.service';
-import { AdminService } from 'src/app/services/admin.service';
-import { DoctorInactive } from 'src/app/classes/doctoInactive';
-import { PendingDoctor } from 'src/app/classes/pendingDoctor';
-
 
 @Component({
   selector: 'app-admin-no-activity',
@@ -16,49 +11,46 @@ import { PendingDoctor } from 'src/app/classes/pendingDoctor';
   styleUrls: ['./admin-no-activity.component.scss']
 })
 export class AdminNoActivityComponent implements OnInit {
-  form: FormGroup;
-  mediData: DoctorInactive[];
-  pending:PendingDoctor[];
 
+  userForm:FormGroup;
+    submitted = false;
   
-    constructor(public admin:AdminService,private formBuilder: FormBuilder,private _router: Router) { }
+    constructor(private formBuilder: FormBuilder,private _router: Router) { }
     
     ngOnInit(): void {
-      this.form=this.formBuilder.group({
-        userID: ['']
-  
-    });
-      
-      this.admin.getPendingDoctor().subscribe(
-        data=>{
-          this.pending=data;
-            }
-            )
-     
-          }
-    
-    
- 
-    Search() {
-      this.admin.getInactiveDoctor().subscribe(
-         data1=>{
-           this.mediData=data1;
-         }
-      )
-      alert("Show Inactive Doctors");
-  }
-
-  Data(){
-    
-let userID=this.admin.beDoctor.userID = this.form.get('userID').value;
-
-console.log(userID);
- this.admin.getBeDoctor(this.admin.beDoctor).subscribe(
-    data2=>{
-      this.pending=data2;
+      this.userForm= this.formBuilder.group({
+       
+        email:['', [Validators.required, Validators.email]],
+        dEnd :['', Validators.required],
+        dStart :['', Validators.required]
+      });
     }
- )
- alert("show measurements complete");
-  }
+    // convenience getter for easy access to form fields
+    get f() { return this.userForm.controls; }
+  
+    onSubmit() {
+        this.submitted = true;
+  
+        // stop here if form is invalid
+        if (this.userForm.invalid) {
+            return;
+        }
+  
+       
+    }
+  
+    numberOnly(event): boolean {
+      const charCode = (event.which) ? event.which : event.keyCode;
+      if (charCode > 31 && (charCode < 48 || charCode > 57)) {
+        return false;
+      }
+      return true;
+  
+    }
+
+    logout(){
+      sessionStorage.setItem('LoginRole',"");
+      this._router.navigate(['login']);
+    }
 
 }

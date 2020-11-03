@@ -22,7 +22,10 @@ export class InsertDataComponent implements OnInit {
      
     });
   }
- 
+  logout(){
+    sessionStorage.setItem('LoginRole',"");
+    this.router.navigate(['login']);
+  }
 
  // convenience getter for easy access to form fields
  get f() { return this.insertform.controls; }

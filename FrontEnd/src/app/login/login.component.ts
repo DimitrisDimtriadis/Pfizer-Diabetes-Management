@@ -37,22 +37,17 @@ export class LoginComponent implements OnInit {
           return;
       }
 
-      this.userS.currentLogin.userEmail = this.loginForm.get('email').value.trim();
-      this.userS.currentLogin.userPassword = this.loginForm.get('password').value.trim();
+      this.userS.currentLogin.userEmail = this.loginForm.get('email').value;
+      this.userS.currentLogin.userPassword = this.loginForm.get('password').value;
 
-      
+      //sessionStorage.setItem("credentials", this.login + ":" + this.password)
       this.userS.loginUser(this.userS.currentLogin).subscribe(
         (response)=>{
-          console.log(response); this.loginRole=String(response.role);
-          sessionStorage.setItem("unreadConsultations",response.unreadConsultations);
-          console.log("unreadConsultations="+ sessionStorage.getItem("unreadConsultations"));
+          console.log(response); this.loginRole=String(response);    
           
       sessionStorage.setItem("credentials",this.userS.currentLogin.userEmail + ":" + this.userS.currentLogin.userPassword);
       sessionStorage.setItem("LoginRole",this.loginRole);
-      console.log(this.userS.currentLogin.userEmail);
-      console.log(this.userS.currentLogin.userPassword);
-      console.log((sessionStorage.getItem("credentials")));
-      console.log(btoa(sessionStorage.getItem("credentials")));
+
       if(this.loginRole ==="ROLE_PATIENT") 
       {this.router.navigate(['/patient']);}
 
@@ -67,5 +62,5 @@ export class LoginComponent implements OnInit {
           }
         ,(error)=>{window.alert("wrong credentials")}
       );
-    }
+}
 }

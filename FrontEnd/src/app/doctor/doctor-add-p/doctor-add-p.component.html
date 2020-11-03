@@ -8,24 +8,24 @@
       <thead class="thead-light">
         <tr>
           <th scope="col">#</th>
-          <th scope="col">First&LastName</th>
-          <th scope="col">Registration Date</th>
+          <th scope="col">First</th>
+          <th scope="col">Last</th>
           <th scope="col">View patient measurements</th>
           <th scope="col">Add patient for consultation</th>
         </tr>
       </thead>
-      <tbody *ngFor="let freeP of freePatientList; let i = index;">
+      <tbody>
         <tr>
-          <th scope="row">{{i+1}}</th>
-          <td>{{freeP.first_name}}&nbsp;{{''+freeP.last_name}}</td>
-          <td>{{freeP.registration_date|date}}</td>
+          <th scope="row">1</th>
+          <td>Mark</td>
+          <td>Otto</td>
           <td>
-            <a class="navbar-brand" style="cursor: pointer;" (click)="doctorViewP(freeP.id)" > 
+            <a class="navbar-brand" href="/doctorViewP" > 
               <img src="/assets/images/seeData.png"  style="width:40px; padding-left: 10px;" >
             </a>
           </td>
           <td>
-          <button class="btn btn-primary" (click)="addPatient(freeP.id)" type="submit">Add patient</button>
+          <button class="btn btn-primary" type="submit">Add patient</button>
         </td>
         </tr>
       </tbody>

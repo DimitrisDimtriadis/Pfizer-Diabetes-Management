@@ -91,7 +91,6 @@ export class RegisterComponent implements OnInit {
          // sessionStorage.setItem("credentials",  this.userS.currentUser.email + ":" + this.userS.currentUser.password)
          // sessionStorage.setItem("modified", "false")
           alert('Welcome to Sacchon app!!');
-          alert('If you are Doctor yoy should wait for Chief Doctor approvement!!');
           this.router.navigate(['login']);
       
   }

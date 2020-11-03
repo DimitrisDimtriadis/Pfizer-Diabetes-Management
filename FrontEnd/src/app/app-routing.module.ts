@@ -16,7 +16,6 @@ import { LogoutComponent } from './logout/logout.component';
 import { FrontEndGuardD } from './classes/frontEndGuardD';
 import { FrontEndGuardA } from './classes/frontEndGuardA';
 import { FrontEndGuardP } from './classes/frontEndGuardP';
-import { PatientNoActivityComponent } from './admin/patient-no-activity/patient-no-activity.component';
 
 
 
@@ -38,7 +37,7 @@ const routes: Routes =
 {path: 'admin', component: AdminComponent,canActivate: [FrontEndGuardA]},
 {path: 'adminConW', component: AdminConsultWaitComponent,canActivate: [FrontEndGuardA]},
 {path: 'adminNoA', component: AdminNoActivityComponent,canActivate: [FrontEndGuardA]},
-{path: 'adminNoP', component: PatientNoActivityComponent,canActivate: [FrontEndGuardA]},
+
 { path: 'logout', component: LogoutComponent}
 ];
 
