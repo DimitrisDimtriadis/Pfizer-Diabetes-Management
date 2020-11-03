@@ -5,11 +5,13 @@ import gr.codehub.teamOne.exceptions.NotFoundException;
 import gr.codehub.teamOne.model.Users;
 import gr.codehub.teamOne.repository.lib.Repository;
 import gr.codehub.teamOne.representation.LoginCredentialDTO;
+import gr.codehub.teamOne.representation.PendingDocDTO;
 import gr.codehub.teamOne.representation.UsersDTO;
 import gr.codehub.teamOne.representation.UsersSearchDTO;
 import gr.codehub.teamOne.security.AccessRole;
 
 import javax.persistence.EntityManager;
+import java.util.Collection;
 import java.util.List;
 
 public class UserRepository extends Repository<Users, Long> {
@@ -127,5 +129,16 @@ public class UserRepository extends Repository<Users, Long> {
     public List getAllPendingDoctors(){
         return entityManager.createQuery("from Users where accountType = 4")
                 .getResultList();
+    }
+
+    public Users getSpecificPendingDoctors(PendingDocDTO pendingDocDTO){
+        List user = entityManager.createQuery("from Users where accountType = 4 and id = :userID")
+                .setParameter("userID", pendingDocDTO.getUserID())
+                .getResultList();
+
+        if(user != null && user.size() != 0){
+            return (Users) user.get(0);
+        }
+        return null;
     }
 }
