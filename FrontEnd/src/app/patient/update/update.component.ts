@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { UserClass } from 'src/app/classes/UserClass';
 import { UserService } from 'src/app/services/user.service';
+import { MustMatch } from 'src/app/_helpers/must-match.validator';
 
 @Component({
   selector: 'app-update',
@@ -12,92 +13,37 @@ import { UserService } from 'src/app/services/user.service';
 export class UpdateComponent implements OnInit {
   userForm:FormGroup;
   submitted = false;
-  userObj:UserClass;
   genders = ['NA','FEMALE', 'MALE']
-  roles = ['ROLE_PATIENT']
-
-  constructor(private formBuilder: FormBuilder,
-    public Uservice:UserService,
-    public userS:UserService, private router: Router) { }
-
+  userObj:UserClass;
   
-  ngOnInit(): void {
 
-    this.Uservice.getUserData().subscribe(
-      data=>{
-        this.userObj=data;
-          }
-    );
-
+  constructor(private formBuilder: FormBuilder,private _router: Router,public Uservice:UserService) { }
+  
+  ngOnInit() {
     
-      this.userForm= this.formBuilder.group({
-        firstName:['', Validators.required],
-        lastName: ['', Validators.required],
-        address: [''],
-        email:['', [Validators.required, Validators.email, Validators.pattern("^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$")]],
-        gender:['', Validators.required],
-        typeAccount:['', Validators.required],
-        password: ['', [Validators.required, Validators.minLength(6)]],
-        mobile:['', [Validators.required, Validators.minLength(10), Validators.maxLength(10)]],
-        phone:[''],
-        amka:['', [Validators.required, Validators.minLength(9),Validators.maxLength(9)]]
-      }
-      );
-    }
-     
+
+    this.getUserData();
+
+    this.userForm= this.formBuilder.group({
+      firstName:['', Validators.minLength(3)],
+      lastName: ['', Validators.minLength(3)],
+      gender:['', Validators.minLength(1)],
+      password: ['', [ Validators.minLength(6)]],
+
+      confirmPassword:['', Validators.minLength(6)],
+
+      address: ['',Validators.minLength(3)],
+      mobile:['', [ Validators.minLength(10), Validators.maxLength(10)]],
+      phone:['', [ Validators.minLength(10)]]
+      
+    }, {
+      validator: MustMatch('password', 'confirmPassword')
+    });
+  }
   // convenience getter for easy access to form fields
   get f() { return this.userForm.controls; }
 
-  Sumbit() {
-    this.submitted = true;
-
-      // stop here if form is invalid
-      if (this.userForm.invalid) {
-          return;
-      }
-
-      this.userS.currentUser.first_name = this.userForm.get('firstName').value;
-      this.userS.currentUser.last_name=this.userForm.get('lastName').value;
-      this.userS.currentUser.address=this.userForm.get('address').value;
-      this.userS.currentUser.email=this.userForm.get('email').value;
-      this.userS.currentUser.mobile_phone_number=this.userForm.get('mobile').value;
-      this.userS.currentUser.phone_number=this.userForm.get('phone').value;
-
-      if(this.userForm.get('gender').value=="MALE")
-      {
-        this.userS.currentUser.gender=1;
-      }else if(this.userForm.get('gender').value=="FEMALE")
-       {this.userS.currentUser.gender=2;}
-       else this.userS.currentUser.gender=0;
-
-      if(this.userForm.get('typeAccount').value=="ROLE_DOCTOR")
-      {
-        this.userS.currentUser.accountType=2;
-      }else if(this.userForm.get('typeAccount').value=="ROLE_PATIENT") 
-      {this.userS.currentUser.accountType=3;}
-      else this.userS.currentUser.accountType=1;
-
-
-      this.userS.currentUser.amka=this.userForm.get('amka').value;
-      this.userS.currentUser.password=this.userForm.get('password').value;
-      
-      console.log(this.userS.currentUser)
-      this.userS.editUserData(this.userS.currentUser).subscribe(
-        (response) => console.log(response),
-            (error) => console.log(error));
-           // sessionStorage.setItem("credentials",  this.userS.currentUser.email + ":" + this.userS.currentUser.password)
-           // sessionStorage.setItem("modified", "false")
-            alert('Your Data has been Updated!!');
-            this.router.navigate(['login']);
-            
-      
-  }
-
-deletePatient(){
-  this.Uservice.deleteUser().subscribe();
-  alert("Delete User Success");
-  this.router.navigate(['/login'])
-}
+  
 
   numberOnly(event): boolean {
     const charCode = (event.which) ? event.which : event.keyCode;
@@ -107,4 +53,67 @@ deletePatient(){
     return true;
 
   }
+
+  getUserData(){
+  this.Uservice.getUserData().subscribe(
+    data=>{
+      this.userObj=data;
+        }
+  );
+      }
+
+
+    editPatient(){
+
+    this.submitted = true;
+    console.log("pressed");
+    // stop here if form is invalid
+    if (this.userForm.invalid) {
+        return;
+    }
+    
+    
+    this.Uservice.currentUser.first_name =(<HTMLInputElement> document.getElementById('firstName')).value.replace(/\s/g, "");
+    this.Uservice.currentUser.last_name=(<HTMLInputElement>document.getElementById('lastName')).value.replace(/\s/g, "");
+    this.Uservice.currentUser.address=(<HTMLInputElement>document.getElementById('address')).value.replace(/\s/g, "");
+    this.Uservice.currentUser.password=(<HTMLInputElement>document.getElementById('password')).value.replace(/\s/g, "");
+    this.Uservice.currentUser.mobile_phone_number=parseInt( (<HTMLInputElement>document.getElementById('mobile')).value.replace(/\s/g, ""));
+    this.Uservice.currentUser.phone_number=parseInt( (<HTMLInputElement>document.getElementById('phone')).value.replace(/\s/g, ""));
+    this.Uservice.currentUser.accountType=2;
+
+
+    this.Uservice.currentUser.amka=parseInt(sessionStorage.getItem("amka"));
+    this.Uservice.currentUser.email=String(sessionStorage.getItem("email")).replace(/\s/g, "");
+
+    this.Uservice.currentLogin.userPassword=this.Uservice.currentUser.password;
+    this.Uservice.currentLogin.userEmail=this.Uservice.currentUser.email;
+    
+    if((<HTMLInputElement>document.getElementById('gender')).value=="MALE")
+    {
+      this.Uservice.currentUser.gender=1;
+    }else if((<HTMLInputElement>document.getElementById('gender')).value=="FEMALE")
+     {this.Uservice.currentUser.gender=2;}
+     else {this.Uservice.currentUser.gender=0;}
+     
+   this.Uservice.editUserData(this.Uservice.currentUser).subscribe(
+     (data:UserClass)=>{
+        
+      }
+
+   );
+   sessionStorage.setItem("credentials",this.Uservice.currentLogin.userEmail + ":" + this.Uservice.currentLogin.userPassword);
+   window.location.reload();
+
+
+  }
+
+
+  deletePatient(){
+    this.Uservice.deleteUser().subscribe();
+    alert("delete user success");
+    this._router.navigate(['/login']);
+
+  }
+ 
+
 }

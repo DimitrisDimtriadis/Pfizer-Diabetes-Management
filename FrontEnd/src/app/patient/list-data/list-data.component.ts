@@ -125,8 +125,8 @@ updateData(id:number){
     this.data.updateMediData(this.data.currentMeasurements).subscribe(
       (response) => console.log(response),
       (error) => console.log(error));
-
-      this.Search();
+      window.location.reload();
+ 
   
 }
 

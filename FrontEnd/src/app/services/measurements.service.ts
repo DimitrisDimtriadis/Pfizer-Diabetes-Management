@@ -23,7 +23,7 @@ export class MeasurementsService {
 
   readonly urlM1="http://localhost:9000/sacchon/measurements?measurementID=";
 
-  readonly patientConsultation="http://localhost:9000/sacchon/measurements?measurementID=";
+  readonly patientConsultation="http://localhost:9000/sacchon/consultation";
   
   addMeasurements: Measurements = {
     bloodGlucoseLevel: 0,
@@ -77,9 +77,9 @@ export class MeasurementsService {
     return this.http.delete<Measurements>(this.urlM1 + data, headerOption);
   }
   getPatientConsultation():Observable<any>{
-    let header= { headers:new HttpHeaders().set('Content-Type', 'application/json')
+  let header= { headers:new HttpHeaders().set('Content-Type', 'application/json')
     .set('Authorization',`Basic ${btoa(sessionStorage.getItem("credentials"))}`)
   }
-    return this.http.get(this.patientConsultation,header);
-  }
+  return this.http.get(this.patientConsultation, header)
+}
 }

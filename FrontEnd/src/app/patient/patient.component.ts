@@ -27,7 +27,7 @@ export class PatientComponent implements OnInit {
     );
     
   }
-  onClickUpdate(){}
+ 
 
  
 }
