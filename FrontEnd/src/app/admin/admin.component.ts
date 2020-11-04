@@ -27,7 +27,7 @@ export class AdminComponent implements OnInit {
     ngOnInit(): void {
       this.form= this.formBuilder.group({
       amka:[''],
-      amka1:['', [Validators.required]],
+      amka1:[''],
       fromDate: [''],
       untilDate: [''],
       });
