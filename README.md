@@ -17,11 +17,12 @@ Sacchon Diabetes Management App Instructors
 	PatientDoctorAssociation
 	Users
 
- 
 
 5.	Next will view EndPoints in POSTMAN
+
 v0.9.82 
 About users____________________________________________________________________
+
 @Get     http://localhost:9000/sacchon/users 
 It returns all users
 
