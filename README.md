@@ -7,15 +7,15 @@ Sacchon Diabetes Management App Instructors
  
 3.	Next we will Open The Visual Studio Code (FrontEnd) folder and in terminal we will run to commands:
 
-•	npm install (modules Download)
-•	ng serve –o (Open the program to Browser)
+	npm install (modules Download)
+	ng serve –o (Open the program to Browser)
 
 4.	Then we will view the table which are created to Database when we run the IntellJ:
 
-•	Consultation
-•	Measurement
-•	PatientDoctorAssociation
-•	Users
+	Consultation
+	Measurement
+	PatientDoctorAssociation
+	Users
 
  
 
@@ -299,8 +299,8 @@ Example body that you return !!!!! [
 ]
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-	Admin user register from Database.
-	Exists auth from the Front and  Back end for the users
-	Front End have all validators
-	When register as doctor, you 
+	Admin user register from Database.
+	Exists auth from the Front and  Back end for the users
+	Front End have all validators
+	When register as doctor, you 
 
