@@ -303,5 +303,5 @@ Example body that you return !!!!! [
 	Admin user register from Database.
 	Exists auth from the Front and  Back end for the users
 	Front End have all validators
-	When register as doctor, you 
+	When register as doctor, you should wait for admin to accept you. 
 
